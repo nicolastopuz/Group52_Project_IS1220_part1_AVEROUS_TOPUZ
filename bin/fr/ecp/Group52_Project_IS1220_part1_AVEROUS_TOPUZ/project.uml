@@ -127,6 +127,10 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_VilX8CLCEeicavOwGCk0Yg"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VilX8SLCEeicavOwGCk0Yg" value="1"/>
     </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Flz48CMUEeiPuIa4oX9lgA" name="station" type="_IlTv4CFnEeis-Kxct5-57Q" association="_FlhlECMUEeiPuIa4oX9lgA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Fl1uICMUEeiPuIa4oX9lgA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Fl2VMCMUEeiPuIa4oX9lgA" value="1"/>
+    </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_VihGgCLCEeicavOwGCk0Yg" memberEnd="_VikJ0SLCEeicavOwGCk0Yg _Vil_ACLCEeicavOwGCk0Yg">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_VijiwCLCEeicavOwGCk0Yg" source="org.eclipse.papyrus">
@@ -328,6 +332,12 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_xi6bECMCEeicavOwGCk0Yg" name="MechnaicalBiking">
     <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_29o-YCMCEeicavOwGCk0Yg" client="_xi6bECMCEeicavOwGCk0Yg" supplier="_iwygACMBEeicavOwGCk0Yg" contract="_iwygACMBEeicavOwGCk0Yg"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_FlhlECMUEeiPuIa4oX9lgA" memberEnd="_Flz48CMUEeiPuIa4oX9lgA _Fl28QCMUEeiPuIa4oX9lgA">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Flyq0CMUEeiPuIa4oX9lgA" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Flyq0SMUEeiPuIa4oX9lgA" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Fl28QCMUEeiPuIa4oX9lgA" name="gpscoordinates" type="_vnNM4CLBEeicavOwGCk0Yg" association="_FlhlECMUEeiPuIa4oX9lgA"/>
   </packagedElement>
   <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_gBEFICFmEeis-Kxct5-57Q">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_gBF6UCFmEeis-Kxct5-57Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
