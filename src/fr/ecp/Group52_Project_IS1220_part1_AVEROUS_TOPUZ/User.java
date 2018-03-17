@@ -1,69 +1,164 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
-public class User {
+/**
+ * The User class basically represents anyone using the myVelib
+ * system. Whether he has a Velib card or not is not relevant to
+ * being a user. A user is just someone who uses the system.
+ * he is characterized by :
+ * <ul>
+ * <li> a name
+ * <li> his position (GPS coordinates)
+ * <li> a unique ID
+ * </ul>
+ * <p>
+ * In case a user holds a card, he also has a time-credit balance 
+ * (expressed in minutes) representing the credit gained by returning
+ * bicycles to <i>plus stations</i>. The time credit is used to compute 
+ * the actual cost of a bike ride.
+ * 
+ * @see GPScoordinates
+ * @see Card
+ * 
+ * @author Pierre Averous
+ * @author Nicolas Topuz
+ * @since 1.0
+ */
+
+public class User implements VisitableItems {
+	
+	/**
+	 * A string that defines the name of the user
+	 */
 	protected String name;
-	protected static double counter=0;
-	protected double numericalId;
+	
+	/**
+	 * A static double counting the number of instance of the user class
+	 */
+	protected static double userCounter=0;
+	
+	/**
+	 * A read-only double defining a unique numericalId for each user 
+	 */
+	protected final double numericalId;
+	
+	/**
+	 * A GPScoordinates object storing the position of the user
+	 */
 	protected GPScoordinates position;
+	
+	/**
+	 * A Card object indicating if the user has a Card and what type of card if necessary
+	 */
 	protected Card card;
+	
+	/**
+	 * A MovingBehavior object storing how the user is moving (walking, biking on a mechanical bike, biking on an electrical bike) and his speed accordingly
+	 */
 	protected MovingBehavior behavior;
 	
-	
+	/**
+	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
+	 * @param name A string defining the name of the user 
+	 */
 	public User(String name) {
 		this.name=name;
-		User.counter+=1;
-		this.numericalId=User.counter;
+		User.userCounter+=1;
+		this.numericalId=User.userCounter;
+		this.card=new NoCard(this);
+	}
+	
+	/**
+	 * A constructor creating a User instance with a name, a unique numericalId and a card of the type entered
+	 * @param name A string defining the name of the user 
+	 * @param type A CardTypes defining the type of the card the user has
+	 */
+	public User(String name, CardTypes type) {
+		this.name=name;
+		User.userCounter+=1;
+		this.numericalId=User.userCounter;
+		///We have to implement a creation of card but we have to create a class depending on the type => shapeFactory
 	}
 
-
+	/**
+	 * A getter returning the name of the user
+	 * @return the name of the user as a string
+	 */
 	public String getName() {
 		return name;
 	}
 
-
-	public static double getCounter() {
-		return counter;
+	/**
+	 * A getter returning the userCounter 
+	 * @return the number of users as a double
+	 */
+	public static double getUserCounter() {
+		return userCounter;
 	}
 
-
+	/**
+	 * A getter returning the unique numericalId of the user
+	 * @return the unique numerical id of the user as a double
+	 */
 	public double getNumericalId() {
 		return numericalId;
 	}
 
-
+	/**
+	 * A getter returning the position of the user
+	 * @return the position of the user as a GPScoordinates
+	 */
 	public GPScoordinates getPosition() {
 		return position;
 	}
 
-
+	/**
+	 * A getter returning the card of the user
+	 * @return the card of the user as a Card 
+	 */
 	public Card getCard() {
 		return card;
 	}
 
-
+	/**
+	 * A getter returning the movingBehavior of the user  
+	 * @return the user moving behavior as a MovingBehavior
+	 */
 	public MovingBehavior getBehavior() {
 		return behavior;
 	}
 
-
+	/**
+	 * A setter to change the name of the user 
+	 * @param name A string defining the name of the user 
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-
+	/**
+	 * A setter to change the position of the user
+	 * @param position A GPScoordinate object defining the position of the user
+	 */
 	public void setPosition(GPScoordinates position) {
 		this.position = position;
 	}
 
-
+	/**
+	 * A setter to change the card status of the user 
+	 * @param card A Card object defining the card status of the user 
+	 */
 	public void setCard(Card card) {
 		this.card = card;
 	}
 
-
+	/**
+	 * A setter to set the moving behavior of the user 
+	 * @param behavior A MovingBehavior object defining the moving behavior of the user
+	 */
 	public void setBehavior(MovingBehavior behavior) {
 		this.behavior = behavior;
 	}
+	
 	
 	@Override
 	public String toString() {
