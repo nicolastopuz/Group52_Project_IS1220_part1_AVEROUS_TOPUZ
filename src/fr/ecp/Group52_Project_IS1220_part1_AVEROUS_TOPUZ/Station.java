@@ -39,8 +39,8 @@ public class Station {
 	 * @param location
 	 */
 	public Station(int numberofslots, GPScoordinates location) {
-		this.stationID = stationCounter;
-		stationCounter++;
+		this.stationID = Station.stationCounter;
+		Station.stationCounter++;
 		this.numberOfSlots = numberofslots;
 		this.location = location;
 		for (int i = 0; i < numberofslots; i++) {
@@ -57,8 +57,8 @@ public class Station {
 	 * @param numberOfBikes
 	 */
 	public Station(int numberofslots, GPScoordinates location, double numberOfBikes) {
-		this.stationID = stationCounter;
-		stationCounter++;
+		this.stationID = Station.stationCounter;
+		Station.stationCounter++;
 		this.numberOfSlots = numberofslots;
 		this.location = location;
 		for (int i = 0; i < numberofslots; i++) {
