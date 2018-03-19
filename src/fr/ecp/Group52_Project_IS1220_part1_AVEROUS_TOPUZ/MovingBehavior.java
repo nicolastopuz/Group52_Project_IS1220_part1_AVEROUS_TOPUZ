@@ -15,5 +15,10 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
  */
 
 public interface MovingBehavior {
+	
+	/**
+	 * A method allowing us to know the speed of the user according to his mean of transport
+	 * @return the speed of the user
+	 */
 	public double getSpeed();
 }

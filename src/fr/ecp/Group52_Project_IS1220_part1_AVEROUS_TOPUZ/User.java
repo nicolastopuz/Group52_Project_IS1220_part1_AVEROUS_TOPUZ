@@ -64,7 +64,7 @@ public class User implements VisitableItems {
 		this.name=name;
 		User.userCounter+=1;
 		this.numericalId=User.userCounter;
-		this.card=new NoCard(this);
+		this.card=CardFactory.create(this, CardTypes.NoCard);
 	}
 	
 	/**
@@ -76,7 +76,7 @@ public class User implements VisitableItems {
 		this.name=name;
 		User.userCounter+=1;
 		this.numericalId=User.userCounter;
-		///We have to implement a creation of card but we have to create a class depending on the type => shapeFactory
+		this.card=CardFactory.create(this, type);
 	}
 
 	/**
