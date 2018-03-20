@@ -87,10 +87,6 @@ public class GPScoordinates {
 	/**
 	 * This is a static method, that allow to calculate the distance 
 	 * in kilometers between two points, A and B, given their GPS coordinates. 
-	 * This method uses the Haversine formula to calculate the distance.
-	 * The Haversine formula is used to determine the great-circle distance
-	 * between two points on a sphere of known radius, given their latitudes 
-	 * and longitudes.
 	 * 
 	 * @param	pointA	the first point.
 	 * @param 	pointB	the point to which the distance should be
@@ -98,22 +94,7 @@ public class GPScoordinates {
 	 * @return	the distance between the 2 points, in km.
 	 */
 	public static double distanceAB(GPScoordinates pointA, GPScoordinates pointB) {
-		double latA = pointA.getLatitude();
-		double lonA = pointA.getLongitude();		
-		double latB = pointB.getLatitude();
-		double lonB = pointB.getLongitude();
-		
-		double dLat = (latB-latA)*(Math.PI/180); //Angle between latitudes of points A and B, converted to radians.
-		double dLon = (lonB-lonA)*(Math.PI/180); //Angle between longitudes of points A and B, converted to radians.
-		
-		double a = 
-				Math.sin(dLat/2) * Math.sin(dLat/2) +
-				Math.cos(latA*Math.PI/180) * Math.cos(latB*Math.PI/180) *
-				Math.sin(dLon/2) * Math.sin(dLon/2)
-				;
-		
-		double b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-		double distance = R * b;
+		double distance = pointA.distanceTo(pointB);
 		return distance;
 	}
 	

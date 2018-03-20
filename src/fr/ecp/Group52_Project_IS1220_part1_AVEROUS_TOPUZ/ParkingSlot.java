@@ -1,6 +1,5 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
-
 /**
  * ParkingSlots is the class for all parking slots in the
  * myVelib system. Every parking slot has a unique ID within
@@ -10,7 +9,7 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
  * <ul>
  * <li> "free" 
  * <li> "taken"
- * <li> "out of order"
+ * <li> "outOfOrder"
  * </ul> 
  * 
  * @author Pierre Averous
@@ -20,15 +19,34 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
  */
 
 public class ParkingSlot {
+	/**
+	 * A double to store the unique ID of the parking slot within a Station.
+	 */
 	private double parkingSlotID;
-	private ParkingSlotState state; 
+	
+	/**
+	 * A ParkingSlotState to store the state the parking slot is in.
+	 */
+	private ParkingSlotState state;
+	
+	/**
+	 * A Station object to indicate in which Station the parking slot is located.
+	 */
 	private Station station;
+	
+	/**
+	 * A Bike object to store the bike that is available at the parking slot.
+	 */
 	private Bike bike;
 	
-	public ParkingSlot(Station s) {
-		this.parkingSlotID = s.getParkingCounter();
-		s.countUp();
-		this.station = s;
+	/**
+	 * A constructor for creating a ParkingSlot instance with a unique ID within a station
+	 * @param station	the station in which the parking slot is built.
+	 */
+	public ParkingSlot(Station station) {
+		this.parkingSlotID = station.getParkingCounter();
+		station.countUp();
+		this.station = station;
 		this.state = ParkingSlotState.free;
 	}
 	
@@ -55,6 +73,38 @@ public class ParkingSlot {
 	public boolean isBike() {
 		if (this.state == ParkingSlotState.taken) { return true; }
 		else { return false; }
+	}
+	
+	/**
+	 * This method allows a User to drop a bike in a parking slot.
+	 * It is called upon by the User class.
+	 * 
+	 * @param	u	User who drops bike
+	 * @see		User 
+	  */
+	public void acceptBike(User u) throws OccupiedSlotException {
+		if (!this.isFree()) {throw new OccupiedSlotException();}
+		else {
+			this.bike = u.getBike();
+			u.setBike(null);
+			this.state = ParkingSlotState.taken;
+		}	
+	}
+	
+	/**
+	 * This method allows a User to take a bike in a parking slot.
+	 * It is called upon by the User class.
+	 * 
+	 * @param	u	User who takes bike
+	 * @see		User 
+	  */
+	public void giveBike(User u) throws EmptySlotException {
+		if (!this.isBike()) {throw new EmptySlotException();}
+		else {
+			u.setBike(this.bike);
+			this.bike = null;
+			this.state = ParkingSlotState.free;
+		}
 	}
 	
 	

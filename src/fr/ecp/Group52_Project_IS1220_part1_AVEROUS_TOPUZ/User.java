@@ -1,5 +1,6 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
+
 /**
  * The User class basically represents anyone using the myVelib
  * system. Whether he has a Velib card or not is not relevant to
@@ -57,6 +58,11 @@ public class User implements VisitableItems {
 	protected MovingBehavior behavior;
 	
 	/**
+	 * A Bike object storing the bike the user is using.
+	 */
+	protected Bike bike;
+	
+	/**
 	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
 	 * @param name A string defining the name of the user 
 	 */
@@ -79,6 +85,40 @@ public class User implements VisitableItems {
 		this.card=CardFactory.create(this, type);
 	}
 
+	/**
+	 * Method for user to pick up a Bike at a given Station. 
+	 * @param s	The station from which the user should pick up the bike from.
+	 */
+	public void takeBike(Station s) {
+		try {
+			ParkingSlot p = s.getAvailableBicycle();
+			p.giveBike(this);
+		}
+		catch(EmptySlotException e) {
+			
+		}
+		catch(NoAvailableBikeException e) {
+			
+		}
+	}
+	
+	/**
+	 * Method for User to drop off a Bike at a given Station.
+	 * @param s The station where the Bike should be dropped off to.
+	 */
+	public void dropBike(Station s) {
+		try {
+			ParkingSlot p = s.getFreeSlot();
+			p.acceptBike(this);
+		}
+		catch(OccupiedSlotException e) {
+			
+		}
+		catch(NoFreeSlotException e) {
+			
+		}
+	}
+	
 	/**
 	 * A getter returning the name of the user
 	 * @return the name of the user as a string
@@ -128,6 +168,14 @@ public class User implements VisitableItems {
 	}
 
 	/**
+	 * A getter returning the Bike of the user
+	 * @return	the bike of the user as a Bike
+	 */
+	public Bike getBike() {
+		return bike;
+	}
+	
+	/**
 	 * A setter to change the name of the user 
 	 * @param name A string defining the name of the user 
 	 */
@@ -157,6 +205,14 @@ public class User implements VisitableItems {
 	 */
 	public void setBehavior(MovingBehavior behavior) {
 		this.behavior = behavior;
+	}
+	
+	/**
+	 * A setter to set the bike of the user 
+	 * @param bike A Bike object defining bike of the user
+	 */
+	public void setBike(Bike bike) {
+		this.bike = bike;
 	}
 	
 	

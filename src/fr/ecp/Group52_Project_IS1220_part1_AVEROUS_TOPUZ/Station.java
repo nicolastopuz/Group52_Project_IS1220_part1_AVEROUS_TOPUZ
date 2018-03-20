@@ -24,9 +24,24 @@ import java.util.ArrayList;
 
 public class Station {
 	
+	/**
+	 * An ArrayList to store the parking slots built in the station.
+	 */
 	protected ArrayList<ParkingSlot> parkingSlots;
+	
+	/**
+	 * An Integer to indicate the number of parking slots built in the station.
+	 */
 	protected int numberOfSlots;
+	
+	/**
+	 * A double object which is unique, to identify a Station.
+	 */
 	protected double stationID;
+	
+	/**
+	 * 
+	 */
 	protected static double stationCounter;
 	protected GPScoordinates location; 
 	protected boolean isOnline;
@@ -115,16 +130,20 @@ public class Station {
 	 * 
 	 * @return	a free parking slot in the station
 	 */
-	public ParkingSlot getFreeSlot() {
-		assert(this.isFreeSlot());
-		int l = this.parkingSlots.size();
-		int i = 0;
-		boolean isFree = false;
-		while(i<l && !isFree) {
-			isFree = parkingSlots.get(i).isFree();
-			i++;
-		}	
-		return this.parkingSlots.get(i);
+	public ParkingSlot getFreeSlot() throws NoFreeSlotException {
+		if(!this.isFreeSlot()) {
+			throw new NoFreeSlotException();
+		}
+		else {
+			int l = this.parkingSlots.size();
+			int i = 0;
+			boolean isFree = false;
+			while(i<l && !isFree) {
+				isFree = parkingSlots.get(i).isFree();
+				i++;
+			}	
+			return this.parkingSlots.get(i);
+		}
 	}
 	
 	/**
@@ -152,16 +171,20 @@ public class Station {
 	 * 
 	 * @return	a parking slot with an available bike in the station
 	 */
-	public ParkingSlot getAvailableBicycle() {
-		assert(this.isAvailableBicycle());
-		int l = this.parkingSlots.size();
-		int i = 0;
-		boolean isBike = false;
-		while(i<l && !isBike) {
-			isBike = parkingSlots.get(i).isBike();
-			i++;
+	public ParkingSlot getAvailableBicycle() throws NoAvailableBikeException {
+		if(!this.isAvailableBicycle()) {
+			throw new NoAvailableBikeException();
 		}
-		return parkingSlots.get(i);
+		else {
+			int l = this.parkingSlots.size();
+			int i = 0;
+			boolean isBike = false;
+			while(i<l && !isBike) {
+				isBike = parkingSlots.get(i).isBike();
+				i++;
+			}
+			return parkingSlots.get(i);
+		}
 	}
 	
 	
