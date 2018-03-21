@@ -25,20 +25,28 @@ public class GPScoordinates {
 	 * @param latitudeDMS	as a string in DMS format (DD°MM'SS,SSS").
 	 * @param longitudeDMS	as a string in DMS format (DD°MM'SS,SSS").
 	 */
-	public GPScoordinates(String latitudeDMS, String longitudeDMS) {
-		
-		double latD, latM, latS, lonD, lonM, lonS;
-		
-		latD = Double.parseDouble(latitudeDMS.substring(0,1));
-		latM = Double.parseDouble(latitudeDMS.substring(3,4));
-		latS = Double.parseDouble(latitudeDMS.substring(6));
-		
-		lonD = Double.parseDouble(longitudeDMS.substring(0,1));
-		lonM = Double.parseDouble(longitudeDMS.substring(3,4));
-		lonS = Double.parseDouble(longitudeDMS.substring(6));
-		
-		this.latitude=latD + (latM/60) + (latS/3600); 
-		this.longitude=lonD + (lonM/60) + (lonS/3600); 
+	public GPScoordinates(String latitudeDMS, String longitudeDMS) throws BadCoordinatesSyntaxException {
+		if(!latitudeDMS.contains("°") || !latitudeDMS.contains("'") || !latitudeDMS.contains("\"")) {
+			throw new BadCoordinatesSyntaxException();
+		}
+		else if(!longitudeDMS.contains("°") || !longitudeDMS.contains("'") || !longitudeDMS.contains("\"")) {
+			throw new BadCoordinatesSyntaxException();
+		}
+		else {
+			double[] modLat;
+			double[] modLon;
+			String[] latDMS = latitudeDMS.split("°|'|\"");
+			String[] lonDMS = longitudeDMS.split("°|'|\"");
+			try {
+				modLat = moduloLatitude(latDMS);
+				modLon = moduloLongitude(lonDMS);
+				this.latitude=modLat[0] + (modLat[1]/60) + (modLat[2]/3600); 
+				this.longitude=modLon[0] + (modLon[1]/60) + (modLon[2]/3600); 
+			}
+			catch(InvalidCoordinatesException e) {
+				
+			}	
+		}
 	}	
 	
 	/**
@@ -96,6 +104,77 @@ public class GPScoordinates {
 	public static double distanceAB(GPScoordinates pointA, GPScoordinates pointB) {
 		double distance = pointA.distanceTo(pointB);
 		return distance;
+	}
+	
+	/**
+	 * A simple mathematical function to guarantee that the longitude's 
+	 * values are in order : degrees between 180 and -180, minutes and seconds between 0 and 60.
+	 * 
+	 * @param latDMS	a String array, containing degrees, minutes and seconds for longitude
+	 * @return 	a double array, containing longitude's degrees, minutes and seconds.	
+	 */
+	protected static double[] moduloLongitude(String[] lonDMS) throws InvalidCoordinatesException {
+		
+		double lonD, lonM, lonS;
+		lonD = Double.parseDouble(lonDMS[0]);
+		lonM = Double.parseDouble(lonDMS[1]);
+		lonS = Double.parseDouble(lonDMS[2]);
+		
+		if(lonM<0 || lonS<0) {
+			throw new InvalidCoordinatesException();
+		}
+		else {
+			while(lonS > 60 ) { //Modulo seconds, and increment minutes accordingly
+				lonS-=60;
+				lonM++;
+			}
+			while(lonM > 60) { //Modulo minutes, and increment degrees accordingly
+				lonM-=60;
+				lonD++;
+			}
+			double c=lonD;
+			c = c%360;
+			lonD = lonD%180;
+			if(c>180 && c<360) {lonD-=180;}
+			else if(c<-180 && c>-360) {lonD+=180;}	
+			double[] result = {lonD, lonM, lonS};
+			return result;
+		}
+	}
+	
+	/**
+	 * A simple mathematical function to guarantee that the latitude's 
+	 * values are in order : degrees between 90 and -90, minutes and seconds between 0 and 60.
+	 * 
+	 * @param latDMS	a String array, containing degrees, minutes and seconds for latitude
+	 * @return 	a double array, containing latitude's degrees, minutes and seconds.	
+	 */
+	protected static double[] moduloLatitude(String[] latDMS) throws InvalidCoordinatesException {
+		
+		double latD, latM, latS;
+		latD = Double.parseDouble(latDMS[0]); 
+		latM = Double.parseDouble(latDMS[1]);
+		latS = Double.parseDouble(latDMS[2]);
+
+		if(latM<0 || latS<0) {
+			throw new InvalidCoordinatesException();
+		}
+		else {
+			while(latS > 60 || latS <0) { //Modulo seconds, and increment minutes accordingly
+				latS-=60;
+				latM++;
+			}
+			while(latM > 60 || latM <0) { //Modulo minutes, and increment degrees accordingly
+				latM-=60;
+				latD++;
+			}
+			latD = latD%180;
+			if(latD>90 && latD<180) {latD = 180-latD;}
+			else if(latD<-90 && latD>-180) {latD = -180+latD;}
+			
+			double[] result = {latD, latM, latS};
+			return result;
+		}
 	}
 	
 	
