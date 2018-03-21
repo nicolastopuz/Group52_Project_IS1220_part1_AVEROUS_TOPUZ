@@ -90,38 +90,48 @@ public class GPScoordinatesTest {
 
 
 	@Test (expected = BadCoordinatesSyntaxException.class)
-	public void testGPScoordinatesStringString_wrongStrignFormat_tooShort() throws BadCoordinatesSyntaxException, OutOfBoundsException {
+	public void testGPScoordinatesStringString_wrongStrignFormat_tooShort() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
 			GPScoordinates gps = new GPScoordinates("-10°","-15°0'0,0");
 	}
 	
 	@Test (expected = BadCoordinatesSyntaxException.class)
-	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong1() throws BadCoordinatesSyntaxException, OutOfBoundsException {
+	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong1() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
 		GPScoordinates gps = new GPScoordinates("-10°75'0,0","-15°0'0,0");
 	}
 	
 	@Test (expected = BadCoordinatesSyntaxException.class)
-	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong2() throws BadCoordinatesSyntaxException, OutOfBoundsException {
+	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong2() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
 		GPScoordinates gps = new GPScoordinates("-10°0'72,0","-15°0'0,0");
 	}
 	
 	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesStringString_out_of_bond_latitude_top() throws BadCoordinatesSyntaxException, OutOfBoundsException {
+	public void testGPScoordinatesStringString_out_of_bond_latitude_top() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
 		GPScoordinates gps = new GPScoordinates("100°0'0,0","-15°0'0,0");
 	}
 	
 	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesStringString_out_of_bond_latitude_down() throws BadCoordinatesSyntaxException, OutOfBoundsException {
+	public void testGPScoordinatesStringString_out_of_bond_latitude_down() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
 		GPScoordinates gps = new GPScoordinates("-100°0'0,0","-15°0'0,0");
 	}
 	
 	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesStringString_out_of_bond_longitude_top() throws BadCoordinatesSyntaxException, OutOfBoundsException {
+	public void testGPScoordinatesStringString_out_of_bond_longitude_top() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
 		GPScoordinates gps = new GPScoordinates("10°0'0,0","190°0'0,0");
 	}
 
 	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesStringString_out_of_bond_longitude_down() throws BadCoordinatesSyntaxException, OutOfBoundsException {
+	public void testGPScoordinatesStringString_out_of_bond_longitude_down() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
 		GPScoordinates gps = new GPScoordinates("10°0'0,0","-190°0'0,0");
+	}
+	
+	@Test (expected = InvalidCoordinatesException.class)
+	public void testGPScoordinatesStringString_invalidCoordinates_negative_minutes() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
+		GPScoordinates gps = new GPScoordinates("10°-5'0,0","-190°0'0,0");
+	}
+	
+	@Test (expected = InvalidCoordinatesException.class)
+	public void testGPScoordinatesStringString_invalidCoordinates_negative_secondss() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
+		GPScoordinates gps = new GPScoordinates("10°0'-3,0","-190°0'0,0");
 	}
 
 	///Now let's test the basic methods (getters and object methods)
@@ -189,6 +199,8 @@ public class GPScoordinatesTest {
 		} catch(OutOfBoundsException e) {
 			e.printStackTrace();
 		} catch(BadCoordinatesSyntaxException e) {
+			e.printStackTrace();
+		} catch (InvalidCoordinatesException e) {
 			e.printStackTrace();
 		}
 	}
