@@ -33,6 +33,8 @@ public class GPScoordinates {
 			throw new BadCoordinatesSyntaxException();
 		}
 		else {
+			latitudeDMS = latitudeDMS.replace(',', '.');
+			longitudeDMS = longitudeDMS.replace(',', '.');
 			double[] modLat;
 			double[] modLon;
 			String[] latDMS = latitudeDMS.split("°|'|\"");
