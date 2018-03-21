@@ -224,7 +224,10 @@ public class GPScoordinates {
 		double a = this.longitude;
 		double b = this.latitude;
 		// Pour garantir l'unicité du hashcode à partir de la latitude et longitude,
-		// on utilise une bijection de NxN dans N (fonction de pairage de Cantor)
+		// on utilise une bijection de Z dans N, puis une bijection de NxN dans N 
+		// (fonction de pairage de Cantor)
+		a = (a>0 ? 2*a : -2*a+1);
+		b = (b>0 ? 2*b : -2*b+1);
 		return (int) (41*(41+(a+b)*(a+b+1)/2+b)); 
 	}
 	
