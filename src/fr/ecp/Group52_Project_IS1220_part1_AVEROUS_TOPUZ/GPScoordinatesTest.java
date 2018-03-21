@@ -51,15 +51,7 @@ public class GPScoordinatesTest {
 		GPScoordinates gps = new GPScoordinates(-91, 10);
 	}
 	
-	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesDoubleDouble_exception_on_longitudee_top() throws OutOfBoundsException {
-		GPScoordinates gps = new GPScoordinates(10, 181);
-	}
-	
-	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesDoubleDouble_exception_on_longitude_down() throws OutOfBoundsException {
-		GPScoordinates gps = new GPScoordinates(10, -181);
-	}
+
 
 	///Now let's test the constructor using strings as parameters 
 	
@@ -114,16 +106,6 @@ public class GPScoordinatesTest {
 		GPScoordinates gps = new GPScoordinates("-100∞0'0,0\"","-15∞0'0,0\"");
 	}
 	
-	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesStringString_out_of_bond_longitude_top() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-		GPScoordinates gps = new GPScoordinates("10∞0'0,0\"","190∞0'0,0\"");
-	}
-
-	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesStringString_out_of_bond_longitude_down() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-		GPScoordinates gps = new GPScoordinates("10∞0'0,0\"","-190∞0'0,0\"");
-	}
-	
 	@Test (expected = InvalidCoordinatesException.class)
 	public void testGPScoordinatesStringString_invalidCoordinates_negative_minutes() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
 		GPScoordinates gps = new GPScoordinates("10∞-5'0,0\"","-190∞0'0,0\"");
@@ -174,9 +156,10 @@ public class GPScoordinatesTest {
 
 	@Test
 	public void testToString() {
+		GPScoordinates gps1;
 		try {
-			GPScoordinates gps1 = new GPScoordinates(0,0);
-			assertTrue("Test de la m√©thode ToString", gps1.toString().equals("(0,0)"));
+			gps1 = new GPScoordinates(0,0);
+			assertTrue("Test de la methode ToString", gps1.toString().equals("(0,0)"));
 		} catch(OutOfBoundsException e) {
 			e.printStackTrace();
 		}

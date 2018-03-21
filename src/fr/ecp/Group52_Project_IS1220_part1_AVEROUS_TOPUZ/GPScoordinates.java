@@ -205,7 +205,7 @@ public class GPScoordinates {
 	
 	@Override
 	public String toString() {
-		return (this.latitude + ", " + this.longitude);
+		return ("("+this.latitude + "," + this.longitude+")");
 	}
 	
 	@Override
