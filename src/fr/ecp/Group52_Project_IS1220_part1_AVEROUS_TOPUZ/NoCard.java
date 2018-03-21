@@ -24,7 +24,7 @@ public class NoCard extends Card implements CardVisitor{
 	public NoCard(User user) {
 		super(user);
 		this.type=CardTypes.NoCard;
-		this.cardNumber=(Double) null; ///mis ça pour l'instant à voir si on modifie
+		this.cardNumber= -1;
 	}
 	
 	@Override
