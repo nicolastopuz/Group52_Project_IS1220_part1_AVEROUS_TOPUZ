@@ -57,6 +57,16 @@ public class GPScoordinates {
 	 * @param longitude
 	 */
 	public GPScoordinates(double latitude, double longitude) {
+		double c=latitude, d = longitude;
+		c = c%360;
+		d = d%360;
+		latitude = latitude%180;
+		longitude = longitude%180;
+		if(c>180 && c<360) {latitude-=180;}
+		else if(c<-180 && c>-360) {latitude+=180;}
+		if(d>180 && d<360) {longitude-=180;}
+		else if(d<-180 && d>-360) {longitude+=180;}
+		
 		this.latitude=latitude; 
 		this.longitude=longitude; 
 	}
