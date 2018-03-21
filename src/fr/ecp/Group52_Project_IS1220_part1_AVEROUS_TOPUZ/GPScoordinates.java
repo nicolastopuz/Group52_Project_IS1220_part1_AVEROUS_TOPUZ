@@ -129,7 +129,7 @@ public class GPScoordinates {
 			throw new InvalidCoordinatesException();
 		}
 		else {
-			while(lonS > 60 ) { //Modulo seconds, and increment minutes accordingly
+			while(lonS > 60) { //Modulo seconds, and increment minutes accordingly
 				lonS-=60;
 				lonM++;
 			}
@@ -165,11 +165,11 @@ public class GPScoordinates {
 			throw new InvalidCoordinatesException();
 		}
 		else {
-			while(latS > 60 || latS <0) { //Modulo seconds, and increment minutes accordingly
+			while(latS > 60) { //Modulo seconds, and increment minutes accordingly
 				latS-=60;
 				latM++;
 			}
-			while(latM > 60 || latM <0) { //Modulo minutes, and increment degrees accordingly
+			while(latM > 60) { //Modulo minutes, and increment degrees accordingly
 				latM-=60;
 				latD++;
 			}

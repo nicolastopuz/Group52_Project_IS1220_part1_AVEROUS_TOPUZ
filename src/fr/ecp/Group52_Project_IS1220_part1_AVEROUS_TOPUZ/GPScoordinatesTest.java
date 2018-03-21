@@ -70,13 +70,13 @@ public class GPScoordinatesTest {
 		GPScoordinates gps3;
 		GPScoordinates gps4;
 		try {
-			gps1 = new GPScoordinates("10°0'0,0","15°0'0,0");
+			gps1 = new GPScoordinates("10�0'0,0\"","15�0'0,0\"");
 			assertTrue("Test du constructeur avec les String positifs et positifs", gps1 instanceof GPScoordinates && gps1.latitude==10 && gps1.getLongitude()==15);
-			gps2 = new GPScoordinates("10°0'0,0","-15°0'0,0");
+			gps2 = new GPScoordinates("10�0'0,0\"","-15�0'0,0\"");
 			assertTrue("Test du constructeur avec les String positifs et positifs", gps2 instanceof GPScoordinates && gps2.latitude==10 && gps2.getLongitude()==-15);
-			gps3 = new GPScoordinates("-10°0'0,0","15°0'0,0");
+			gps3 = new GPScoordinates("-10�0'0,0\"","15�0'0,0\"");
 			assertTrue("Test du constructeur avec les String positifs et positifs", gps3 instanceof GPScoordinates && gps3.latitude==-10 && gps3.getLongitude()==15);
-			gps4 = new GPScoordinates("-10°0'0,0","-15°0'0,0");
+			gps4 = new GPScoordinates("-10�0'0,0\"","-15�0'0,0\"");
 			assertTrue("Test du constructeur avec les String positifs et positifs", gps4 instanceof GPScoordinates && gps4.latitude==-10 && gps4.getLongitude()==-15 );
 		} catch (BadCoordinatesSyntaxException e) {
 			e.printStackTrace();
@@ -91,47 +91,47 @@ public class GPScoordinatesTest {
 
 	@Test (expected = BadCoordinatesSyntaxException.class)
 	public void testGPScoordinatesStringString_wrongStrignFormat_tooShort() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-			GPScoordinates gps = new GPScoordinates("-10°","-15°0'0,0");
+			GPScoordinates gps = new GPScoordinates("-10�","-15�0'0,0");
 	}
 	
 	@Test (expected = BadCoordinatesSyntaxException.class)
 	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong1() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-		GPScoordinates gps = new GPScoordinates("-10°75'0,0","-15°0'0,0");
+		GPScoordinates gps = new GPScoordinates("-10�75'0,0","-15�0'0,0");
 	}
 	
 	@Test (expected = BadCoordinatesSyntaxException.class)
 	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong2() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-		GPScoordinates gps = new GPScoordinates("-10°0'72,0","-15°0'0,0");
+		GPScoordinates gps = new GPScoordinates("-10�0'72,0","-15�0'0,0");
 	}
 	
 	@Test (expected = OutOfBoundsException.class)
 	public void testGPScoordinatesStringString_out_of_bond_latitude_top() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-		GPScoordinates gps = new GPScoordinates("100°0'0,0","-15°0'0,0");
+		GPScoordinates gps = new GPScoordinates("100�0'0,0\"","-15�0'0,0\"");
 	}
 	
 	@Test (expected = OutOfBoundsException.class)
 	public void testGPScoordinatesStringString_out_of_bond_latitude_down() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-		GPScoordinates gps = new GPScoordinates("-100°0'0,0","-15°0'0,0");
+		GPScoordinates gps = new GPScoordinates("-100�0'0,0\"","-15�0'0,0\"");
 	}
 	
 	@Test (expected = OutOfBoundsException.class)
 	public void testGPScoordinatesStringString_out_of_bond_longitude_top() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-		GPScoordinates gps = new GPScoordinates("10°0'0,0","190°0'0,0");
+		GPScoordinates gps = new GPScoordinates("10�0'0,0\"","190�0'0,0\"");
 	}
 
 	@Test (expected = OutOfBoundsException.class)
 	public void testGPScoordinatesStringString_out_of_bond_longitude_down() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-		GPScoordinates gps = new GPScoordinates("10°0'0,0","-190°0'0,0");
+		GPScoordinates gps = new GPScoordinates("10�0'0,0\"","-190�0'0,0\"");
 	}
 	
 	@Test (expected = InvalidCoordinatesException.class)
 	public void testGPScoordinatesStringString_invalidCoordinates_negative_minutes() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-		GPScoordinates gps = new GPScoordinates("10°-5'0,0","-190°0'0,0");
+		GPScoordinates gps = new GPScoordinates("10�-5'0,0\"","-190�0'0,0\"");
 	}
 	
 	@Test (expected = InvalidCoordinatesException.class)
 	public void testGPScoordinatesStringString_invalidCoordinates_negative_secondss() throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException {
-		GPScoordinates gps = new GPScoordinates("10°0'-3,0","-190°0'0,0");
+		GPScoordinates gps = new GPScoordinates("10�0'-3,0\"","-190�0'0,0\"");
 	}
 
 	///Now let's test the basic methods (getters and object methods)
@@ -188,7 +188,7 @@ public class GPScoordinatesTest {
 			GPScoordinates gps1 = new GPScoordinates(10,10);
 			GPScoordinates gps2 = new GPScoordinates(10,10);		
 			GPScoordinates gps3 = new GPScoordinates(-10,-10);
-			GPScoordinates gps4 = new GPScoordinates("10°0'0,0","10°0'0,0");
+			GPScoordinates gps4 = new GPScoordinates("10�0'0,0\"","10�0'0,0\"");
 			GPScoordinates gps5 = new GPScoordinates(0,180);
 			GPScoordinates gps6 = new GPScoordinates(0,-180);
 			assertTrue("Test de equals dans un cas d'égalité avec constructeur numérique", gps1.equals(gps2));
