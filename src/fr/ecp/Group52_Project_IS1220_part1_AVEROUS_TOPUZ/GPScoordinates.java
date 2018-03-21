@@ -46,6 +46,9 @@ public class GPScoordinates {
 			catch(InvalidCoordinatesException e) {
 				
 			}	
+			catch(OutOfBoundsException e) {
+				
+			}
 		}
 	}	
 	
@@ -56,19 +59,19 @@ public class GPScoordinates {
 	 * @param latitude
 	 * @param longitude
 	 */
-	public GPScoordinates(double latitude, double longitude) {
-		double c=latitude, d = longitude;
-		c = c%360;
+	public GPScoordinates(double latitude, double longitude) throws OutOfBoundsException {
+		double d = longitude;
 		d = d%360;
-		latitude = latitude%180;
 		longitude = longitude%180;
-		if(c>180 && c<360) {latitude-=180;}
-		else if(c<-180 && c>-360) {latitude+=180;}
-		if(d>180 && d<360) {longitude-=180;}
-		else if(d<-180 && d>-360) {longitude+=180;}
 		
-		this.latitude=latitude; 
-		this.longitude=longitude; 
+		if(latitude>90 || latitude<-90) {throw new OutOfBoundsException();}
+		else {
+			if(d>180 && d<360) {longitude-=180;}
+			else if(d<-180 && d>-360) {longitude+=180;}
+			
+			this.latitude=latitude; 
+			this.longitude=longitude; 
+		}
 	}
 	
 	//Autres méthodes
@@ -159,7 +162,7 @@ public class GPScoordinates {
 	 * @param latDMS	a String array, containing degrees, minutes and seconds for latitude
 	 * @return 	a double array, containing latitude's degrees, minutes and seconds.	
 	 */
-	protected static double[] moduloLatitude(String[] latDMS) throws InvalidCoordinatesException {
+	protected static double[] moduloLatitude(String[] latDMS) throws InvalidCoordinatesException, OutOfBoundsException {
 		
 		double latD, latM, latS;
 		latD = Double.parseDouble(latDMS[0]); 
@@ -178,15 +181,13 @@ public class GPScoordinates {
 				latM-=60;
 				latD++;
 			}
-			latD = latD%180;
-			if(latD>90 && latD<180) {latD = 180-latD;}
-			else if(latD<-90 && latD>-180) {latD = -180+latD;}
-			
-			double[] result = {latD, latM, latS};
-			return result;
+			if(latD>90 || latD<-90) {throw new OutOfBoundsException();}
+			else {				
+				double[] result = {latD, latM, latS};
+				return result;
+			}	
 		}
 	}
-	
 	
 	//Mise en place des getters
 	/**
@@ -228,8 +229,5 @@ public class GPScoordinates {
 	public int hashCode() {
 		return (int) (41*(41+this.longitude+this.latitude));
 	}
-
-	
-	
 	
 }

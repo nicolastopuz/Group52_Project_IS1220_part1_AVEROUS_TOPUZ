@@ -22,22 +22,22 @@ public class GPScoordinatesTest {
 	
 
 
-	@Test (expected = OutOfBoundException.class)
+	@Test (expected = OutOfBoundsException.class)
 	public void testGPScoordinatesDoubleDouble_exception_on_latitude_top() {
 		GPScoordinates gps = new GPScoordinates(91, 10);
 	}
 	
-	@Test (expected = OutOfBoundException.class)
+	@Test (expected = OutOfBoundsException.class)
 	public void testGPScoordinatesDoubleDouble_exception_on_latitude_down() {
 		GPScoordinates gps = new GPScoordinates(-91, 10);
 	}
 	
-	@Test (expected = OutOfBoundException.class)
+	@Test (expected = OutOfBoundsException.class)
 	public void testGPScoordinatesDoubleDouble_exception_on_longitudee_top() {
 		GPScoordinates gps = new GPScoordinates(10, 181);
 	}
 	
-	@Test (expected = OutOfBoundException.class)
+	@Test (expected = OutOfBoundsException.class)
 	public void testGPScoordinatesDoubleDouble_exception_on_longitude_down() {
 		GPScoordinates gps = new GPScoordinates(10, -181);
 	}
@@ -59,17 +59,17 @@ public class GPScoordinatesTest {
 
 	
 
-	@Test (expected = WrongFormatException.class)
+	@Test (expected = BadCoordinatesSyntaxException.class)
 	public void testGPScoordinatesStringString_wrongStrignFormat_tooShort() {
 		GPScoordinates gps = new GPScoordinates("-10°","-15°0'0,0");
 	}
 	
-	@Test (expected = WrongFormatException.class)
+	@Test (expected = BadCoordinatesSyntaxException.class)
 	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong1() {
 		GPScoordinates gps = new GPScoordinates("-10°75'0,0","-15°0'0,0");
 	}
 	
-	@Test (expected = WrongFormatException.class)
+	@Test (expected = BadCoordinatesSyntaxException.class)
 	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong2() {
 		GPScoordinates gps = new GPScoordinates("-10°0'72,0","-15°0'0,0");
 	}
