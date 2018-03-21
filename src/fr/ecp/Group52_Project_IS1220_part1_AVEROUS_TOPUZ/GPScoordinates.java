@@ -221,7 +221,11 @@ public class GPScoordinates {
 	
 	@Override
 	public int hashCode() {
-		return (int) (41*(41+this.longitude+this.latitude));
+		double a = this.longitude;
+		double b = this.latitude;
+		// Pour garantir l'unicité du hashcode à partir de la latitude et longitude,
+		// on utilise une bijection de NxN dans N (fonction de pairage de Cantor)
+		return (int) (41*(41+(a+b)*(a+b+1)/2+b)); 
 	}
 	
 }
