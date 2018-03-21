@@ -3,15 +3,15 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 /**
  * The JUnit test class testing the GPScoordinates class
  * @see GPScoordinates
- * @see OutOfBoundException
+ * @see OutOfBoundsException
  * @see BadCoordinatesSyntaxException
  * 
  * @author Pierre Averous
  * @author Nicolas Topuz
  * @since 1.0
  */
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -34,50 +34,30 @@ public class GPScoordinatesTest {
 			assertTrue("Test du constructeur avec les doubles négatif et positif", gps3 instanceof GPScoordinates && gps3.getLatitude()==-10 && gps3.getLongitude()==10);
 			gps4 = new GPScoordinates(-10, -10);
 			assertTrue("Test du constructeur avec les doubles négatifs", gps4 instanceof GPScoordinates && gps4.getLatitude()==-10 && gps4.getLongitude()==-10);
-		} catch (OutOfBoundException e) {
+		} catch (OutOfBoundsException e) {
 			e.printStackTrace();
 		}	
 	}
 	
 
 
-<<<<<<< HEAD
 	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesDoubleDouble_exception_on_latitude_top() {
+	public void testGPScoordinatesDoubleDouble_exception_on_latitude_top() throws OutOfBoundsException {
 		GPScoordinates gps = new GPScoordinates(91, 10);
 	}
 	
 	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesDoubleDouble_exception_on_latitude_down() {
+	public void testGPScoordinatesDoubleDouble_exception_on_latitude_down() throws OutOfBoundsException {
 		GPScoordinates gps = new GPScoordinates(-91, 10);
 	}
 	
 	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesDoubleDouble_exception_on_longitudee_top() {
+	public void testGPScoordinatesDoubleDouble_exception_on_longitudee_top() throws OutOfBoundsException {
 		GPScoordinates gps = new GPScoordinates(10, 181);
 	}
 	
 	@Test (expected = OutOfBoundsException.class)
-	public void testGPScoordinatesDoubleDouble_exception_on_longitude_down() {
-=======
-	@Test (expected = OutOfBoundException.class)
-	public void testGPScoordinatesDoubleDouble_exception_on_latitude_top() throws OutOfBoundException {
-		GPScoordinates gps = new GPScoordinates(91, 10);
-	}
-	
-	@Test (expected = OutOfBoundException.class)
-	public void testGPScoordinatesDoubleDouble_exception_on_latitude_down() throws OutOfBoundException {
-		GPScoordinates gps = new GPScoordinates(-91, 10);
-	}
-	
-	@Test (expected = OutOfBoundException.class)
-	public void testGPScoordinatesDoubleDouble_exception_on_longitudee_top() throws OutOfBoundException {
-		GPScoordinates gps = new GPScoordinates(10, 181);
-	}
-	
-	@Test (expected = OutOfBoundException.class)
-	public void testGPScoordinatesDoubleDouble_exception_on_longitude_down() throws OutOfBoundException {
->>>>>>> a5173e94f1c5158100b5fa8bd8a94895ca7d535c
+	public void testGPScoordinatesDoubleDouble_exception_on_longitude_down() throws OutOfBoundsException {
 		GPScoordinates gps = new GPScoordinates(10, -181);
 	}
 
@@ -100,60 +80,47 @@ public class GPScoordinatesTest {
 			assertTrue("Test du constructeur avec les String positifs et positifs", gps4 instanceof GPScoordinates && gps4.latitude==-10 && gps4.getLongitude()==-15 );
 		} catch (BadCoordinatesSyntaxException e) {
 			e.printStackTrace();
-		} catch (OutOfBoundException e) {
+		} catch (OutOfBoundsException e) {
+			e.printStackTrace();
+		} catch (InvalidCoordinatesException e) {
 			e.printStackTrace();
 		}
 	}
 
 
-<<<<<<< HEAD
-	
 
 	@Test (expected = BadCoordinatesSyntaxException.class)
-	public void testGPScoordinatesStringString_wrongStrignFormat_tooShort() {
-		GPScoordinates gps = new GPScoordinates("-10°","-15°0'0,0");
-	}
-	
-	@Test (expected = BadCoordinatesSyntaxException.class)
-	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong1() {
-=======
-	@Test (expected = BadCoordinatesSyntaxException.class)
-	public void testGPScoordinatesStringString_wrongStrignFormat_tooShort() throws BadCoordinatesSyntaxException, OutOfBoundException {
+	public void testGPScoordinatesStringString_wrongStrignFormat_tooShort() throws BadCoordinatesSyntaxException, OutOfBoundsException {
 			GPScoordinates gps = new GPScoordinates("-10°","-15°0'0,0");
 	}
 	
 	@Test (expected = BadCoordinatesSyntaxException.class)
-	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong1() throws BadCoordinatesSyntaxException, OutOfBoundException {
->>>>>>> a5173e94f1c5158100b5fa8bd8a94895ca7d535c
+	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong1() throws BadCoordinatesSyntaxException, OutOfBoundsException {
 		GPScoordinates gps = new GPScoordinates("-10°75'0,0","-15°0'0,0");
 	}
 	
 	@Test (expected = BadCoordinatesSyntaxException.class)
-<<<<<<< HEAD
-	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong2() {
-=======
-	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong2() throws BadCoordinatesSyntaxException, OutOfBoundException {
->>>>>>> a5173e94f1c5158100b5fa8bd8a94895ca7d535c
+	public void testGPScoordinatesStringString_wrongStrignFormat_tooLong2() throws BadCoordinatesSyntaxException, OutOfBoundsException {
 		GPScoordinates gps = new GPScoordinates("-10°0'72,0","-15°0'0,0");
 	}
 	
-	@Test (expected = OutOfBoundException.class)
-	public void testGPScoordinatesStringString_out_of_bond_latitude_top() throws BadCoordinatesSyntaxException, OutOfBoundException {
+	@Test (expected = OutOfBoundsException.class)
+	public void testGPScoordinatesStringString_out_of_bond_latitude_top() throws BadCoordinatesSyntaxException, OutOfBoundsException {
 		GPScoordinates gps = new GPScoordinates("100°0'0,0","-15°0'0,0");
 	}
 	
-	@Test (expected = OutOfBoundException.class)
-	public void testGPScoordinatesStringString_out_of_bond_latitude_down() throws BadCoordinatesSyntaxException, OutOfBoundException {
+	@Test (expected = OutOfBoundsException.class)
+	public void testGPScoordinatesStringString_out_of_bond_latitude_down() throws BadCoordinatesSyntaxException, OutOfBoundsException {
 		GPScoordinates gps = new GPScoordinates("-100°0'0,0","-15°0'0,0");
 	}
 	
-	@Test (expected = OutOfBoundException.class)
-	public void testGPScoordinatesStringString_out_of_bond_longitude_top() throws BadCoordinatesSyntaxException, OutOfBoundException {
+	@Test (expected = OutOfBoundsException.class)
+	public void testGPScoordinatesStringString_out_of_bond_longitude_top() throws BadCoordinatesSyntaxException, OutOfBoundsException {
 		GPScoordinates gps = new GPScoordinates("10°0'0,0","190°0'0,0");
 	}
 
-	@Test (expected = OutOfBoundException.class)
-	public void testGPScoordinatesStringString_out_of_bond_longitude_down() throws BadCoordinatesSyntaxException, OutOfBoundException {
+	@Test (expected = OutOfBoundsException.class)
+	public void testGPScoordinatesStringString_out_of_bond_longitude_down() throws BadCoordinatesSyntaxException, OutOfBoundsException {
 		GPScoordinates gps = new GPScoordinates("10°0'0,0","-190°0'0,0");
 	}
 
@@ -172,7 +139,7 @@ public class GPScoordinatesTest {
 			assertTrue("Test de getLatitude pour valeur min", gps3.getLatitude()==-90);
 			assertTrue("Test de getLatitude pour valeur quelconque positive", gps4.getLatitude()==33);
 			assertTrue("Test de getLatitude pour valeur quelconque negative", gps5.getLatitude()==-66);
-		} catch(OutOfBoundException e) {
+		} catch(OutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
@@ -190,7 +157,7 @@ public class GPScoordinatesTest {
 			assertTrue("Test de getLongitude pour valeur min", gps3.getLongitude()==-180);
 			assertTrue("Test de getLongitude pour valeur quelconque positive", gps4.getLongitude()==111);
 			assertTrue("Test de getLongitude pour valeur quelconque negative", gps5.getLongitude()==-45);	
-		} catch(OutOfBoundException e) {
+		} catch(OutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
@@ -200,7 +167,7 @@ public class GPScoordinatesTest {
 		try {
 			GPScoordinates gps1 = new GPScoordinates(0,0);
 			assertTrue("Test de la méthode ToString", gps1.toString().equals("(0,0)"));
-		} catch(OutOfBoundException e) {
+		} catch(OutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
@@ -219,7 +186,7 @@ public class GPScoordinatesTest {
 			assertTrue("Test de equals dans un cas d'égalité avec constructeur String", gps1.equals(gps4));
 			assertFalse("Test de equals dans un cas d'inégalité avec un objet autre", gps1.equals(12));
 			assertTrue("Test de equals : vérification du modulo", gps5.equals(gps6));
-		} catch(OutOfBoundException e) {
+		} catch(OutOfBoundsException e) {
 			e.printStackTrace();
 		} catch(BadCoordinatesSyntaxException e) {
 			e.printStackTrace();
@@ -232,7 +199,7 @@ public class GPScoordinatesTest {
 			GPScoordinates gps1 = new GPScoordinates(0,0);
 			GPScoordinates gps2 = new GPScoordinates(0,180);	
 			assertTrue("Test de la méthode hashCode",gps1.hashCode()!=gps2.hashCode());
-		} catch(OutOfBoundException e) {
+		} catch(OutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
@@ -265,7 +232,7 @@ public class GPScoordinatesTest {
 			double b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 			double distance = 6371 * b;
 			assertTrue("Distance complexe entre deux points aléatoires", gps6.distanceTo(gps7)==distance);
-		} catch (OutOfBoundException e) {
+		} catch (OutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
@@ -293,7 +260,7 @@ public class GPScoordinatesTest {
 			double b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 			double distance = 6371 * b;
 			assertTrue("Test distance complexe entre deux points aléatoires", GPScoordinates.distanceAB(gps4, gps5)==distance);
-		} catch(OutOfBoundException e) {
+		} catch(OutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}

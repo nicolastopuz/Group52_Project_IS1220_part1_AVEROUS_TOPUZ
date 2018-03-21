@@ -25,7 +25,7 @@ public class GPScoordinates {
 	 * @param latitudeDMS	as a string in DMS format (DD°MM'SS,SSS").
 	 * @param longitudeDMS	as a string in DMS format (DD°MM'SS,SSS").
 	 */
-	public GPScoordinates(String latitudeDMS, String longitudeDMS) throws BadCoordinatesSyntaxException {
+	public GPScoordinates(String latitudeDMS, String longitudeDMS) throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException{
 		if(!latitudeDMS.contains("°") || !latitudeDMS.contains("'") || !latitudeDMS.contains("\"")) {
 			throw new BadCoordinatesSyntaxException();
 		}
@@ -37,18 +37,10 @@ public class GPScoordinates {
 			double[] modLon;
 			String[] latDMS = latitudeDMS.split("°|'|\"");
 			String[] lonDMS = longitudeDMS.split("°|'|\"");
-			try {
-				modLat = moduloLatitude(latDMS);
-				modLon = moduloLongitude(lonDMS);
-				this.latitude=modLat[0] + (modLat[1]/60) + (modLat[2]/3600); 
-				this.longitude=modLon[0] + (modLon[1]/60) + (modLon[2]/3600); 
-			}
-			catch(InvalidCoordinatesException e) {
-				
-			}	
-			catch(OutOfBoundsException e) {
-				
-			}
+			modLat = moduloLatitude(latDMS);
+			modLon = moduloLongitude(lonDMS);
+			this.latitude=modLat[0] + (modLat[1]/60) + (modLat[2]/3600); 
+			this.longitude=modLon[0] + (modLon[1]/60) + (modLon[2]/3600); 
 		}
 	}	
 	
