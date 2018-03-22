@@ -54,6 +54,7 @@ public abstract class Card {
 	public Card(User user) {
 		super();
 		this.user=user;
+		user.setCard(this);
 	}
 	
 	/**
