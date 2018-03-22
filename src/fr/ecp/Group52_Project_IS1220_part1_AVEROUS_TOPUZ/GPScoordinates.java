@@ -17,19 +17,35 @@ public class GPScoordinates {
 	
 	//Mise en place des constructeurs
 	
+	public static void main(String[] args) {
+		
+		GPScoordinates gps1;
+		GPScoordinates gps2;
+		try {
+			gps1 = new GPScoordinates(0,180);
+			gps2 = new GPScoordinates(0,-180);
+			
+			double dist = gps1.distanceTo(gps2);
+			System.out.println(dist);
+		}
+		catch(OutOfBoundsException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Constructor for GPS coordinates, given the coordinates
 	 * in DMS format (degrees, minutes, seconds), as a string
-	 * (DDï¿½MM'SS,SSS").
+	 * (DD°MM'SS,SSS").
 	 * 
-	 * @param latitudeDMS	as a string in DMS format (DDï¿½MM'SS,SSS").
-	 * @param longitudeDMS	as a string in DMS format (DDï¿½MM'SS,SSS").
+	 * @param latitudeDMS	as a string in DMS format (DD°MM'SS,SSS").
+	 * @param longitudeDMS	as a string in DMS format (DD°MM'SS,SSS").
 	 */
 	public GPScoordinates(String latitudeDMS, String longitudeDMS) throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException{
-		if(!latitudeDMS.contains("ï¿½") || !latitudeDMS.contains("'") || !latitudeDMS.contains("\"")) {
+		if(!latitudeDMS.contains("°") || !latitudeDMS.contains("'") || !latitudeDMS.contains("\"")) {
 			throw new BadCoordinatesSyntaxException();
 		}
-		else if(!longitudeDMS.contains("ï¿½") || !longitudeDMS.contains("'") || !longitudeDMS.contains("\"")) {
+		else if(!longitudeDMS.contains("°") || !longitudeDMS.contains("'") || !longitudeDMS.contains("\"")) {
 			throw new BadCoordinatesSyntaxException();
 		}
 		else {
@@ -37,8 +53,8 @@ public class GPScoordinates {
 			longitudeDMS = longitudeDMS.replace(',', '.');
 			double[] modLat;
 			double[] modLon;
-			String[] latDMS = latitudeDMS.split("ï¿½|'|\"");
-			String[] lonDMS = longitudeDMS.split("ï¿½|'|\"");
+			String[] latDMS = latitudeDMS.split("°|'|\"");
+			String[] lonDMS = longitudeDMS.split("°|'|\"");
 			modLat = moduloLatitude(latDMS);
 			modLon = moduloLongitude(lonDMS);
 			this.latitude=modLat[0] + (modLat[1]/60) + (modLat[2]/3600); 
@@ -54,17 +70,12 @@ public class GPScoordinates {
 	 * @param longitude
 	 */
 	public GPScoordinates(double latitude, double longitude) throws OutOfBoundsException {
-		double d = longitude;
-		d = d%360;
-		longitude = longitude%360;
 		
 		if(latitude>90 || latitude<-90) {throw new OutOfBoundsException();}
+		else if (longitude>180 || longitude <-180) {throw new OutOfBoundsException();}
 		else {
-			if(d>180 && d<360) {longitude-=180;}
-			else if(d<-180 && d>-360) {longitude+=180;}
-			
-			this.latitude=latitude; 
-			this.longitude=longitude; 
+			this.latitude = latitude; 
+			this.longitude = longitude; 
 		}
 	}
 	
@@ -82,15 +93,17 @@ public class GPScoordinates {
 	 * @return	the distance between the 2 points, in km.
 	 */
 	public double distanceTo(GPScoordinates pointB) {
-		double latB = pointB.getLatitude();
-		double lonB = pointB.getLongitude();
+		double latB = (pointB.getLatitude()==-90 ? 90 : pointB.getLatitude());
+		double lonB = (pointB.getLongitude()==-180 ? 180 : pointB.getLongitude());
+		double latA = (this.latitude==-90 ? 90 : this.latitude);
+		double lonA = (this.longitude==-180 ? 180 : this.longitude);
 		
-		double dLat = (latB-this.latitude)*(Math.PI/180); //Angle between latitudes of points A and B, converted to radians.
-		double dLon = (lonB-this.longitude)*(Math.PI/180); //Angle between longitudes of points A and B, converted to radians.
+		double dLat = (latB-latA)*(Math.PI/180); //Angle between latitudes of points A and B, converted to radians.
+		double dLon = (lonB-lonA)*(Math.PI/180); //Angle between longitudes of points A and B, converted to radians.
 		
 		double a = 
 				Math.sin(dLat/2) * Math.sin(dLat/2) +
-				Math.cos(this.latitude*Math.PI/180) * Math.cos(latB*Math.PI/180) *
+				Math.cos(latA*Math.PI/180) * Math.cos(latB*Math.PI/180) *
 				Math.sin(dLon/2) * Math.sin(dLon/2)
 				;
 		
@@ -120,7 +133,7 @@ public class GPScoordinates {
 	 * @param latDMS	a String array, containing degrees, minutes and seconds for longitude
 	 * @return 	a double array, containing longitude's degrees, minutes and seconds.	
 	 */
-	protected static double[] moduloLongitude(String[] lonDMS) throws InvalidCoordinatesException {
+	protected static double[] moduloLongitude(String[] lonDMS) throws InvalidCoordinatesException, OutOfBoundsException {
 		
 		double lonD, lonM, lonS;
 		lonD = Double.parseDouble(lonDMS[0]);
@@ -139,13 +152,11 @@ public class GPScoordinates {
 				lonM-=60;
 				lonD++;
 			}
-			double c=lonD;
-			c = c%360;
-			lonD = lonD%180;
-			if(c>180 && c<360) {lonD-=180;}
-			else if(c<-180 && c>-360) {lonD+=180;}	
-			double[] result = {lonD, lonM, lonS};
-			return result;
+			if(lonD>180 || lonD<-180) {throw new OutOfBoundsException();}
+			else {				
+				double[] result = {lonD, lonM, lonS};
+				return result;
+			}	
 		}
 	}
 	
@@ -212,7 +223,8 @@ public class GPScoordinates {
 	public boolean equals(Object obj) {
 		if (obj instanceof GPScoordinates) {
 			GPScoordinates that = (GPScoordinates) obj;
-			return (this.longitude==that.getLongitude() && this.latitude==that.getLatitude());
+			return ((this.longitude==that.getLongitude() || this.longitude==that.getLongitude()+360 || this.longitude == that.getLongitude()-360 ) 
+					&& (this.latitude==that.getLatitude() || this.latitude==that.getLatitude()+180 || this.latitude==that.getLatitude()-180));
 		}
 		else {
 			return false;
@@ -223,7 +235,7 @@ public class GPScoordinates {
 	public int hashCode() {
 		double a = this.longitude;
 		double b = this.latitude;
-		// Pour garantir l'unicitï¿½ du hashcode ï¿½ partir de la latitude et longitude,
+		// Pour garantir l'unicitï¿½ du hashcode à partir de la latitude et longitude,
 		// on utilise une bijection de Z dans N, puis une bijection de NxN dans N 
 		// (fonction de pairage de Cantor)
 		a = (a>0 ? 2*a : -2*a+1);
