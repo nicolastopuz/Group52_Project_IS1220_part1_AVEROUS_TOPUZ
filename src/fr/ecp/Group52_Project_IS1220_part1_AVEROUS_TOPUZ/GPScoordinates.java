@@ -20,16 +20,16 @@ public class GPScoordinates {
 	/**
 	 * Constructor for GPS coordinates, given the coordinates
 	 * in DMS format (degrees, minutes, seconds), as a string
-	 * (DD°MM'SS,SSS").
+	 * (DDï¿½MM'SS,SSS").
 	 * 
-	 * @param latitudeDMS	as a string in DMS format (DD°MM'SS,SSS").
-	 * @param longitudeDMS	as a string in DMS format (DD°MM'SS,SSS").
+	 * @param latitudeDMS	as a string in DMS format (DDï¿½MM'SS,SSS").
+	 * @param longitudeDMS	as a string in DMS format (DDï¿½MM'SS,SSS").
 	 */
 	public GPScoordinates(String latitudeDMS, String longitudeDMS) throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException{
-		if(!latitudeDMS.contains("°") || !latitudeDMS.contains("'") || !latitudeDMS.contains("\"")) {
+		if(!latitudeDMS.contains("ï¿½") || !latitudeDMS.contains("'") || !latitudeDMS.contains("\"")) {
 			throw new BadCoordinatesSyntaxException();
 		}
-		else if(!longitudeDMS.contains("°") || !longitudeDMS.contains("'") || !longitudeDMS.contains("\"")) {
+		else if(!longitudeDMS.contains("ï¿½") || !longitudeDMS.contains("'") || !longitudeDMS.contains("\"")) {
 			throw new BadCoordinatesSyntaxException();
 		}
 		else {
@@ -37,8 +37,8 @@ public class GPScoordinates {
 			longitudeDMS = longitudeDMS.replace(',', '.');
 			double[] modLat;
 			double[] modLon;
-			String[] latDMS = latitudeDMS.split("°|'|\"");
-			String[] lonDMS = longitudeDMS.split("°|'|\"");
+			String[] latDMS = latitudeDMS.split("ï¿½|'|\"");
+			String[] lonDMS = longitudeDMS.split("ï¿½|'|\"");
 			modLat = moduloLatitude(latDMS);
 			modLon = moduloLongitude(lonDMS);
 			this.latitude=modLat[0] + (modLat[1]/60) + (modLat[2]/3600); 
@@ -56,7 +56,7 @@ public class GPScoordinates {
 	public GPScoordinates(double latitude, double longitude) throws OutOfBoundsException {
 		double d = longitude;
 		d = d%360;
-		longitude = longitude%180;
+		longitude = longitude%360;
 		
 		if(latitude>90 || latitude<-90) {throw new OutOfBoundsException();}
 		else {
@@ -68,7 +68,7 @@ public class GPScoordinates {
 		}
 	}
 	
-	//Autres méthodes
+	//Autres mï¿½thodes
 	/**
 	 * This method calculates the distance in kilometers between
 	 * two points, given their GPS coordinates. This method uses
@@ -223,7 +223,7 @@ public class GPScoordinates {
 	public int hashCode() {
 		double a = this.longitude;
 		double b = this.latitude;
-		// Pour garantir l'unicité du hashcode à partir de la latitude et longitude,
+		// Pour garantir l'unicitï¿½ du hashcode ï¿½ partir de la latitude et longitude,
 		// on utilise une bijection de Z dans N, puis une bijection de NxN dans N 
 		// (fonction de pairage de Cantor)
 		a = (a>0 ? 2*a : -2*a+1);
