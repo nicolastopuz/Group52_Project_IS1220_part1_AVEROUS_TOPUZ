@@ -69,5 +69,12 @@ public abstract class Bike {
 		return type;
 	}
 	
-
+	@Override
+	public abstract String toString();
+	
+	@Override
+	public abstract boolean equals(Object ob);
+	
+	@Override
+	public abstract int hashCode();
 }

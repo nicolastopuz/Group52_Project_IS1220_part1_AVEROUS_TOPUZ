@@ -42,5 +42,25 @@ public class ElectricalBike extends Bike implements VisitableBikes {
 	public static double getElectricalBikeCounter() {
 		return electricalBikeCounter;
 	}
+	
+	@Override 
+	public String toString() {
+		return ("This bike is an electrical bike. It's unique numerical id is "+ this.numericalId);
+	}
+	
+	@Override 
+	public boolean equals(Object ob) {
+		if (ob instanceof ElectricalBike) {
+			ElectricalBike that  = (ElectricalBike) ob;
+			return (this.numericalId==that.getNumericalId());
+		}
+		else {
+			return false;
+		}
+	}
 
+	@Override
+	public int hashCode() {
+		return (int) (31*(31+this.numericalId)+7); 
+	}
 }
