@@ -109,6 +109,10 @@ public abstract class Card {
 		}
 	}
 	
-	
+	public static void main(String[] args) {
+		User u = new User("Pierre");
+		Card CC = CardFactory.create(u, CardTypes.NoCard);
+		System.out.println(CC.toString());
+	}
 
 }

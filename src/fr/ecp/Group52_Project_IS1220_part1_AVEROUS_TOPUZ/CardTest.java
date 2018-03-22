@@ -10,12 +10,12 @@ public class CardTest {
 	
 	@Test
 	public void testHashCode_SameCardType() {
-		assertTrue("Test de la fonction HashCode sur 2 cartes du même type", CardFactory.create(u, CardTypes.Vlibre).hashCode() == CardFactory.create(u, CardTypes.Vlibre).hashCode());
+		assertTrue("Test de la fonction HashCode sur 2 cartes du mï¿½me type", CardFactory.create(u, CardTypes.Vlibre).hashCode() != CardFactory.create(u, CardTypes.Vlibre).hashCode());
 	}	
 	
 	@Test
 	public void testHashCode_DifferentCardType() {
-		assertTrue("Test de la fonction HashCode sur 2 cartes de type différent", CardFactory.create(u, CardTypes.NoCard).hashCode() == CardFactory.create(u, CardTypes.Vmax).hashCode());
+		assertTrue("Test de la fonction HashCode sur 2 cartes de type diffï¿½rent", CardFactory.create(u, CardTypes.NoCard).hashCode() != CardFactory.create(u, CardTypes.Vmax).hashCode());
 	}
 
 	@Test
@@ -54,8 +54,11 @@ public class CardTest {
 
 	@Test
 	public void testToString() {
-		Card CC = CardFactory.create(u, CardTypes.NoCard);
-		assertTrue("Test de toString", CC.toString() == ("This card number "+CC.getCardNumber()+" is a "+CC.getType()+" and belongs to "+CC.getUser().getName()+".\n"));
+		Card CC = CardFactory.create(u, CardTypes.Vlibre);
+		assertTrue("Test of toString for actual card", CC.toString().equals("This card number "+CC.getCardNumber()+" is a "+CC.getType()+" and belongs to "+CC.getUser().getName()+".\n"));
+		Card noCard = CardFactory.create(u, CardTypes.NoCard);
+		assertTrue("Test of toString for no card", noCard.toString().equals(noCard.getUser().getName()+" doesn't have a card.\n"));
+		
 	}
 
 	@Test
@@ -63,14 +66,14 @@ public class CardTest {
 		Card c1 = CardFactory.create(u, CardTypes.NoCard);
 		Card c2 = CardFactory.create(u, CardTypes.Vlibre);
 		Card c3 = CardFactory.create(u, CardTypes.Vmax);
-		Card c4 = CardFactory.create(u, CardTypes.NoCard);
+		Card c4 = CardFactory.create(u, CardTypes.Vlibre);
 		assertTrue("Test de equals on NoCard & Vlibre", !c1.equals(c2));
 		assertTrue("Test de equals on NoCard & Vmax", !c1.equals(c3));
 		assertTrue("Test de equals on Vmax & Vlibre", !c3.equals(c2));
-		assertTrue("Test de equals on same type but different object", !c1.equals(c4));
+		assertTrue("Test de equals on same type but different object", !c2.equals(c4));
 		
-		assertTrue("Test de la réflexivité de la fonction", c1.equals(c2) == c2.equals(c1));
-		assertTrue("Test d'une égalité", c1.equals(c1));
+		assertTrue("Test de la rï¿½flexivitï¿½ de la fonction", c1.equals(c2) == c2.equals(c1));
+		assertTrue("Test d'une ï¿½galitï¿½", c1.equals(c1));
 	}
 
 }
