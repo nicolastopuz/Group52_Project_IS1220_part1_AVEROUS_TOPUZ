@@ -25,6 +25,7 @@
     <ownedAttribute xmi:type="uml:Property" xmi:id="_z75pgCLzEeicavOwGCk0Yg" name="Bikes" visibility="protected">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EEList"/>
     </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_96BmkC4XEeiQBpJjSWnpOA" name="BikeFactory" visibility="protected" type="_3pkKkC4WEeiQBpJjSWnpOA"/>
     <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_rYaF8CFoEeis-Kxct5-57Q" client="_SbWdYCFmEeis-Kxct5-57Q" supplier="_UQ2UgCFoEeis-Kxct5-57Q" contract="_UQ2UgCFoEeis-Kxct5-57Q"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_IlTv4CFnEeis-Kxct5-57Q" name="Station">
@@ -59,7 +60,6 @@
     <ownedAttribute xmi:type="uml:Property" xmi:id="_vXhVoCLCEeicavOwGCk0Yg" name="Position" visibility="protected" type="_vnNM4CLBEeicavOwGCk0Yg"/>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_U-AUICLWEeicavOwGCk0Yg" name="Card" visibility="protected" type="_TB-DQCLsEeicavOwGCk0Yg"/>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_l7ikwCMBEeicavOwGCk0Yg" name="movingBehavior" visibility="protected" type="_iwygACMBEeicavOwGCk0Yg"/>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_iVgvcCh2Eeims7hGSju0dQ" name="CardFactory" visibility="protected" type="_qvFe8Ch1Eeims7hGSju0dQ"/>
     <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_xTNQcCFoEeis-Kxct5-57Q" client="_LBzAcCFnEeis-Kxct5-57Q" supplier="_UQ2UgCFoEeis-Kxct5-57Q" contract="_UQ2UgCFoEeis-Kxct5-57Q"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_PFLWUCFnEeis-Kxct5-57Q" name="Bike" isAbstract="true">
@@ -360,6 +360,10 @@
     </eAnnotations>
     <ownedEnd xmi:type="uml:Property" xmi:id="_v9ADYCh3Eeims7hGSju0dQ" name="cardabstractfactory" type="_qvFe8Ch1Eeims7hGSju0dQ" association="_v858wCh3Eeims7hGSju0dQ"/>
   </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_3pkKkC4WEeiQBpJjSWnpOA" name="BikeFactory"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_-KdEsC4WEeiQBpJjSWnpOA" client="_kacXgCLXEeicavOwGCk0Yg" supplier="_3pkKkC4WEeiQBpJjSWnpOA"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_-6R_IC4WEeiQBpJjSWnpOA" client="_ekw9kCLXEeicavOwGCk0Yg" supplier="_3pkKkC4WEeiQBpJjSWnpOA"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_7qcwoC4XEeiQBpJjSWnpOA" client="_3pkKkC4WEeiQBpJjSWnpOA" supplier="_SbWdYCFmEeis-Kxct5-57Q"/>
   <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_gBEFICFmEeis-Kxct5-57Q">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_gBF6UCFmEeis-Kxct5-57Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
       <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
