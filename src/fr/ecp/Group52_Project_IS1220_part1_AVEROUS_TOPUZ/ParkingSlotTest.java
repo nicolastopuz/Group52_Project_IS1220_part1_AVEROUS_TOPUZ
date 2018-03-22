@@ -8,13 +8,16 @@ public class ParkingSlotTest {
 
 	@Test
 	public void testHashCode() {
-		GPScoordinates location=new GPScoordinates(40d, 50d);
-		Station station = new Station(10, location);
-		ParkingSlot ps_1 = new ParkingSlot(station);
-		ParkingSlot ps_2 = new ParkingSlot(station);
-		ParkingSlot ps_3 = new ParkingSlot(station);
-		ParkingSlot ps_4 = new ParkingSlot(station);
-		assertTrue("test pour le hashcode", ps_1.hashCode()!=ps_2.hashCode() && ps_1.hashCode()!=ps_3.hashCode() && ps_1.hashCode()!=ps_4.hashCode() && ps_2.hashCode()!=ps_3.hashCode() && ps_2.hashCode()!=ps_4.hashCode() && ps_3.hashCode()!=ps_4.hashCode());
+		GPScoordinates location;
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);
+			ParkingSlot ps_2 = new ParkingSlot(station);
+			assertTrue("test pour le hashcode", ps_1.hashCode()!=ps_2.hashCode());
+		} catch (OutOfBoundsException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
