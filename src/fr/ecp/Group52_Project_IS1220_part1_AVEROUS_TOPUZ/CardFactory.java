@@ -3,8 +3,6 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 /**
  * The CardFactory class implements a simple Factory pattern in order to allow 
  * the creation of cards in an easy and OPEN-CLOSE way
- * being a user. A user is just someone who uses the system.
- * he is characterized by :
  * 
  * @see Card
  * @see CardTypes

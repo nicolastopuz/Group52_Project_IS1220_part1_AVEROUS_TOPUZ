@@ -77,6 +77,7 @@ public class Station {
 		Station.stationCounter++;
 		this.numberOfSlots = numberofslots;
 		this.location = location;
+		this.parkingSlots = new ArrayList<ParkingSlot>();
 		for (int i = 0; i < numberofslots; i++) {
 			this.parkingSlots.add(new ParkingSlot(this));			
 		}
