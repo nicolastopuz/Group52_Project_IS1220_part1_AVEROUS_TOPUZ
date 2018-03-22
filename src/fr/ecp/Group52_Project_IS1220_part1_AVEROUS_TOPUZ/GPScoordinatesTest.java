@@ -159,7 +159,7 @@ public class GPScoordinatesTest {
 		GPScoordinates gps1;
 		try {
 			gps1 = new GPScoordinates(0,0);
-			assertTrue("Test de la methode ToString", gps1.toString().equals("(0,0)"));
+			assertTrue("Test de la methode ToString", gps1.toString().equals("(0.0,0.0)"));
 		} catch(OutOfBoundsException e) {
 			e.printStackTrace();
 		}
