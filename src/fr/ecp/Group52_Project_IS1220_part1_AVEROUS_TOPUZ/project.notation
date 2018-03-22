@@ -1560,10 +1560,12 @@
   </edges>
   <edges xmi:type="notation:Connector" xmi:id="_H-rYICLwEeicavOwGCk0Yg" type="Abstraction_Edge" source="__ZXIICLvEeicavOwGCk0Yg" target="_TB_RYCLsEeicavOwGCk0Yg">
     <children xmi:type="notation:DecorationNode" xmi:id="_H-rYIyLwEeicavOwGCk0Yg" type="Abstraction_NameLabel">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_H-r_MCLwEeicavOwGCk0Yg" y="40"/>
+      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_vbi8EC4dEeihWcBEOwlu-w" name="IS_UPDATED_POSITION" booleanValue="true"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_H-r_MCLwEeicavOwGCk0Yg" x="-1" y="40"/>
     </children>
     <children xmi:type="notation:DecorationNode" xmi:id="_H-r_MSLwEeicavOwGCk0Yg" type="Abstraction_StereotypeLabel">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_H-r_MiLwEeicavOwGCk0Yg" y="60"/>
+      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_vd4eYC4dEeihWcBEOwlu-w" name="IS_UPDATED_POSITION" booleanValue="true"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_H-r_MiLwEeicavOwGCk0Yg" x="-1" y="60"/>
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="_H-rYISLwEeicavOwGCk0Yg"/>
     <element xmi:type="uml:Abstraction" href="project.uml#_H-qKACLwEeicavOwGCk0Yg"/>
@@ -1599,10 +1601,12 @@
   </edges>
   <edges xmi:type="notation:Connector" xmi:id="_N9MlACLwEeicavOwGCk0Yg" type="InterfaceRealization_Edge" source="__ZXIICLvEeicavOwGCk0Yg" target="_FYIgkCLYEeicavOwGCk0Yg">
     <children xmi:type="notation:DecorationNode" xmi:id="_N9MlAyLwEeicavOwGCk0Yg" type="InterfaceRealization_StereotypeLabel">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_N9MlBCLwEeicavOwGCk0Yg" y="40"/>
+      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_vfnjwC4dEeihWcBEOwlu-w" name="IS_UPDATED_POSITION" booleanValue="true"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_N9MlBCLwEeicavOwGCk0Yg" x="-1" y="38"/>
     </children>
     <children xmi:type="notation:DecorationNode" xmi:id="_N9MlBSLwEeicavOwGCk0Yg" type="InterfaceRealization_NameLabel">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_N9MlBiLwEeicavOwGCk0Yg" y="60"/>
+      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_vhAq4C4dEeihWcBEOwlu-w" name="IS_UPDATED_POSITION" booleanValue="true"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_N9MlBiLwEeicavOwGCk0Yg" x="-1" y="58"/>
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="_N9MlASLwEeicavOwGCk0Yg"/>
     <element xmi:type="uml:InterfaceRealization" href="project.uml#_N8rAkCLwEeicavOwGCk0Yg"/>

@@ -203,6 +203,15 @@ public class Station {
 	}
 	
 	/**
+	 * Getter for the number of slots that exist in the station.
+	 * 
+	 * @return	the number of slots in the station as an int.
+	 */
+	public int getNumberOfSlots() {
+		return this.numberOfSlots;
+	}
+	
+	/**
 	 * Getter for the coordinates of the station.
 	 * 
 	 * @return	The coordinates of the station.

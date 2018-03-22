@@ -219,10 +219,10 @@ public class User implements VisitableItems {
 	@Override
 	public String toString() {
 		if (this.card.getType()==CardTypes.NoCard) {
-			return (this.name+" is user number "+this.numericalId+"and hasn't got a card .\n");
+			return (this.name+" is user number "+this.numericalId+" and hasn't got a card.\n");
 		}
 		else {
-			return (this.name+" is user number "+this.numericalId+"and has a "+this.card.getType()+" card.\n");
+			return (this.name+" is user number "+this.numericalId+" and has a "+this.card.getType()+" card.\n");
 		}
 	}
 	
