@@ -2,9 +2,11 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class ParkingSlotTest {
+	
 
 	@Test
 	public void testHashCode() {
@@ -14,18 +16,25 @@ public class ParkingSlotTest {
 			Station station = new Station(10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);
 			ParkingSlot ps_2 = new ParkingSlot(station);
-			assertTrue("test pour le hashcode", ps_1.hashCode()!=ps_2.hashCode());
+			assertTrue("Test pour le hashcode", ps_1.hashCode()!=ps_2.hashCode());
 		} catch (OutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
 
-	/**
+	
 	@Test
 	public void testParkingSlot() {
-		fail("Not yet implemented");
-	}
-
+		GPScoordinates location;
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);
+			assertTrue("Test du constructeur", ps_1 instanceof ParkingSlot && ps_1.getState()==ParkingSlotState.free && ps_1.getStation()==station && ps_1.getParkingSlotID()==10 && ps_1.getStation().getParkingCounter()==11);
+		} catch (OutOfBoundsException e) {
+			e.printStackTrace();
+		}	}
+/**
 	@Test
 	public void testIsFree() {
 		fail("Not yet implemented");
