@@ -242,5 +242,4 @@ public class User implements VisitableItems {
 		return (int) (41*(41+this.name.hashCode())+this.numericalId);
 	}
 
-
 }

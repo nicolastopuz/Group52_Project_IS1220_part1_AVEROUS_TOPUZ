@@ -17,22 +17,6 @@ public class GPScoordinates {
 	
 	//Mise en place des constructeurs
 	
-	public static void main(String[] args) {
-		
-		GPScoordinates gps1;
-		GPScoordinates gps2;
-		try {
-			gps1 = new GPScoordinates(0,180);
-			gps2 = new GPScoordinates(0,-180);
-			
-			double dist = gps1.distanceTo(gps2);
-			System.out.println(dist);
-		}
-		catch(OutOfBoundsException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	/**
 	 * Constructor for GPS coordinates, given the coordinates
 	 * in DMS format (degrees, minutes, seconds), as a string
@@ -106,9 +90,9 @@ public class GPScoordinates {
 				Math.cos(latA*Math.PI/180) * Math.cos(latB*Math.PI/180) *
 				Math.sin(dLon/2) * Math.sin(dLon/2)
 				;
-		
 		double b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 		double distance = R * b;
+		
 		return distance;
 	}
 	
