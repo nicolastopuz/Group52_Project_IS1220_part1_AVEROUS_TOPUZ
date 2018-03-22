@@ -45,7 +45,7 @@ public class ElectricalBike extends Bike implements VisitableBikes {
 	
 	@Override 
 	public String toString() {
-		return ("This bike is an electrical bike. It's unique numerical id is "+ this.numericalId);
+		return ("This bike is an electrical bike. Its unique numerical id is "+ this.numericalId);
 	}
 	
 	@Override 

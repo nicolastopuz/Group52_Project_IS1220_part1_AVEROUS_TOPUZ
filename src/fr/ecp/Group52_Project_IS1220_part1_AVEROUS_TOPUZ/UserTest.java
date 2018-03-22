@@ -126,8 +126,8 @@ public class UserTest {
 	public void testToString() {
 		User u1 = new User("Lotus");
 		User u2 = new User("Ajax", CardTypes.Vlibre);
-		assertTrue("Test du toString pour un user sans carte", ("Lotus is user number "+u1.getNumericalId()+ " and hasn't got a card.\n") == u1.toString());
-		assertTrue("Test du toString pour un user avec une carte Vlibre", ("Ajax is user number "+u2.getNumericalId()+" and has a Vlibre card.\n")==u2.toString());
+		assertTrue("Test du toString pour un user sans carte", ("Lotus is user number "+u1.getNumericalId()+ " and hasn't got a card.\n").equals(u1.toString()));
+		assertTrue("Test du toString pour un user avec une carte Vlibre", ("Ajax is user number "+u2.getNumericalId()+" and has a Vlibre card.\n").equals(u2.toString()));
 	}
 
 	@Test
