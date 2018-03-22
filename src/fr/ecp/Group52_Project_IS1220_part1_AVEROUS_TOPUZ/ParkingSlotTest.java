@@ -34,32 +34,86 @@ public class ParkingSlotTest {
 		} catch (OutOfBoundsException e) {
 			e.printStackTrace();
 		}	}
-/**
+
 	@Test
 	public void testIsFree() {
-		fail("Not yet implemented");
+		GPScoordinates location;
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);	
+			assertTrue("Test de isFree dans le cas positif", ps_1.isFree());
+			ps_1.setState(ParkingSlotState.outOfOrder);
+			ParkingSlot ps_2 = new ParkingSlot(station);
+			ps_2.setState(ParkingSlotState.taken);
+			assertFalse("Test de isFree dans les cas négatifs", ps_1.isFree() | ps_2.isFree());
+		} catch (OutOfBoundsException e){
+			e.printStackTrace();
+		}
 	}
 
+	
 	@Test
 	public void testIsBike() {
-		fail("Not yet implemented");
+		GPScoordinates location;
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);	
+			ParkingSlot ps_2 = new ParkingSlot(station);
+			ps_1.setState(ParkingSlotState.outOfOrder);
+			assertFalse("Test de isBike dans les cas négatifs", ps_1.isBike()|ps_2.isBike());
+			ps_1.setState(ParkingSlotState.taken);
+			assertTrue("Test de isBike dans le cas positif", ps_1.isBike());
+		} catch (OutOfBoundsException e){
+			e.printStackTrace();
+		}	
 	}
 
+	
 	@Test
 	public void testGetState() {
-		fail("Not yet implemented");
+		GPScoordinates location;
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);	
+			assertTrue("Test de getState pour free", ps_1.getState()==ParkingSlotState.free);
+			ps_1.setState(ParkingSlotState.outOfOrder);
+			assertTrue("Test de getState pour out of order", ps_1.getState()==ParkingSlotState.outOfOrder);
+			ps_1.setState(ParkingSlotState.taken);
+			assertTrue("Test de getState pour taken", ps_1.getState()==ParkingSlotState.taken);
+		} catch (OutOfBoundsException e){
+			e.printStackTrace();
+		}	
 	}
-
+	
 	@Test
 	public void testGetParkingSlotID() {
-		fail("Not yet implemented");
+		GPScoordinates location;
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);	
+			assertTrue("Test de getParkingSlotID ", ps_1.getParkingSlotID()==10);
+		} catch (OutOfBoundsException e){
+			e.printStackTrace();
+		}	
 	}
-
+	
 	@Test
 	public void testGetStation() {
-		fail("Not yet implemented");
+		GPScoordinates location;
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);	
+			assertTrue("Test de getStation", ps_1.getStation()==station);
+		} catch (OutOfBoundsException e){
+			e.printStackTrace();
+		}	
 	}
-
+	/**
 	@Test
 	public void testGetBike() {
 		fail("Not yet implemented");
