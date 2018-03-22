@@ -206,15 +206,5 @@ public class ParkingSlot {
 		return (int) (41*(41+this.station.hashCode())+this.parkingSlotID);
 	}
 
-	public static void main(String[] args) {
-		try {
-			GPScoordinates location = new GPScoordinates(10,20);
-			Station station = new Station(10,location);
-			System.out.println(station.getParkingCounter());
-		} catch (OutOfBoundsException e) {
-			e.printStackTrace();
-		}
-		
-	}
 	
 }

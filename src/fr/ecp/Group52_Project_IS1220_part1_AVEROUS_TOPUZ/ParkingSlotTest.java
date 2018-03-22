@@ -116,7 +116,33 @@ public class ParkingSlotTest {
 	
 	@Test
 	public void testGetBike() {
-		fail("Not yet implemented");
+		GPScoordinates location;
+		ElectricalBike elecBike = (ElectricalBike) BikeFactory.create(BikesType.Electrical);
+		MechanicalBike mechaBike = (MechanicalBike) BikeFactory.create(BikesType.Mechanical);
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);	
+			ps_1.setBike(elecBike);
+			assertTrue("Test de SetBike pour une electrical bike", ps_1.getBike()==elecBike);
+			ps_1.setBike(mechaBike);
+			assertTrue("Test de SetBike pour une mechanical bike", ps_1.getBike()==mechaBike);			
+		} catch (OutOfBoundsException | EmptySlotException e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Test (expected = EmptySlotException.class)
+	public void testGetBike_exception() throws EmptySlotException {
+		GPScoordinates location;
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);	
+			ps_1.getBike();		
+		} catch (OutOfBoundsException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -138,7 +164,20 @@ public class ParkingSlotTest {
 
 	@Test
 	public void testSetBike() {
-		fail("Not yet implemented");
+		GPScoordinates location;
+		ElectricalBike elecBike = (ElectricalBike) BikeFactory.create(BikesType.Electrical);
+		MechanicalBike mechaBike = (MechanicalBike) BikeFactory.create(BikesType.Mechanical);
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);	
+			ps_1.setBike(elecBike);
+			assertTrue("Test de SetBike pour une electrical bike", ps_1.getBike()==elecBike);
+			ps_1.setBike(mechaBike);
+			assertTrue("Test de SetBike pour une mechanical bike", ps_1.getBike()==mechaBike);			
+		} catch (OutOfBoundsException | EmptySlotException e){
+			e.printStackTrace();
+		}		
 	}
 
 	@Test
@@ -169,9 +208,9 @@ public class ParkingSlotTest {
 			ParkingSlot ps_2 = new ParkingSlot(station1);
 			Station station2 = new Station(10, location2);
 			ParkingSlot ps_3 = new ParkingSlot(station2);
-			assertTrue("Test de equals pour deux parking slots d'une même station", ps_1.equals(ps_2));
+			assertFalse("Test de equals pour deux parking slots d'une même station", ps_1.equals(ps_2));
 			assertTrue("Test de reflexivité", ps_1.equals(ps_1));
-			assertTrue("Test de equals pour deux parking slots de deux stations différents", ps_1.equals(ps_3));
+			assertFalse("Test de equals pour deux parking slots de deux stations différents", ps_1.equals(ps_3));
 		} catch (OutOfBoundsException e){
 			e.printStackTrace();
 		}	
