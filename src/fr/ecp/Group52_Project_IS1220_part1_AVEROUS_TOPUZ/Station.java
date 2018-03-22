@@ -58,6 +58,7 @@ public class Station {
 		Station.stationCounter++;
 		this.numberOfSlots = numberofslots;
 		this.location = location;
+		this.parkingSlots = new ArrayList<ParkingSlot>();
 		for (int i = 0; i < numberofslots; i++) {
 			this.parkingSlots.add(new ParkingSlot(this));			
 		}
@@ -82,7 +83,7 @@ public class Station {
 		this.isOnline = true;
 	}
 	
-	//Autres Méthodes
+	//Autres Mï¿½thodes
 	/**
 	 * Increments the parking slot counter. This method is called upon
 	 * when a parking slot is added to the station.
@@ -287,7 +288,7 @@ public class Station {
 	
 	@Override
 	public int hashCode() {
-		return (int) (41*(41+this.parkingSlots.hashCode())+this.stationID);
+		return (int) (41*(41+this.stationID));
 	}
 
 	
