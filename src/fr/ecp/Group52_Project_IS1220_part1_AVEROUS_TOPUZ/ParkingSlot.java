@@ -50,6 +50,19 @@ public class ParkingSlot {
 		this.state = ParkingSlotState.free;
 	}
 	
+	/**
+	 * A constructor for creating a ParkingSlot instance with a unique ID within a station
+	 * @param station	the station in which the parking slot is built.
+	 * @param bike		the bike stationed at the parking slot
+	 */
+	public ParkingSlot(Station station, Bike bike) {
+		this.parkingSlotID = station.getParkingCounter();
+		station.countUp();
+		this.station = station;
+		this.state = ParkingSlotState.free;
+		this.bike = bike;
+	}
+	
 	
 	//Autres M�thodes
 	
@@ -142,8 +155,9 @@ public class ParkingSlot {
 	 * 
 	 * @return The bike that is on the slot.
 	 */
-	public Bike getBike() {
-		return this.bike;
+	public Bike getBike() throws EmptySlotException {
+		if(this.bike == null) {throw new EmptySlotException();}
+		else { return this.bike;}
 	}
 	
 	
@@ -180,7 +194,7 @@ public class ParkingSlot {
 	public boolean equals(Object obj) {
 		if (obj instanceof ParkingSlot) {
 			ParkingSlot that = (ParkingSlot) obj;
-			return (this.parkingSlotID==that.getParkingSlotID() && this.station==that.getStation() && this.bike==that.getBike());
+			return (this.parkingSlotID==that.getParkingSlotID() && this.station==that.getStation());
 		}
 		else {
 			return false;
