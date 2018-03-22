@@ -198,7 +198,6 @@ public class ParkingSlot {
 			Station station = new Station(10,location);
 			System.out.println(station.getParkingCounter());
 		} catch (OutOfBoundsException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

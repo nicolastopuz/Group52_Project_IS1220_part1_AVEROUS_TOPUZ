@@ -113,7 +113,7 @@ public class ParkingSlotTest {
 			e.printStackTrace();
 		}	
 	}
-	/**
+	
 	@Test
 	public void testGetBike() {
 		fail("Not yet implemented");
@@ -121,7 +121,19 @@ public class ParkingSlotTest {
 
 	@Test
 	public void testSetState() {
-		fail("Not yet implemented");
+		GPScoordinates location;
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);	
+			assertTrue("Test de getState pour free", ps_1.getState()==ParkingSlotState.free);
+			ps_1.setState(ParkingSlotState.outOfOrder);
+			assertTrue("Test de getState pour out of order", ps_1.getState()==ParkingSlotState.outOfOrder);
+			ps_1.setState(ParkingSlotState.taken);
+			assertTrue("Test de getState pour taken", ps_1.getState()==ParkingSlotState.taken);
+		} catch (OutOfBoundsException e){
+			e.printStackTrace();
+		}	
 	}
 
 	@Test
@@ -131,12 +143,38 @@ public class ParkingSlotTest {
 
 	@Test
 	public void testToString() {
-		fail("Not yet implemented");
+		GPScoordinates location;
+		try {
+			location = new GPScoordinates(40, 50);
+			Station station = new Station(10, location);
+			ParkingSlot ps_1 = new ParkingSlot(station);	
+			String str = ("This is parking slot number " + ps_1.getParkingSlotID() + ", situated within station number " + ps_1.getStation().getStationID() +".");
+			str += "\n";
+			str += ("This parking slot is located at : "+ps_1.getStation().getLocation().toString()+".");
+			assertTrue("Test de toString", ps_1.toString().equals(str));
+		} catch (OutOfBoundsException e){
+			e.printStackTrace();
+		}	
 	}
 
 	@Test
 	public void testEqualsObject() {
-		fail("Not yet implemented");
+		GPScoordinates location1;
+		GPScoordinates location2;
+		try {
+			location1 = new GPScoordinates(40, 50);
+			location2 = new GPScoordinates(10,20);
+			Station station1 = new Station(10, location1);
+			ParkingSlot ps_1 = new ParkingSlot(station1);	
+			ParkingSlot ps_2 = new ParkingSlot(station1);
+			Station station2 = new Station(10, location2);
+			ParkingSlot ps_3 = new ParkingSlot(station2);
+			assertTrue("Test de equals pour deux parking slots d'une même station", ps_1.equals(ps_2));
+			assertTrue("Test de reflexivité", ps_1.equals(ps_1));
+			assertTrue("Test de equals pour deux parking slots de deux stations différents", ps_1.equals(ps_3));
+		} catch (OutOfBoundsException e){
+			e.printStackTrace();
+		}	
 	}
-*/
+
 }
