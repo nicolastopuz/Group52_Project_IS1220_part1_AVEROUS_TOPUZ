@@ -64,6 +64,16 @@ public class User implements VisitableItems {
 	protected Bike bike;
 	
 	/**
+	 * A boolean indicating whether the user is on a ride
+	 */
+	protected boolean onARide;
+	
+	/**
+	 * A Ride object indicating the ride
+	 */
+	protected Ride ride;
+	
+	/**
 	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
 	 * @param name A string defining the name of the user 
 	 */
@@ -72,8 +82,10 @@ public class User implements VisitableItems {
 		User.userCounter+=1;
 		this.numericalId=User.userCounter;
 		this.card=CardFactory.create(this, CardTypes.NoCard);
+		this.onARide=false;
 	}
-	
+
+
 	/**
 	 * A constructor creating a User instance with a name, a unique numericalId and a card of the type entered
 	 * @param name A string defining the name of the user 
@@ -96,10 +108,8 @@ public class User implements VisitableItems {
 			p.giveBike(this);
 		}
 		catch(EmptySlotException e) {
-			
 		}
 		catch(NoAvailableBikeException e) {
-			
 		}
 	}
 	
@@ -113,10 +123,8 @@ public class User implements VisitableItems {
 			p.acceptBike(this);
 		}
 		catch(OccupiedSlotException e) {
-			
 		}
 		catch(NoFreeSlotException e) {
-			
 		}
 	}
 	
@@ -214,6 +222,43 @@ public class User implements VisitableItems {
 	 */
 	public void setBike(Bike bike) {
 		this.bike = bike;
+	}
+	
+	/**
+	 * A getter to know whether the user is on a ride
+	 * @return onARide A boolean defining whether the user is on a ride
+	 */
+	public boolean isOnARide() {
+		return onARide;
+	}
+	
+	/**
+	 * A getter returning the ride of the user if he has one
+	 * @return ride A Ride object defining the ride the user is on.
+	 */
+	public Ride getRide() throws NoRideException{
+		if (this.isOnARide()) {
+			return ride;
+		}
+		else {
+			throw new NoRideException();
+		}
+	}
+
+	/**
+	 * A setter to set whether the user is on a ride
+	 * @param onARide a boolean indicating whether the user is on a ride
+	 */
+	public void setOnARide(boolean onARide) {
+		this.onARide = onARide;
+	}
+	
+	/**
+	 * A setter to signal that the user is on a specific ride
+	 * @param ride A Ride object defining the ride that the user is on.
+	 */
+	public void setRide(Ride ride) {
+		this.ride = ride;
 	}
 	
 	
