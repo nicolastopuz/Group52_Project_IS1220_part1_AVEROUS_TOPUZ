@@ -23,12 +23,35 @@ public class StationTest {
 
 	@Test
 	public void testStationIntGPScoordinates() {
-		fail("Not yet implemented");
+		GPScoordinates location1;
+		try {
+			location1 = new GPScoordinates(10,10);
+			Station station1 = new Station(10,location1);
+			assertTrue("Test pour constructeur à 2 paramètre", station1 instanceof Station && station1.getStationID()==1 && station1.getNumberOfSlots()==10 && station1.getLocation()==location1 && station1.getParkingSlots().size()==10);
+			for (int i=0;i<10;i++) {
+				assertTrue("Test de la génération des parkingSlots", station1.getParkingSlots().get(i) instanceof ParkingSlot && station1.getParkingSlots().get(i).getParkingSlotID()==i);
+			}
+		} catch(OutOfBoundsException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testStationIntGPScoordinatesDouble() {
-		fail("Not yet implemented");
+		GPScoordinates location1;
+		try {
+			location1 = new GPScoordinates(10,10);
+			Station station1 = new Station(10,location1,8,0,25);
+			assertTrue("Test pour constructeur à 4 paramètre", station1 instanceof Station && station1.getStationID()==1 && station1.getNumberOfSlots()==10 && station1.getLocation()==location1 && station1.getParkingSlots().size()==10);
+			for (int i=0;i<10;i++) {
+				assertTrue("Test de la génération des parkingSlots", station1.getParkingSlots().get(i) instanceof ParkingSlot && station1.getParkingSlots().get(i).getParkingSlotID()==i);
+			}
+			for (int j=0; j<8; j++) {
+				assertTrue("Vérification de la présence des Bikes", station1.getParkingSlots().get(j).isBike());
+			}
+		} catch(OutOfBoundsException e) {
+			e.printStackTrace();
+		}	
 	}
 
 	@Test
