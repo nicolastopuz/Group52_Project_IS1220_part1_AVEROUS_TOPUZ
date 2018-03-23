@@ -84,7 +84,7 @@ public class Station {
 			this.parkingSlots = new ArrayList<ParkingSlot>();
 			for (int i = 0; i < numberofslots; i++) {
 				this.parkingSlots.add(new ParkingSlot(this));
-				if(i < numberOfSlots*numberOfBikes*mechanicalBikeProportion/numberOfSlots) {
+				if(i < numberOfBikes*mechanicalBikeProportion) {
 					this.parkingSlots.get(i).setBike( BikeFactory.create(BikesType.Mechanical) );
 				}
 				else if (i < numberOfBikes*(1-mechanicalBikeProportion)) {
