@@ -1,5 +1,6 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
+import static org.junit.Assert.assertTrue;
 
 /**
  * The User class basically represents anyone using the myVelib
@@ -242,4 +243,14 @@ public class User implements VisitableItems {
 		return (int) (41*(41+this.name.hashCode())+this.numericalId);
 	}
 
+	public static void main(String[] args) {
+		GPScoordinates location1;
+		try {
+			location1 = new GPScoordinates(10,10);
+			Station station1 = new Station(10,location1);
+			System.out.println(station1.getStationID());
+		} catch(OutOfBoundsException e) {
+			e.printStackTrace();
+		}
+	}
 }
