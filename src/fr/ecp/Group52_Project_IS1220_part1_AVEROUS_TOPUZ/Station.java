@@ -50,8 +50,8 @@ public class Station {
 	/**
 	 * This method is a constructor of the Station class. 
 	 * 
-	 * @param numberofslots
-	 * @param location
+	 * @param numberofslots the number of parkingslots to create in the station, as an int.
+	 * @param location	the location of the station, as GPScoordinates.
 	 */
 	public Station(int numberofslots, GPScoordinates location) {
 		this.stationID = Station.stationCounter;
@@ -68,20 +68,31 @@ public class Station {
 	/**
 	 * This method is a constructor of the Station class. 
 	 * 
-	 * @param numberofslots
-	 * @param location
-	 * @param numberOfBikes
+	 * @param numberofslots	the number of parkingslots to create in the station, as an int.
+	 * @param location		the location of the station, as GPScoordinates.
+	 * @param numberOfBikes	the number of bikes to put on the slots of the station, as an int
+	 * @param mechanicalBikeProportion	the proportion of mechanical bikes to create, as a float between 0 and 1
 	 */
-	public Station(int numberofslots, GPScoordinates location, double numberOfBikes) {
-		this.stationID = Station.stationCounter;
-		Station.stationCounter++;
-		this.numberOfSlots = numberofslots;
-		this.location = location;
-		this.parkingSlots = new ArrayList<ParkingSlot>();
-		for (int i = 0; i < numberofslots; i++) {
-			this.parkingSlots.add(new ParkingSlot(this));			
+	public Station(int numberofslots, GPScoordinates location, int numberOfBikes, float mechanicalBikeProportion) throws MoreBikesThanSlotsException, InvalidProportionsException{
+		if(numberOfBikes>numberofslots || numberOfBikes<0) {throw new MoreBikesThanSlotsException();}
+		else if(mechanicalBikeProportion>1 || mechanicalBikeProportion<0) {throw new InvalidProportionsException();}
+		else {
+			this.stationID = Station.stationCounter;
+			Station.stationCounter++;
+			this.numberOfSlots = numberofslots;
+			this.location = location;
+			this.parkingSlots = new ArrayList<ParkingSlot>();
+			for (int i = 0; i < numberofslots; i++) {
+				this.parkingSlots.add(new ParkingSlot(this));
+				if(i < numberOfSlots*numberOfBikes*mechanicalBikeProportion/numberOfSlots) {
+					this.parkingSlots.get(i).setBike( BikeFactory.create(BikesType.Mechanical) );
+				}
+				else if (i < numberOfBikes*(1-mechanicalBikeProportion)) {
+					this.parkingSlots.get(i).setBike( BikeFactory.create(BikesType.Electrical) );	
+				}
+			}
+			this.isOnline = true;
 		}
-		this.isOnline = true;
 	}
 	
 	//Autres M�thodes
