@@ -1,6 +1,6 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
-import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
 
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.EmptySlotException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoAvailableBikeException;
@@ -81,6 +81,11 @@ public class User implements VisitableItems {
 	protected Ride ride;
 	
 	/**
+	 * An ArrayList of Rides to keep the record of all the rides performed by the user
+	 */
+	protected ArrayList<Ride> rides;
+	
+	/**
 	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
 	 * @param name A string defining the name of the user 
 	 */
@@ -90,6 +95,7 @@ public class User implements VisitableItems {
 		this.numericalId=User.userCounter;
 		this.card=CardFactory.create(this, CardTypes.NoCard);
 		this.onARide=false;
+		this.rides=new ArrayList<Ride>();
 	}
 
 
@@ -103,7 +109,11 @@ public class User implements VisitableItems {
 		User.userCounter+=1;
 		this.numericalId=User.userCounter;
 		this.card=CardFactory.create(this, type);
+		this.rides=new ArrayList<Ride>();
 	}
+
+
+
 
 	/**
 	 * Method for user to pick up a Bike at a given Station. 
@@ -266,6 +276,22 @@ public class User implements VisitableItems {
 	 */
 	public void setRide(Ride ride) {
 		this.ride = ride;
+	}
+	
+	/**
+	 * A getter to get the array list rides storing all the rides done by the user
+	 * @return rides an ArrayList storing all the rides done by the user
+	 */
+	public ArrayList<Ride> getRides() {
+		return rides;
+	}
+
+	/**
+	 * A Method to store a done ride in the ArrayLists rides
+	 * @param ride The finished ride to add to the list
+	 */
+	public void addRide(Ride ride) {
+		this.rides.add(ride);
 	}
 	
 	
