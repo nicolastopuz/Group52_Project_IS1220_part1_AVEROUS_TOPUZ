@@ -298,4 +298,10 @@ public class User implements VisitableItems {
 			e.printStackTrace();
 		}
 	}
+
+
+	@Override
+	public String accept(StatisticVisitor v) {
+		return v.visit(this);
+	}
 }

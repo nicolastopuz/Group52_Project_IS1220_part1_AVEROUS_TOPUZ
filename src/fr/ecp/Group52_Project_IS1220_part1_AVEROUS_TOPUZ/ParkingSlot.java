@@ -18,7 +18,7 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
  * 
  */
 
-public class ParkingSlot {
+public class ParkingSlot implements VisitableItems{
 	/**
 	 * A double to store the unique ID of the parking slot within a Station.
 	 */
@@ -204,6 +204,11 @@ public class ParkingSlot {
 	@Override
 	public int hashCode() {
 		return (int) (41*(41+this.station.hashCode())+this.parkingSlotID);
+	}
+
+	@Override
+	public String accept(StatisticVisitor v) {
+		return v.visit(this);
 	}
 
 	
