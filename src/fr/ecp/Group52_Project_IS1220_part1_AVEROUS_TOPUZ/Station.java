@@ -1,6 +1,10 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 import java.util.ArrayList;
 
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidProportionsException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.MoreBikesThanSlotsException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoAvailableBikeException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoFreeSlotException;
 
 /**
  * Stations are among the most important elements of the myVelib
@@ -36,7 +40,7 @@ public class Station implements VisitableItems, Observable {
 	protected int numberOfSlots;
 	
 	/**
-	 * A double object which is unique, to identify a Station.
+	 * A double  which is unique, to identify a Station.
 	 */
 	protected double stationID;
 	
@@ -49,6 +53,16 @@ public class Station implements VisitableItems, Observable {
 	protected int parkingCounter;
 	protected ArrayList<Observer> departureObserverList, arrivalObserverList;
 	protected int freeSlotNumber, availableBikeNumber;
+	
+	/**
+	 * A read-only double to know the total number of rented bikes in this station 
+	 */
+	protected double numberOfRent;
+	
+	/**
+	 * A read-only double to know the total number of returned bikes in this station 
+	 */
+	protected double numberOfReturn; 
 	
 	/**
 	 * This method is a constructor of the Station class. 
@@ -313,8 +327,24 @@ public class Station implements VisitableItems, Observable {
 	public ArrayList<Observer> getDepartureObserverList() {
 		return departureObserverList;
 	}
-	
-	
+
+	/**
+	 * A getter to retrieve the number of of rented bikes
+	 * @return the number of rented bikes as a double
+	 */
+	public double getNumberOfRent() {
+		return numberOfRent;
+	}
+
+	/**
+	 * A getter to retrieve the number of of returned bikes
+	 * @return the number of returned bikes as a double
+	 */
+	public double getNumberOfReturn() {
+		return numberOfReturn;
+	}
+
+
 	//Mise en place des setters
 	/**
 	 * This method allows to set the location of the station.
@@ -348,8 +378,23 @@ public class Station implements VisitableItems, Observable {
 	public void setFreeSlotNumber(int freeSlotNumber) {
 		this.freeSlotNumber = freeSlotNumber;
 	}
-
 	
+	/**
+	 * A setter to change the number of rented bikes in this stations
+	 * @param numberOfRent A double representing the new number of rented bikes
+	 */
+	public void setNumberOfRent(double numberOfRent) {
+		this.numberOfRent = numberOfRent;
+	}
+
+	/**
+	 * A setter to change the number of returned bikes in this stations
+	 * @param numberOfRent A double representing the new number of returned bikes
+	 */
+	public void setNumberOfReturn(double numberOfReturn) {
+		this.numberOfReturn = numberOfReturn;
+	}
+
 	@Override
 	public String toString() {
 		String str = ("This is station number " + this.stationID + ", containing " + this.numberOfSlots +" parking slots.");
@@ -375,7 +420,7 @@ public class Station implements VisitableItems, Observable {
 	}
 
 	@Override
-	public String accept(StatisticVisitor v) {
+	public String accept(StatisticCompiler v) {
 		return v.visit(this);
 	}
 

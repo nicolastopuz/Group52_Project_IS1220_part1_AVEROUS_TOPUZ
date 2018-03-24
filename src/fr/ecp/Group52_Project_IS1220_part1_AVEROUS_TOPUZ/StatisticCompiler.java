@@ -55,24 +55,45 @@ public class StatisticCompiler implements StatisticVisitor {
 		return null;
 	}
 
+	/**
+	 * This method returns as a string the relevant statistics for a station which is to say : <p>
+	 * - the total number of rent operations <p>
+	 * - the total number of return operation <p>
+	 * - the average occupation of the station <p>
+	 */
 	@Override
 	public String visit(Station s) {
-		// TODO Auto-generated method stub
-		
-		///Allow to retrieve the total number of rent operations
-		/// Allow to retrieve the total number of return operations
+
+		s.getNumberOfRent();
+		s.getNumberOfReturn();
 		/// Allow to retrieve Average of occupation of the station
-		return null;
+		return ("This station, ID number "+s.getStationID()+" has witnessed "+s.getNumberOfRent()+" rent operations as well as "+s.getNumberOfReturn()+" return operations.\nIt's aerage occupation rate is ");
 	}
 
+	/**
+	 * This method returns as a string the relevant statistics for a user which is to say : <p>
+	 * - the number of rides <p>
+	 * - the total time spent on a bike <p>
+	 * - the total amount of all rides performed <p>
+	 * - all the time-credit earned <p>
+	 */
 	@Override
 	public String visit(User u) {
-		// TODO Auto-generated method stub
+		double numberOfRides = u.getRides().size();
 		
-		///Allow to retrieve the number of rides
-		///Allow to retrieve total time spent on a bike
-		///Allow to retrieve total amount of all rides performed
-		///Allow to retrieve of all the time-creditearned
+		double timeSpentOnABike;
+		double totalPrice;
+		double totalCreditTimeEarned;
+		
+		for (Ride r : u.getRides()) {
+			timeSpentOnABike+=r.getTimeOnABike();
+			totalPrice+=r.getPrice();
+			totalCreditTimeEarned+=r.getCreditTimeEarned();
+		}
+		
+		return ("The User "+ u.getName()+", ID number "+u.getNumericalId()+", has done "+numberOfRides+" rides. He has spent "+timeSpentOnABike+" hours on a bike, paid a total amount of charges of "+totalPrice+"€ and earned a total amount of time credit of "+totalCreditTimeEarned+" minutes.\n");
+		
+
 		return null;
 	}
 

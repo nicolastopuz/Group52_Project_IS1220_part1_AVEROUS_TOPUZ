@@ -1,6 +1,17 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
 
+import java.util.ArrayList;
+
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.EmptySlotException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoAvailableBikeException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoFreeSlotException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NotOnRideException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OccupiedSlotException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
+
+
 /**
  * The User class basically represents anyone using the myVelib
  * system. Whether he has a Velib card or not is not relevant to
@@ -95,6 +106,12 @@ public class User implements VisitableItems, Observer {
 	protected PathPreferenceVisitor pathPreference;
 	
 	/**
+	 * An ArrayList of Rides to keep the record of all the rides performed by the user
+	 */
+	protected ArrayList<Ride> rides;
+
+	
+	/**
 	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
 	 * @param name A string defining the name of the user 
 	 */
@@ -104,6 +121,7 @@ public class User implements VisitableItems, Observer {
 		this.numericalId=User.userCounter;
 		this.card=CardFactory.create(this, CardTypes.NoCard);
 		this.onARide=false;
+		this.rides=new ArrayList<Ride>();
 	}
 
 
@@ -117,7 +135,11 @@ public class User implements VisitableItems, Observer {
 		User.userCounter+=1;
 		this.numericalId=User.userCounter;
 		this.card=CardFactory.create(this, type);
+		this.rides=new ArrayList<Ride>();
 	}
+
+
+
 
 	/**
 	 * Method for user to pick up a Bike at a given Station. 
@@ -128,6 +150,9 @@ public class User implements VisitableItems, Observer {
 			ParkingSlot p = s.getAvailableBicycle();
 			p.giveBike(this);
 			this.behavior = this.bike.getBehavior();
+			double numberOfRent = s.getNumberOfRent()+1;
+			s.setNumberOfRent(numberOfRent);
+
 		}
 		catch(EmptySlotException e) {
 		}
@@ -144,6 +169,8 @@ public class User implements VisitableItems, Observer {
 			ParkingSlot p = s.getFreeSlot();
 			p.acceptBike(this);
 			this.behavior = new Walking();
+			double numberOfReturn = s.getNumberOfReturn();
+			s.setNumberOfReturn(numberOfReturn);
 		}
 		catch(OccupiedSlotException e) {
 		}
@@ -309,6 +336,22 @@ public class User implements VisitableItems, Observer {
 		this.ride = ride;
 	}
 	
+	/**
+	 * A getter to get the array list rides storing all the rides done by the user
+	 * @return rides an ArrayList storing all the rides done by the user
+	 */
+	public ArrayList<Ride> getRides() {
+		return rides;
+	}
+
+	/**
+	 * A Method to store a done ride in the ArrayLists rides
+	 * @param ride The finished ride to add to the list
+	 */
+	public void addRide(Ride ride) {
+		this.rides.add(ride);
+	}
+	
 	
 	@Override
 	public String toString() {
@@ -349,7 +392,7 @@ public class User implements VisitableItems, Observer {
 	
 
 	@Override
-	public String accept(StatisticVisitor v) {
+	public String accept(StatisticCompiler v) {
 		return v.visit(this);
 	}
 }
