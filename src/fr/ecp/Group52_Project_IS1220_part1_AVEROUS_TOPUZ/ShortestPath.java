@@ -29,11 +29,10 @@ public class ShortestPath implements PathPreferenceVisitor {
 	 * Constructor for an instance of the FastestPath strategy.
 	 * @param ride	The ride in question, that should be calculated
 	 */
-	public ShortestPath(Ride ride) {
+	public ShortestPath() {
 		this.walk = new Walking();
 		this.elec = new ElectricalBiking();
 		this.meca = new MecanicalBiking();
-		this.ride = ride;
 		this.departureAndArrival = this.departureAndArrival();
 	}
 	
@@ -78,11 +77,11 @@ public class ShortestPath implements PathPreferenceVisitor {
 		int departureIndex = 0, arrivalIndex = 0;
 		double minDistance = tripCostMatrix[0][0];
 		for (int i = 0; i < tripCostMatrix.length; i++) {
-			for (int j = 0; j < tripCostMatrix[i].length; j++) {
+			for (int j = 0; j < tripCostMatrix[0].length; j++) {
 				if (minDistance>tripCostMatrix[i][j] && tripCostMatrix[i][j]>0) {
 					minDistance = tripCostMatrix[i][j];
-					departureIndex = i;
 					arrivalIndex = j;
+					departureIndex = i;
 					/*
 					 * Having the cost of every possible trip in the tripCostMatrix, we now
 					 * only need to find the cheapest trip, and through which stations this trip goes.
@@ -100,6 +99,7 @@ public class ShortestPath implements PathPreferenceVisitor {
 		
 		return departureAndArrival;
 	}
+
 	
 	//Getters
 	

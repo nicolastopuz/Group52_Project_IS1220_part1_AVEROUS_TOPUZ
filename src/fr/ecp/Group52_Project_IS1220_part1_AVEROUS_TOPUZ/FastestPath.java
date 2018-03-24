@@ -29,11 +29,10 @@ public class FastestPath implements PathPreferenceVisitor {
 	 * Constructor for an instance of the FastestPath strategy.
 	 * @param ride	The ride in question, that should be calculated
 	 */
-	public FastestPath(Ride ride) {
+	public FastestPath() {
 		this.walk = new Walking();
 		this.elec = new ElectricalBiking();
 		this.meca = new MecanicalBiking();
-		this.ride = ride;
 		this.departureAndArrival = this.departureAndArrival();
 	}
 	
@@ -83,7 +82,7 @@ public class FastestPath implements PathPreferenceVisitor {
 		double minTimeMeca = timeBetweenStationsMechanical[0][0];
 		double minTimeElec = timeBetweenStationsElectrical[0][0];
 		for (int i = 0; i < timeBetweenStationsMechanical.length; i++) {
-			for (int j = 0; j < timeBetweenStationsMechanical[i].length; j++) {
+			for (int j = 0; j < timeBetweenStationsMechanical[0].length; j++) {
 				if (minTimeMeca>timeBetweenStationsMechanical[i][j] && timeBetweenStationsMechanical[i][j]>0) {
 					minTimeMeca = timeBetweenStationsMechanical[i][j];
 					minTimeElec = timeBetweenStationsElectrical[i][j];
@@ -106,7 +105,6 @@ public class FastestPath implements PathPreferenceVisitor {
 		
 		return departureAndArrival;
 	}
-
 	
 	//Getters
 	

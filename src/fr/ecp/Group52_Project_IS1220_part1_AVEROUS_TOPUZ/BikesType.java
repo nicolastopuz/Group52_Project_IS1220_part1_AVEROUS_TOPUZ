@@ -13,6 +13,16 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
  */
 
 public enum BikesType {
-	Mechanical,
-	Electrical;
+	Mechanical(new MecanicalBiking()),
+	Electrical(new ElectricalBiking());
+	
+	private MovingBehavior behavior;
+	
+	BikesType(MovingBehavior behavior) {
+		this.behavior = behavior;
+	}
+	
+	public MovingBehavior getBehavior() {
+		return behavior;
+	}
 }

@@ -4,4 +4,6 @@ public interface PathPreferenceVisitor {
 	
 	public Station[] departureAndArrival();
 	
+	public void setRide(Ride ride);
+	
 }

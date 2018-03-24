@@ -3,6 +3,7 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 import java.util.ArrayList;
 
 public class Ride {
+	//Class Attributes start here
 	/**
 	 * The coordinates from which the user starts his ride.
 	 */
@@ -44,19 +45,33 @@ public class Ride {
 	protected Station arrivalStation;
 	
 	/**
+	 * The user preference for which path should be taken (fastest/shortest)
+	 */
+	protected PathPreferenceVisitor pathPreference;
+	
+	
+	//Methods start here
+	
+	/**
 	 * The constructor for making a Ride instance.
 	 * 
-	 * @param user
-	 * @param arrival
-	 * @param allStations
-	 * @param arrivalStationPreference
+	 * @param user		The User who is on this ride
+	 * @param arrival	The GPS coordinates of where the user wishes to go
+	 * @param allStations	An ArrayList of all stations in the current network
+	 * @param arrivalStationPreference	The preference for the arrival Station (plus station or not)
+	 * @param pathPreference	The preference in the path to be taken to the arrival (Fastest or Shortest)
 	 */
-	public Ride(User user, GPScoordinates arrival, ArrayList<Station> allStations, ArrivalStationPreferenceVisitable arrivalStationPreference) {
+	public Ride(User user, GPScoordinates arrival, ArrayList<Station> allStations, ArrivalStationPreferenceVisitable arrivalStationPreference, PathPreferenceVisitor pathPreference) {
 		this.user = user; 
 		this.departure=user.getPosition();
 		this.arrival = arrival;
 		this.allStations = allStations;
 		this.arrivalStationPreference = arrivalStationPreference;
+		this.pathPreference = pathPreference;
+		this.pathPreference.setRide(this);
+		Station[] departureAndArrival = pathPreference.departureAndArrival();
+		this.departureStation = departureAndArrival[0];
+		this.arrivalStation = departureAndArrival[1];
 	}
 	
 	/**
@@ -234,17 +249,27 @@ public class Ride {
 	
 	@Override
 	public String toString() {
-		
+		return("This ride goes from point " +this.departure.toString()+ " to point " 
+				+this.arrival.toString()+ " passing through stations " +this.departureStation.getStationID()+ 
+				" and " +this.arrivalStation.getStationID()+ ".");
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		
+		if(obj instanceof Ride) {
+			Ride that = (Ride) obj;
+			return (this.departure.equals(that.getDeparture()) && this.arrival.equals(that.getArrival()) 
+					&& this.departureStation.equals(that.getDepartureStation()) 
+					&& this.arrivalStation.equals(that.getArrivalStation()));
+		}
+		else {
+			return false;
+		}
 	}
 	
 	@Override
 	public int hashCode() {
-		
+		return (int) (41*(41+this.bike.hashCode() + this.arrivalStation.hashCode()));
 	}
 	
 }

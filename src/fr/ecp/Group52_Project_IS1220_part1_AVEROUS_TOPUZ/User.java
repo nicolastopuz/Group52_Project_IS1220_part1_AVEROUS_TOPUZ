@@ -1,6 +1,5 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
-import static org.junit.Assert.assertTrue;
 
 /**
  * The User class basically represents anyone using the myVelib
@@ -26,7 +25,7 @@ import static org.junit.Assert.assertTrue;
  * @since 1.0
  */
 
-public class User implements VisitableItems {
+public class User implements VisitableItems, Observer {
 	
 	/**
 	 * A string that defines the name of the user
@@ -74,6 +73,28 @@ public class User implements VisitableItems {
 	protected Ride ride;
 	
 	/**
+	 * The stations to which the user should go for his ride
+	 * departureOfRide is where he should pick up a bike
+	 * arrivalOfRide is where he should drop his bike off
+	 */
+	protected Station departureOfRide, arrivalOfRide;
+	
+	/**
+	 * The GPS coordinates of the place where the user wants to go
+	 */
+	protected GPScoordinates arrival;
+	
+	/**
+	 * The preference of the user for the way he wishes to go to station
+	 */
+	private ArrivalStationPreferenceVisitable arrivalStationPreference;
+	
+	/**
+	 * The user preference for which path should be taken (fastest/shortest)
+	 */
+	protected PathPreferenceVisitor pathPreference;
+	
+	/**
 	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
 	 * @param name A string defining the name of the user 
 	 */
@@ -106,6 +127,7 @@ public class User implements VisitableItems {
 		try {
 			ParkingSlot p = s.getAvailableBicycle();
 			p.giveBike(this);
+			this.behavior = this.bike.getBehavior();
 		}
 		catch(EmptySlotException e) {
 		}
@@ -121,6 +143,7 @@ public class User implements VisitableItems {
 		try {
 			ParkingSlot p = s.getFreeSlot();
 			p.acceptBike(this);
+			this.behavior = new Walking();
 		}
 		catch(OccupiedSlotException e) {
 		}
@@ -128,6 +151,31 @@ public class User implements VisitableItems {
 		}
 	}
 	
+	public void update() throws NotOnRideException {
+		if(this.isOnARide()) {
+			goTo(this.arrival, this.arrivalStationPreference, this.pathPreference);
+		}
+		else {
+			throw new NotOnRideException();
+		}
+	}
+	
+	public void goTo(GPScoordinates arrival, ArrivalStationPreferenceVisitable arrivalStationPreference, PathPreferenceVisitor pathPreference) {
+		this.arrival = arrival;
+		this.arrivalStationPreference = arrivalStationPreference;
+		this.pathPreference = pathPreference;
+		this.ride = new Ride(this, arrival, allStations, arrivalStationPreference, pathPreference);
+		this.setOnARide(true);
+		this.departureOfRide = this.ride.getDepartureStation();
+		this.arrivalOfRide = this.ride.getArrivalStation();
+		departureOfRide.addDepartureObserver(this);
+		arrivalOfRide.addArrivalObserver(this);
+	}
+	
+	public void goTo(GPScoordinates arrival) {
+		this.goTo(arrival, new NoPreference(), new FastestPath());
+	}
+	//Getters 
 	/**
 	 * A getter returning the name of the user
 	 * @return the name of the user as a string
@@ -298,7 +346,7 @@ public class User implements VisitableItems {
 			e.printStackTrace();
 		}
 	}
-
+	
 
 	@Override
 	public String accept(StatisticVisitor v) {

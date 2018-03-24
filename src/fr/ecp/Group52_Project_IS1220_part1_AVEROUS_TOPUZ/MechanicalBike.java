@@ -32,6 +32,7 @@ public class MechanicalBike extends Bike implements VisitableBikes {
 	public MechanicalBike() {
 		super();
 		this.type=BikesType.Mechanical;
+		this.behavior = this.type.getBehavior();
 		MechanicalBike.mechanicalBikeCounter+=1;
 	}
 

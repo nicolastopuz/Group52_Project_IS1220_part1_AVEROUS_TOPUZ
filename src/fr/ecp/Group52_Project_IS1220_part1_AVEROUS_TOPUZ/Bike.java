@@ -35,6 +35,11 @@ public abstract class Bike {
 	 * A read-only BikesType object defining which kind of bike this is 
 	 */
 	protected BikesType type;
+	
+	/**
+	 * The MovingBehavior associated to the type of bike
+	 */
+	protected MovingBehavior behavior;
 
 	/**
 	 * The general constructor of the Bike abstract class
@@ -67,6 +72,10 @@ public abstract class Bike {
 	 */
 	public BikesType getType() {
 		return type;
+	}
+	
+	public MovingBehavior getBehavior() {
+		return this.behavior;
 	}
 	
 	@Override

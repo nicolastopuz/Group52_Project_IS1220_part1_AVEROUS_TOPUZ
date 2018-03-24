@@ -1,6 +1,7 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 import java.util.ArrayList;
 
+
 /**
  * Stations are among the most important elements of the myVelib
  * system. A station is where bicycles can be rented and dropped. 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  * @since 1.0
  */
 
-public class Station implements VisitableItems{
+public class Station implements VisitableItems, Observable {
 	
 	/**
 	 * An ArrayList to store the parking slots built in the station.
@@ -46,23 +47,27 @@ public class Station implements VisitableItems{
 	protected GPScoordinates location; 
 	protected boolean isOnline;
 	protected int parkingCounter;
+	protected ArrayList<Observer> departureObserverList, arrivalObserverList;
+	protected int freeSlotNumber, availableBikeNumber;
 	
 	/**
 	 * This method is a constructor of the Station class. 
 	 * 
-	 * @param numberofslots the number of parkingslots to create in the station, as an int.
+	 * @param numberOfSlots the number of parkingslots to create in the station, as an int.
 	 * @param location	the location of the station, as GPScoordinates.
 	 */
-	public Station(int numberofslots, GPScoordinates location) {
+	public Station(int numberOfSlots, GPScoordinates location) {
 		this.stationID = Station.stationCounter;
 		Station.stationCounter++;
-		this.numberOfSlots = numberofslots;
+		this.numberOfSlots = numberOfSlots;
 		this.location = location;
 		this.parkingSlots = new ArrayList<ParkingSlot>();
-		for (int i = 0; i < numberofslots; i++) {
+		for (int i = 0; i < numberOfSlots; i++) {
 			this.parkingSlots.add(new ParkingSlot(this));			
 		}
 		this.isOnline = true;
+		this.availableBikeNumber = 0;
+		this.freeSlotNumber = numberOfSlots;
 	}
 	
 	/**
@@ -73,16 +78,16 @@ public class Station implements VisitableItems{
 	 * @param numberOfBikes	the number of bikes to put on the slots of the station, as an int
 	 * @param mechanicalBikeProportion	the proportion of mechanical bikes to create, as a float between 0 and 1
 	 */
-	public Station(int numberofslots, GPScoordinates location, int numberOfBikes, float mechanicalBikeProportion) throws MoreBikesThanSlotsException, InvalidProportionsException{
-		if(numberOfBikes>numberofslots || numberOfBikes<0) {throw new MoreBikesThanSlotsException();}
+	public Station(int numberOfSlots, GPScoordinates location, int numberOfBikes, float mechanicalBikeProportion) throws MoreBikesThanSlotsException, InvalidProportionsException{
+		if(numberOfBikes>numberOfSlots || numberOfBikes<0) {throw new MoreBikesThanSlotsException();}
 		else if(mechanicalBikeProportion>1 || mechanicalBikeProportion<0) {throw new InvalidProportionsException();}
 		else {
 			this.stationID = Station.stationCounter;
 			Station.stationCounter++;
-			this.numberOfSlots = numberofslots;
+			this.numberOfSlots = numberOfSlots;
 			this.location = location;
 			this.parkingSlots = new ArrayList<ParkingSlot>();
-			for (int i = 0; i < numberofslots; i++) {
+			for (int i = 0; i < numberOfSlots; i++) {
 				this.parkingSlots.add(new ParkingSlot(this));
 				if(i < numberOfBikes*mechanicalBikeProportion) {
 					this.parkingSlots.get(i).setBike( BikeFactory.create(BikesType.Mechanical) );
@@ -92,6 +97,8 @@ public class Station implements VisitableItems{
 				}
 			}
 			this.isOnline = true;
+			this.availableBikeNumber = numberOfBikes;
+			this.freeSlotNumber = numberOfSlots-numberOfBikes;
 		}
 	}
 	
@@ -104,6 +111,37 @@ public class Station implements VisitableItems{
 	 */
 	public void countUp() {
 		this.parkingCounter++;
+	}
+	
+	public void addDepartureObserver(Observer obs) {
+		this.departureObserverList.add(obs);
+	}
+	
+	public void addArrivalObserver(Observer obs) {
+		this.arrivalObserverList.add(obs);
+	}
+	public void removeDepartureObserver(Observer obs) {
+		this.departureObserverList.remove(obs);
+	}
+	
+	public void removeArrivalObserver(Observer obs) {
+		this.arrivalObserverList.remove(obs);
+	}
+	
+	public void notifyObserver(Observer obs) {
+		obs.update();
+	}
+	
+	public void notifyAllDepartureObservers() {
+		for (int i = 0; i < departureObserverList.size(); i++) {
+			notifyObserver(departureObserverList.get(i));
+		}
+	}
+	
+	public void notifyAllArrivalObservers() {
+		for (int i = 0; i < arrivalObserverList.size(); i++) {
+			notifyObserver(arrivalObserverList.get(i));
+		}
 	}
 	
 	/**
@@ -260,6 +298,22 @@ public class Station implements VisitableItems{
 		return this.parkingSlots;
 	}
 	
+	public int getAvailableBikeNumber() {
+		return availableBikeNumber;
+	}
+	
+	public int getFreeSlotNumber() {
+		return freeSlotNumber;
+	}
+	
+	public ArrayList<Observer> getArrivalObserverList() {
+		return arrivalObserverList;
+	}
+	
+	public ArrayList<Observer> getDepartureObserverList() {
+		return departureObserverList;
+	}
+	
 	
 	//Mise en place des setters
 	/**
@@ -286,6 +340,14 @@ public class Station implements VisitableItems{
 	public void setState(boolean isOn) {
 		this.isOnline = isOn;
 	}	
+	
+	public void setAvailableBikeNumber(int availableBikeNumber) {
+		this.availableBikeNumber = availableBikeNumber;
+	}
+	
+	public void setFreeSlotNumber(int freeSlotNumber) {
+		this.freeSlotNumber = freeSlotNumber;
+	}
 
 	
 	@Override

@@ -101,6 +101,11 @@ public class ParkingSlot implements VisitableItems{
 			this.bike = u.getBike();
 			u.setBike(null);
 			this.state = ParkingSlotState.taken;
+			this.station.setAvailableBikeNumber(this.station.getAvailableBikeNumber()+1);
+			this.station.setFreeSlotNumber(this.station.getFreeSlotNumber()-1);
+			if(this.station.getFreeSlotNumber() == 0) {
+				this.station.notifyAllArrivalObservers();
+			}
 		}	
 	}
 	
@@ -117,6 +122,11 @@ public class ParkingSlot implements VisitableItems{
 			u.setBike(this.bike);
 			this.bike = null;
 			this.state = ParkingSlotState.free;
+			this.station.setAvailableBikeNumber(this.station.getAvailableBikeNumber()-1);
+			this.station.setFreeSlotNumber(this.station.getFreeSlotNumber()+1);
+			if(this.station.getAvailableBikeNumber() == 0) {
+				this.station.notifyAllDepartureObservers();
+			}
 		}
 	}
 	

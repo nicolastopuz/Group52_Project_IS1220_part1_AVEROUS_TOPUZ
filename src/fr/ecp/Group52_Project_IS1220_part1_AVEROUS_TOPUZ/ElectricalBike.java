@@ -32,6 +32,7 @@ public class ElectricalBike extends Bike implements VisitableBikes {
 	public ElectricalBike() {
 		super();
 		this.type=BikesType.Electrical;
+		this.behavior = this.type.getBehavior();
 		ElectricalBike.electricalBikeCounter+=1;
 	}
 
