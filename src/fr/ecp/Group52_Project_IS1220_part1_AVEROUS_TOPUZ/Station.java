@@ -87,7 +87,7 @@ public class Station {
 				if(i < numberOfBikes*mechanicalBikeProportion) {
 					this.parkingSlots.get(i).setBike( BikeFactory.create(BikesType.Mechanical) );
 				}
-				else if (i < numberOfBikes*(1-mechanicalBikeProportion)) {
+				else if (i < numberOfBikes) {
 					this.parkingSlots.get(i).setBike( BikeFactory.create(BikesType.Electrical) );	
 				}
 			}
