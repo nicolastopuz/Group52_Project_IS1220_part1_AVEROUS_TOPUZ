@@ -63,11 +63,7 @@ public class StatisticCompiler implements StatisticVisitor {
 	 */
 	@Override
 	public String visit(Station s) {
-
-		s.getNumberOfRent();
-		s.getNumberOfReturn();
-		/// Allow to retrieve Average of occupation of the station
-		return ("This station, ID number "+s.getStationID()+" has witnessed "+s.getNumberOfRent()+" rent operations as well as "+s.getNumberOfReturn()+" return operations.\nIt's aerage occupation rate is ");
+		return ("This station, ID number "+s.getStationID()+" has witnessed "+s.getNumberOfRent()+" rent operations as well as "+s.getNumberOfReturn()+" return operations.\nIt's aerage occupation rate is "+s.getAverageTimeOfOccupation()+" hours.\n");
 	}
 
 	/**
@@ -98,11 +94,8 @@ public class StatisticCompiler implements StatisticVisitor {
 	}
 
 	@Override
-	public String visit(ParkingSlot ps) {
-		// TODO Auto-generated method stub
-		
-		///Allow to retrieve the occupation time of the parking slot
-		return null;
+	public String visit(ParkingSlot ps) {		
+		return ("The Parking Slot number "+ps.getParkingSlotID()+" of station number "+ps.getStation().getStationID()+" has a total time  of occupation of "+ps.getTimeOfOccupation()+" hours.\n");
 	}
 
 }

@@ -1,5 +1,9 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
+
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.EmptySlotException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OccupiedSlotException;
 
@@ -25,22 +29,32 @@ public class ParkingSlot implements VisitableItems{
 	/**
 	 * A double to store the unique ID of the parking slot within a Station.
 	 */
-	private double parkingSlotID;
+	protected double parkingSlotID;
 	
 	/**
 	 * A ParkingSlotState to store the state the parking slot is in.
 	 */
-	private ParkingSlotState state;
+	protected ParkingSlotState state;
 	
 	/**
 	 * A Station object to indicate in which Station the parking slot is located.
 	 */
-	private Station station;
+	protected Station station;
 	
 	/**
 	 * A Bike object to store the bike that is available at the parking slot.
 	 */
-	private Bike bike;
+	protected Bike bike;
+	
+	/**
+	 * A hidden LocalDateTime object storing the last change of state in order to compute the total time of occupation of the slot 
+	 */
+	protected LocalDateTime lastChange;
+	
+	/**
+	 * A long storing the total time of occupation of the Parking Slot 
+	 */
+	protected long timeOfOccupation; 
 	
 	/**
 	 * A constructor for creating a ParkingSlot instance with a unique ID within a station
@@ -51,6 +65,8 @@ public class ParkingSlot implements VisitableItems{
 		station.countUp();
 		this.station = station;
 		this.state = ParkingSlotState.free;
+		this.lastChange = LocalDateTime.now();
+		this.timeOfOccupation =0;
 	}
 	
 	/**
@@ -64,6 +80,8 @@ public class ParkingSlot implements VisitableItems{
 		this.station = station;
 		this.state = ParkingSlotState.free;
 		this.bike = bike;
+		this.lastChange = LocalDateTime.now();
+		this.timeOfOccupation =0;
 	}
 	
 	
@@ -165,13 +183,21 @@ public class ParkingSlot implements VisitableItems{
 	
 	/**
 	 * Getter method for the bike that is on the parking slot.
-	 * 
 	 * @return The bike that is on the slot.
 	 */
 	public Bike getBike() throws EmptySlotException {
 		if(this.bike == null) {throw new EmptySlotException();}
 		else { return this.bike;}
 	}
+	
+	/**
+	 * Getter method for the time of occupation of the parkingSlot
+	 * @return the time of occupation of the parkingSlot as a long 
+	 */
+	public long getTimeOfOccupation() {
+		return this.timeOfOccupation;
+	}
+	
 	
 	
 	//Mise en place des setters
@@ -182,6 +208,14 @@ public class ParkingSlot implements VisitableItems{
 	 * @see ParkingSlotState
 	 */
 	public void setState(ParkingSlotState state) {
+		if (this.state.equals(ParkingSlotState.taken)) {
+			Duration duration = Duration.between(LocalDateTime.now(),this.lastChange);
+			this.timeOfOccupation += duration.toHours();
+			this.lastChange = LocalDateTime.now();
+		}
+		else {
+			this.lastChange = LocalDateTime.now();
+		}
 		this.state = state;
 	}
 	
