@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @since 1.0
  */
 
-public class Station {
+public class Station implements VisitableItems{
 	
 	/**
 	 * An ArrayList to store the parking slots built in the station.
@@ -310,6 +310,11 @@ public class Station {
 	@Override
 	public int hashCode() {
 		return (int) (41*(41+this.stationID));
+	}
+
+	@Override
+	public String accept(StatisticVisitor v) {
+		return v.visit(this);
 	}
 
 	

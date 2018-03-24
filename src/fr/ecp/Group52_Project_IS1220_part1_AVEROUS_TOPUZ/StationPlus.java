@@ -38,9 +38,11 @@ public class StationPlus extends Station {
 	 * 
 	 * @param numberofslots
 	 * @param location
+	 * @throws InvalidProportionsException 
+	 * @throws MoreBikesThanSlotsException 
 	 */
-	public StationPlus(int numberofslots, GPScoordinates location, double numberOfBikes) {
-		super(numberofslots, location, numberOfBikes);
+	public StationPlus(int numberofslots, GPScoordinates location, int numberOfBikes, float proportion) throws MoreBikesThanSlotsException, InvalidProportionsException {
+		super(numberofslots, location, numberOfBikes, proportion);
 	}
 	
 }
