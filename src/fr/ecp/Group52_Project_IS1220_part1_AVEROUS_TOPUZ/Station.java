@@ -1,6 +1,11 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 import java.util.ArrayList;
 
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidProportionsException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.MoreBikesThanSlotsException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoAvailableBikeException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoFreeSlotException;
+
 /**
  * Stations are among the most important elements of the myVelib
  * system. A station is where bicycles can be rented and dropped. 
@@ -313,7 +318,7 @@ public class Station implements VisitableItems{
 	}
 
 	@Override
-	public String accept(StatisticVisitor v) {
+	public String accept(StatisticCompiler v) {
 		return v.visit(this);
 	}
 

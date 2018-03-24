@@ -2,6 +2,13 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
 import static org.junit.Assert.assertTrue;
 
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.EmptySlotException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoAvailableBikeException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoFreeSlotException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OccupiedSlotException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
+
 /**
  * The User class basically represents anyone using the myVelib
  * system. Whether he has a Velib card or not is not relevant to
@@ -301,7 +308,7 @@ public class User implements VisitableItems {
 
 
 	@Override
-	public String accept(StatisticVisitor v) {
+	public String accept(StatisticCompiler v) {
 		return v.visit(this);
 	}
 }

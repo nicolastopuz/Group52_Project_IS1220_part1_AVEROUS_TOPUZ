@@ -1,5 +1,9 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.BadCoordinatesSyntaxException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidCoordinatesException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
+
 /**
  * This class defines the GPS coordinates of an element. It is here used
  * to determine the location of a Station, or of a user.
@@ -20,16 +24,16 @@ public class GPScoordinates {
 	/**
 	 * Constructor for GPS coordinates, given the coordinates
 	 * in DMS format (degrees, minutes, seconds), as a string
-	 * (DD°MM'SS,SSS").
+	 * (DDï¿½MM'SS,SSS").
 	 * 
-	 * @param latitudeDMS	as a string in DMS format (DD°MM'SS,SSS").
-	 * @param longitudeDMS	as a string in DMS format (DD°MM'SS,SSS").
+	 * @param latitudeDMS	as a string in DMS format (DDï¿½MM'SS,SSS").
+	 * @param longitudeDMS	as a string in DMS format (DDï¿½MM'SS,SSS").
 	 */
 	public GPScoordinates(String latitudeDMS, String longitudeDMS) throws BadCoordinatesSyntaxException, OutOfBoundsException, InvalidCoordinatesException{
-		if(!latitudeDMS.contains("°") || !latitudeDMS.contains("'") || !latitudeDMS.contains("\"")) {
+		if(!latitudeDMS.contains("ï¿½") || !latitudeDMS.contains("'") || !latitudeDMS.contains("\"")) {
 			throw new BadCoordinatesSyntaxException();
 		}
-		else if(!longitudeDMS.contains("°") || !longitudeDMS.contains("'") || !longitudeDMS.contains("\"")) {
+		else if(!longitudeDMS.contains("ï¿½") || !longitudeDMS.contains("'") || !longitudeDMS.contains("\"")) {
 			throw new BadCoordinatesSyntaxException();
 		}
 		else {
@@ -37,8 +41,8 @@ public class GPScoordinates {
 			longitudeDMS = longitudeDMS.replace(',', '.');
 			double[] modLat;
 			double[] modLon;
-			String[] latDMS = latitudeDMS.split("°|'|\"");
-			String[] lonDMS = longitudeDMS.split("°|'|\"");
+			String[] latDMS = latitudeDMS.split("ï¿½|'|\"");
+			String[] lonDMS = longitudeDMS.split("ï¿½|'|\"");
 			modLat = moduloLatitude(latDMS);
 			modLon = moduloLongitude(lonDMS);
 			this.latitude=modLat[0] + (modLat[1]/60) + (modLat[2]/3600); 
@@ -219,7 +223,7 @@ public class GPScoordinates {
 	public int hashCode() {
 		double a = this.longitude;
 		double b = this.latitude;
-		// Pour garantir l'unicitï¿½ du hashcode à partir de la latitude et longitude,
+		// Pour garantir l'unicitï¿½ du hashcode ï¿½ partir de la latitude et longitude,
 		// on utilise une bijection de Z dans N, puis une bijection de NxN dans N 
 		// (fonction de pairage de Cantor)
 		a = (a>0 ? 2*a : -2*a+1);

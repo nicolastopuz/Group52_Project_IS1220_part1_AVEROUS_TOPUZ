@@ -1,5 +1,8 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.EmptySlotException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OccupiedSlotException;
+
 /**
  * ParkingSlots is the class for all parking slots in the
  * myVelib system. Every parking slot has a unique ID within
@@ -207,7 +210,7 @@ public class ParkingSlot implements VisitableItems{
 	}
 
 	@Override
-	public String accept(StatisticVisitor v) {
+	public String accept(StatisticCompiler v) {
 		return v.visit(this);
 	}
 

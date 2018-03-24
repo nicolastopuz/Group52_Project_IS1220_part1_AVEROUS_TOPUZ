@@ -16,10 +16,10 @@ public class Network implements VisitableItems {
 		stationList.add(station);
 	}
 
+
 	@Override
-	public String accept(StatisticVisitor v) {
-		return v.visit(this);
-	}
+	public String accept(StatisticCompiler v) {
+		return v.visit(this);	}
 	
 	
 }
