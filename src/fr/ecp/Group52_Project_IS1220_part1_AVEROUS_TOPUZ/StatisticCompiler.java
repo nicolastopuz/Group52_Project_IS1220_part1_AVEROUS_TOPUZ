@@ -55,18 +55,23 @@ public class StatisticCompiler implements StatisticVisitor {
 		return null;
 	}
 
+	/**
+	 * This method returns as a string the relevant statistics for a station which is to say : <p>
+	 * - the total number of rent operations <p>
+	 * - the total number of return operation <p>
+	 * - the average occupation of the station <p>
+	 */
 	@Override
 	public String visit(Station s) {
-		// TODO Auto-generated method stub
-		
-		///Allow to retrieve the total number of rent operations
-		/// Allow to retrieve the total number of return operations
+
+		s.getNumberOfRent();
+		s.getNumberOfReturn();
 		/// Allow to retrieve Average of occupation of the station
-		return null;
+		return ("This station, ID number "+s.getStationID()+" has witnessed "+s.getNumberOfRent()+" rent operations as well as "+s.getNumberOfReturn()+" return operations.\nIt's aerage occupation rate is ");
 	}
 
 	/**
-	 * This method returns as a string the relevant statistics for a user which is to say <p>
+	 * This method returns as a string the relevant statistics for a user which is to say : <p>
 	 * - the number of rides <p>
 	 * - the total time spent on a bike <p>
 	 * - the total amount of all rides performed <p>

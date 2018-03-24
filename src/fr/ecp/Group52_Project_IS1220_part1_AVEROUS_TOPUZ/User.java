@@ -123,6 +123,8 @@ public class User implements VisitableItems {
 		try {
 			ParkingSlot p = s.getAvailableBicycle();
 			p.giveBike(this);
+			double numberOfRent = s.getNumberOfRent()+1;
+			s.setNumberOfRent(numberOfRent);
 		}
 		catch(EmptySlotException e) {
 		}
@@ -138,6 +140,8 @@ public class User implements VisitableItems {
 		try {
 			ParkingSlot p = s.getFreeSlot();
 			p.acceptBike(this);
+			double numberOfReturn = s.getNumberOfReturn();
+			s.setNumberOfReturn(numberOfReturn);
 		}
 		catch(OccupiedSlotException e) {
 		}

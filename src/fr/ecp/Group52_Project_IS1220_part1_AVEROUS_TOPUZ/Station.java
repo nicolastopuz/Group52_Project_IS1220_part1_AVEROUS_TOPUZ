@@ -40,7 +40,7 @@ public class Station implements VisitableItems{
 	protected int numberOfSlots;
 	
 	/**
-	 * A double object which is unique, to identify a Station.
+	 * A double  which is unique, to identify a Station.
 	 */
 	protected double stationID;
 	
@@ -51,6 +51,16 @@ public class Station implements VisitableItems{
 	protected GPScoordinates location; 
 	protected boolean isOnline;
 	protected int parkingCounter;
+	
+	/**
+	 * A read-only double to know the total number of rented bikes in this station 
+	 */
+	protected double numberOfRent;
+	
+	/**
+	 * A read-only double to know the total number of returned bikes in this station 
+	 */
+	protected double numberOfReturn; 
 	
 	/**
 	 * This method is a constructor of the Station class. 
@@ -265,7 +275,22 @@ public class Station implements VisitableItems{
 		return this.parkingSlots;
 	}
 	
-	
+	/**
+	 * A getter to retrieve the number of of rented bikes
+	 * @return the number of rented bikes as a double
+	 */
+	public double getNumberOfRent() {
+		return numberOfRent;
+	}
+
+	/**
+	 * A getter to retrieve the number of of returned bikes
+	 * @return the number of returned bikes as a double
+	 */
+	public double getNumberOfReturn() {
+		return numberOfReturn;
+	}
+
 	//Mise en place des setters
 	/**
 	 * This method allows to set the location of the station.
@@ -291,8 +316,23 @@ public class Station implements VisitableItems{
 	public void setState(boolean isOn) {
 		this.isOnline = isOn;
 	}	
-
 	
+	/**
+	 * A setter to change the number of rented bikes in this stations
+	 * @param numberOfRent A double representing the new number of rented bikes
+	 */
+	public void setNumberOfRent(double numberOfRent) {
+		this.numberOfRent = numberOfRent;
+	}
+
+	/**
+	 * A setter to change the number of returned bikes in this stations
+	 * @param numberOfRent A double representing the new number of returned bikes
+	 */
+	public void setNumberOfReturn(double numberOfReturn) {
+		this.numberOfReturn = numberOfReturn;
+	}
+
 	@Override
 	public String toString() {
 		String str = ("This is station number " + this.stationID + ", containing " + this.numberOfSlots +" parking slots.");
