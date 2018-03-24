@@ -63,6 +63,11 @@ public class Station implements VisitableItems{
 	protected double numberOfReturn; 
 	
 	/**
+	 * A long storing the average time of occupation after it's last computation by the averageTimeOfOccupation (it will be used to sort the least occupied stations)
+	 */
+	protected long averageTimeOfOccupation;
+	
+	/**
 	 * This method is a constructor of the Station class. 
 	 * 
 	 * @param numberofslots the number of parkingslots to create in the station, as an int.
@@ -215,6 +220,17 @@ public class Station implements VisitableItems{
 		}
 	}
 	
+	/**
+	 * A method to compute the average time of occupation and set its value in averageTimeOfOccupation
+	 */
+	public void computingTheAverageTimeOccupation() {
+		long averageOccupationTime = 0;
+		for (ParkingSlot ps : this.getParkingSlots()) {
+			averageOccupationTime+=ps.getTimeOfOccupation();
+		}
+		this.averageTimeOfOccupation=averageOccupationTime/this.getParkingSlots().size();
+	}
+	
 	
 	//Mise en place des getters
 	/**
@@ -289,6 +305,14 @@ public class Station implements VisitableItems{
 	 */
 	public double getNumberOfReturn() {
 		return numberOfReturn;
+	}
+	
+	/**
+	 * A getter to retrieve the average time of occupation of the station 
+	 * @return the average time of occupation of the station as a long 
+	 */
+	public long getAverageTimeOfOccupation() {
+		return this.averageTimeOfOccupation;
 	}
 
 	//Mise en place des setters
