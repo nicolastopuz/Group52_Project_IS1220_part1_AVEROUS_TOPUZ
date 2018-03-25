@@ -1,5 +1,6 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -61,27 +62,52 @@ public class StatisticCompiler implements StatisticVisitor {
 	@Override
 	public String visit(Network n) {
 		if (this.sortingMethod==NetworkStatisticsSortingMethods.MostUsed) {
-			ArrayList<ArrayList> stations = new ArrayList<ArrayList>();
-			Hashtable sortedStations = new Hashtable();
+			ArrayList<ArrayList<Double>> stations = new ArrayList<ArrayList<Double>>();
+			ArrayList<ArrayList<Double>>  sortedStations = new ArrayList<ArrayList<Double>>();
 			for (Station s : n.getStationList()) {
-				stations.put(s.getStationID(), s.getNumberOfRent()+s.getNumberOfReturn());
+				ArrayList<Double> paire= new ArrayList<Double>();
+				paire.add(s.getStationID());
+				paire.add(s.getNumberOfRent()+s.getNumberOfReturn());
+				stations.add(paire);
 			}
 			while (!stations.isEmpty()) {
-				double key =0;
-				double val =-1;
-				Enumeration e = stations.elements();
-				
-				
+				int indice_max=-1;
+				double max=-1;
+				for (int i=0; i<stations.size();i++) {
+					if (stations.get(i).get(1)>max) {
+						indice_max=i;
+						max = stations.get(i).get(1);
+					}
+				}
+				sortedStations.add(stations.get(indice_max));
+				stations.remove(indice_max);
 			}
-			
+			return ("This Network has "+n.getStationList().size()+" stations, "+n.getBikeList().size()+" bikes and "+n.getUserList().size()+" users.\nThe list of it's stations sorted from the most used to the least used is the following :"+sortedStations.toString());
 		}
 		else if (this.sortingMethod==NetworkStatisticsSortingMethods.LeastOccupied) {
-			Hashtable stations = new Hashtable();
-			Hashtable sortedStations = new Hashtable();
+			ArrayList<ArrayList<Double>> stations = new ArrayList<ArrayList<Double>>();
+			ArrayList<ArrayList<Double>>  sortedStations = new ArrayList<ArrayList<Double>>();
 			for (Station s : n.getStationList()) {
-				stations.put(s.getStationID(), s.getAverageTimeOfOccupation());
+				ArrayList<Double> paire= new ArrayList<Double>();
+				paire.add(s.getStationID());
+				paire.add((double) s.getAverageTimeOfOccupation());
+				stations.add(paire);
 			}
+			while (!stations.isEmpty()) {
+				int indice_min=-1;
+				double min=200000000;
+				for (int i=0; i<stations.size();i++) {
+					if (stations.get(i).get(1)<min) {
+						indice_min=i;
+						min = stations.get(i).get(1);
+					}
+				}
+				sortedStations.add(stations.get(indice_min));
+				stations.remove(indice_min);
+			}
+			return ("This Network has "+n.getStationList().size()+" stations, "+n.getBikeList().size()+" bikes and "+n.getUserList().size()+" users.\nThe list of it's stations sorted from the least occupied to the most occupied is the following :"+sortedStations.toString());
 		}
+		return null;
 	}
 
 	/**
