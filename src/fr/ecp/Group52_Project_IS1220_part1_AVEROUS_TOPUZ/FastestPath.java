@@ -2,6 +2,14 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
 import java.util.ArrayList;
 
+/**
+ * This class corresponds to a preference of the user within a ride to go from
+ * point A to point B using not the shortest, but the fastest path available
+ * 
+ * @author Pierre Averous
+ * @author Nicolas Topuz
+ * @since 1.0
+ */
 public class FastestPath implements PathPreferenceVisitor {
 	
 	/**
@@ -38,17 +46,7 @@ public class FastestPath implements PathPreferenceVisitor {
 	
 	//Autres méthodes
 
-	/**
-	 * Most important method of this class : it computes the departure
-	 * and arrival Stations for the given ride. In this case, it chooses 
-	 * them to get the fastest path.
-	 * <p>This method also updates the ride durations for electrical
-	 * and mechanical biking, contained in the variables 
-	 * electricalRideDuration and mechanicalRideDuration.
-	 * @return departureAndArrival	A Station[] Object, containing in 
-	 * position 0 the departure Station, and in position 1 the arrival 
-	 * Station.
-	 */
+	@Override
 	public Station[] departureAndArrival() {
 		Station[] departureAndArrival = new Station[2];
 		
@@ -106,6 +104,7 @@ public class FastestPath implements PathPreferenceVisitor {
 		return departureAndArrival;
 	}
 	
+	@Override
 	public Station getUpdateOnArrivalStation(GPScoordinates departure) {
 		GPScoordinates arrival = this.ride.getArrival();
 		ArrayList<Station> arrivalStations = this.ride.getArrivalStations();
@@ -192,12 +191,7 @@ public class FastestPath implements PathPreferenceVisitor {
 
 	//Setters
 	
-	/**
-	 * Setter for the ride in which the path is calculated.
-	 * This method also updates the departureAndArrival variable, 
-	 * so that it matches with the ride.
-	 * @param ride	The ride that is to be calculated.
-	 */
+	@Override
 	public void setRide(Ride ride) {
 		this.ride = ride;
 		this.departureAndArrival = this.departureAndArrival();

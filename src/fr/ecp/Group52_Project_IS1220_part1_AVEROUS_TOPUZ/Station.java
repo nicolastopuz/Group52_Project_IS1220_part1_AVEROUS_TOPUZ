@@ -46,15 +46,45 @@ public class Station implements VisitableItems, Observable {
 	protected double stationID;
 	
 	/**
-	 * 
+	 * A static counter to keep track of the total number of stations within the network
 	 */
 	protected static double stationCounter;
+	
+	/**
+	 * A GPScoordinates object for the coordinates of the station
+	 */
 	protected GPScoordinates location; 
+	
+	/**
+	 * A boolean to know if the station is online or not
+	 */
 	protected boolean isOnline;
+	
+	/**
+	 * An integer to count the parkingslots built in this station
+	 */
 	protected int parkingCounter;
+	
+	/**
+	 * The lists of Observers of this station
+	 * @see Observable
+	 */
 	protected ArrayList<Observer> departureObserverList, arrivalObserverList;
+	
+	/**
+	 * Integers containing the number of free slots within the station, as well as
+	 * the number of available bikes
+	 */
 	protected int freeSlotNumber, availableBikeNumber;
+	
+	/**
+	 * The bonus credit to be earned when dropping a bike off at this station (if any)
+	 */
 	protected int bonusCredit;
+	
+	/**
+	 * The network the station was built in
+	 */
 	protected Network network;
 	
 	/**
@@ -113,10 +143,10 @@ public class Station implements VisitableItems, Observable {
 			for (int i = 0; i < numberOfSlots; i++) {
 				this.parkingSlots.add(new ParkingSlot(this));
 				if(i < numberOfBikes*mechanicalBikeProportion) {
-					this.parkingSlots.get(i).setBike( BikeFactory.create(BikesType.Mechanical) );
+					this.parkingSlots.get(i).setBike( network.createBike(BikesType.Mechanical) );
 				}
 				else if (i < numberOfBikes) {
-					this.parkingSlots.get(i).setBike( BikeFactory.create(BikesType.Electrical) );	
+					this.parkingSlots.get(i).setBike( network.createBike(BikesType.Electrical) );	
 				}
 			}
 			this.isOnline = true;
@@ -136,32 +166,40 @@ public class Station implements VisitableItems, Observable {
 	public void countUp() {
 		this.parkingCounter++;
 	}
-	
+
+	@Override
 	public void addDepartureObserver(Observer obs) {
 		this.departureObserverList.add(obs);
 	}
 	
+	@Override
 	public void addArrivalObserver(Observer obs) {
 		this.arrivalObserverList.add(obs);
 	}
+
+	@Override
 	public void removeDepartureObserver(Observer obs) {
 		this.departureObserverList.remove(obs);
 	}
-	
+
+	@Override
 	public void removeArrivalObserver(Observer obs) {
 		this.arrivalObserverList.remove(obs);
 	}
-	
+
+	@Override
 	public void notifyObserver(Observer obs) throws NoRideException {
 		obs.update();
 	}
-	
+
+	@Override
 	public void notifyAllDepartureObservers() throws NoRideException{
 		for (int i = 0; i < departureObserverList.size(); i++) {
 			notifyObserver(departureObserverList.get(i));
 		}
 	}
-	
+
+	@Override
 	public void notifyAllArrivalObservers() throws NoRideException {
 		for (int i = 0; i < arrivalObserverList.size(); i++) {
 			notifyObserver(arrivalObserverList.get(i));
@@ -333,18 +371,37 @@ public class Station implements VisitableItems, Observable {
 		return this.parkingSlots;
 	}
 	
+	/**
+	 * Getter method for the number of available bikes at this station
+	 * @return	the number of available bikes at this station as an int
+	 * 
+	 */
 	public int getAvailableBikeNumber() {
 		return availableBikeNumber;
 	}
 	
+	/**
+	 * Getter method for the number of free parking slots in this station
+	 * @return the number of free slots in this station as an int
+	 */
 	public int getFreeSlotNumber() {
 		return freeSlotNumber;
 	}
 	
+	/**
+	 * Getter method for the ArrayList containing all observers considering
+	 * this station as a potential arrival station of a ride
+	 * @return	The ArrayList containing the arrival observers
+	 */
 	public ArrayList<Observer> getArrivalObserverList() {
 		return arrivalObserverList;
 	}
 	
+	/**
+	 * Getter method for the ArrayList containing all observers considering
+	 * this station as a potential departure station of a ride
+	 * @return	The ArrayList containing the departure observers
+	 */
 	public ArrayList<Observer> getDepartureObserverList() {
 		return departureObserverList;
 	}
@@ -416,10 +473,18 @@ public class Station implements VisitableItems, Observable {
 		this.isOnline = isOn;
 	}	
 	
+	/**
+	 * Setter for the number of available bikes at the station
+	 * @param availableBikeNumber	the number of available bikes at the station
+	 */
 	public void setAvailableBikeNumber(int availableBikeNumber) {
 		this.availableBikeNumber = availableBikeNumber;
 	}
 	
+	/**
+	 * Setter for the number of free slots at the station
+	 * @param freeSlotNumber	the number of free slots at the station
+	 */
 	public void setFreeSlotNumber(int freeSlotNumber) {
 		this.freeSlotNumber = freeSlotNumber;
 	}

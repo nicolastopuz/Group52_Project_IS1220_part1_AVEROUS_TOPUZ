@@ -2,6 +2,14 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
 import java.util.ArrayList;
 
+/**
+ * This class corresponds to a preference of the user within a ride to go from
+ * point A to point B using not the fastest, but the shortest path available
+ * 
+ * @author Pierre Averous
+ * @author Nicolas Topuz
+ * @since 1.0
+ */
 public class ShortestPath implements PathPreferenceVisitor {
 
 	/**
@@ -37,17 +45,7 @@ public class ShortestPath implements PathPreferenceVisitor {
 	}
 	
 	
-	/**
-	 * Most important method of this class : it computes the departure
-	 * and arrival Stations for the given ride. In this case, it chooses 
-	 * them to get the shortest path.
-	 * <p>This method also updates the ride durations for electrical
-	 * and mechanical biking, contained in the variables 
-	 * electricalRideDuration and mechanicalRideDuration.
-	 * @return departureAndArrival	A Station[] Object, containing in 
-	 * position 0 the departure Station, and in position 1 the arrival 
-	 * Station.
-	 */
+	@Override
 	public Station[] departureAndArrival() {
 		Station[] departureAndArrival = new Station[2];
 		
@@ -99,7 +97,8 @@ public class ShortestPath implements PathPreferenceVisitor {
 		
 		return departureAndArrival;
 	}
-
+	
+	@Override
 	public Station getUpdateOnArrivalStation(GPScoordinates departure) {
 		GPScoordinates arrival = this.ride.getArrival();
 		ArrayList<Station> arrivalStations = this.ride.getArrivalStations();

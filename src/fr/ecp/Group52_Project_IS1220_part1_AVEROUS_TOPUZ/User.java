@@ -191,6 +191,7 @@ public class User implements VisitableItems, Observer {
 		}
 	}
 	
+	
 	public void update() throws NoRideException {
 		if(this.isOnARide()) {
 			this.ride.updateArrivalStation();

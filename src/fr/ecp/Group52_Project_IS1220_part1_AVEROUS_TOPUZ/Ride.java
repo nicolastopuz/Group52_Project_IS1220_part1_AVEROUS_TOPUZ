@@ -2,6 +2,17 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
 import java.util.ArrayList;
 
+/**
+ * This class is used for creating Ride objects. A Ride is used when a User
+ * wants to go from a point A to a point B using the myVelib system. He 
+ * goes on a Ride, and the Ride he is on will provide him with useful information
+ * for setting his course : at which station to pick a bike up, to which station
+ * to go to drop it off, depending on the user's preferences.
+ * 
+ * @author Pierre Averous
+ * @author Nicolas Topuz
+ * @since 1.0
+ */
 public class Ride {
 	//Class Attributes start here
 	/**
@@ -182,9 +193,6 @@ public class Ride {
 		return distancesMatrix;
 	}
 	
-	public void endTheRide() {
-		
-	}
 	
 	//Methods
 	/**
@@ -234,6 +242,10 @@ public class Ride {
 		this.timeOnBike = (int) (this.timeBikeDropped - this.timeBikeTaken)/60000;
 	}
 	
+	/**
+	 * A method to update the arrival station of the ride, in case the last parkingslots at this 
+	 * station are taken by another user during the ride
+	 */
 	public void updateArrivalStation() {
 		GPScoordinates userLocation = this.user.getPosition();
 		this.arrivalStation = pathPreference.getUpdateOnArrivalStation(userLocation);		

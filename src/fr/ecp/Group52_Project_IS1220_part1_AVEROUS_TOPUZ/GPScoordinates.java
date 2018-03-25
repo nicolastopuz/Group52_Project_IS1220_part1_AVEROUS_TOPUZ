@@ -3,6 +3,7 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.BadCoordinatesSyntaxException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidCoordinatesException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
+import java.util.Random;
 
 /**
  * This class defines the GPS coordinates of an element. It is here used
@@ -65,6 +66,34 @@ public class GPScoordinates {
 			this.latitude = latitude; 
 			this.longitude = longitude; 
 		}
+	}
+	
+	/**
+	 * A simple method that returns a random location on the globe.
+	 *  	
+	 * @return a GPScoordinates object, with random coordinates.
+	 * @throws OutOfBoundsException
+	 */
+	public static GPScoordinates randomLocation() throws OutOfBoundsException{
+		Random randomGenerator = new Random();
+		double randomLatitude = 0, randomLongitude = 0;
+		int plusOrMinus = randomGenerator.nextInt(1);
+		if(plusOrMinus == 0) {
+			randomLatitude = -randomGenerator.nextInt(90);
+		}
+		else {
+			randomLatitude = randomGenerator.nextInt(90);
+		}
+		
+		int plusOrMinus2 = randomGenerator.nextInt(1);
+		if(plusOrMinus2 == 0) {
+			randomLongitude = -randomGenerator.nextInt(180);
+		}
+		else {
+			randomLongitude = randomGenerator.nextInt(180);
+		}
+		
+		return new GPScoordinates(randomLatitude, randomLongitude);
 	}
 	
 	//Autres m�thodes
