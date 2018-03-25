@@ -5,6 +5,7 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidPropo
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.MoreBikesThanSlotsException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoAvailableBikeException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoFreeSlotException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;
 
 /**
  * Stations are among the most important elements of the myVelib
@@ -53,6 +54,7 @@ public class Station implements VisitableItems, Observable {
 	protected int parkingCounter;
 	protected ArrayList<Observer> departureObserverList, arrivalObserverList;
 	protected int freeSlotNumber, availableBikeNumber;
+	protected int bonusCredit;
 	
 	/**
 	 * A read-only double to know the total number of rented bikes in this station 
@@ -87,6 +89,7 @@ public class Station implements VisitableItems, Observable {
 		this.isOnline = true;
 		this.availableBikeNumber = 0;
 		this.freeSlotNumber = numberOfSlots;
+		this.bonusCredit=0;
 	}
 	
 	/**
@@ -119,6 +122,7 @@ public class Station implements VisitableItems, Observable {
 			this.availableBikeNumber = numberOfBikes;
 			this.freeSlotNumber = numberOfSlots-numberOfBikes;
 		}
+		this.bonusCredit=0;
 	}
 	
 	//Autres M�thodes
@@ -147,17 +151,17 @@ public class Station implements VisitableItems, Observable {
 		this.arrivalObserverList.remove(obs);
 	}
 	
-	public void notifyObserver(Observer obs) {
+	public void notifyObserver(Observer obs) throws NoRideException {
 		obs.update();
 	}
 	
-	public void notifyAllDepartureObservers() {
+	public void notifyAllDepartureObservers() throws NoRideException{
 		for (int i = 0; i < departureObserverList.size(); i++) {
 			notifyObserver(departureObserverList.get(i));
 		}
 	}
 	
-	public void notifyAllArrivalObservers() {
+	public void notifyAllArrivalObservers() throws NoRideException {
 		for (int i = 0; i < arrivalObserverList.size(); i++) {
 			notifyObserver(arrivalObserverList.get(i));
 		}
@@ -366,6 +370,14 @@ public class Station implements VisitableItems, Observable {
 	 */
 	public long getAverageTimeOfOccupation() {
 		return this.averageTimeOfOccupation;
+	}
+	
+	/**
+	 * Getter for bonus credit earned when dropping a bike off at this station
+	 * @return	the bonus credit in minutes
+	 */
+	public int getBonusCredit() {
+		return bonusCredit;
 	}
 
 

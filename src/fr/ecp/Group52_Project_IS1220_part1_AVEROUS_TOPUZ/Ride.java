@@ -49,6 +49,27 @@ public class Ride {
 	 */
 	protected PathPreferenceVisitor pathPreference;
 	
+	/**
+	 * The time the user spends on the bike during the ride
+	 */
+	protected int timeOnBike;
+	
+	/**
+	 * The price of the ride as a double
+	 */
+	protected double priceOfRide;
+	
+	/**
+	 * The credit earned by this ride
+	 */
+	protected int creditEarned;
+	
+	/**
+	 * long objects to store the time at which the user picked up a bike, in milliseconds, and the 
+	 * time at which the user dropped off a bike, thus allowing to know the time 
+	 * the user as spent on the bike 
+	 */
+	protected long timeBikeTaken, timeBikeDropped;
 	
 	//Methods start here
 	
@@ -155,7 +176,63 @@ public class Ride {
 		}
 		return distancesMatrix;
 	}
-
+	
+	public void endTheRide() {
+		
+	}
+	
+	//Methods
+	/**
+	 * This method updates the price of the ride inside the ride object.
+	 */
+	public void proceedPayment() {
+		int credit = this.user.getTimeCredit();
+		int timeToPay;
+		if(this.timeOnBike >= credit) {
+			timeToPay = (int)this.timeOnBike - this.user.getTimeCredit();
+			this.user.setTimeCredit(0);
+		}
+		else {
+			timeToPay = 0;
+			this.user.setTimeCredit(credit - (int)this.timeOnBike);
+		}
+		this.priceOfRide = this.user.getCard().pay(this.bike.getType(), timeToPay);
+	}
+	
+	/**
+	 * This method proceeds to the attribution of bonus credits, depending on the 
+	 * station visited by the user upon his arrival.
+	 */
+	public void proceedCreditAttribution() {
+		Station arrivalStation = this.arrivalStation;
+		this.creditEarned = arrivalStation.getBonusCredit();
+		this.user.setTimeCredit( this.user.getTimeCredit() + this.creditEarned );
+	}
+	
+	/**
+	 * Method called upon when a user picks up a bike. It lets the payment center know
+	 * the time at which the user picked up a bike, in order to compute the 
+	 * duration of rental of the given bike.
+	 */
+	public void startOnBike() {
+		this.bike = user.getBike();
+		this.timeBikeTaken = System.currentTimeMillis();
+	}
+	
+	/**
+	 * Method called upon when a user drops a bike off. It lets the payment center know
+	 * the time at which the user dropped off a bike, and then computes the 
+	 * duration of rental of the given bike.
+	 */
+	public void stopOnBike() {
+		this.timeBikeDropped = System.currentTimeMillis();
+		this.timeOnBike = (int) (this.timeBikeDropped - this.timeBikeTaken)/60000;
+	}
+	
+	public void updateArrivalStation() {
+		GPScoordinates userLocation = this.user.getPosition();
+		this.arrivalStation = pathPreference.getUpdateOnArrivalStation(userLocation);		
+	}
 	
 	//Les Getters
 	/**
@@ -216,35 +293,110 @@ public class Ride {
 		return this.departureStation;
 	}
 	
+	/**
+	 * The credit earned with this ride, if any (plus station)
+	 * @return	credit earned with the ride
+	 */
+	public int getCreditEarned() {
+		return creditEarned;
+	}
+	
+	/**
+	 * The getter for the price of the ride
+	 * @return	the price of the ride in euros as aa int
+	 */
+	public double getPriceOfRide() {
+		return priceOfRide;
+	}
+	
+	/**
+	 * The getter for the time spent on a bike during the ride
+	 * @return	the time spent on a bike during the ride in milliseconds as a double
+	 */
+	public int getTimeOnBike() {
+		return timeOnBike;
+	}
 	
 	//Les Setters
 	
+	/**
+	 * Setter for the GPScoordinates of the departure of the ride
+	 * @param departure the GPScoordinates object for the location of the departure of the ride
+	 */
 	public void setDeparture(GPScoordinates departure) {
 		this.departure=departure;
 	}
 	
+	/**
+	 * Setter for the GPScoordinates of the arrival of the ride
+	 * @param arrival the GPScoordinates object for the location of the arrival of the ride
+	 */
 	public void setArrival(GPScoordinates arrival) {
 		this.arrival=arrival;
 	}
 	
+	/**
+	 * Setter for the User who in on this ride
+	 * @param user	the user who is on this ride
+	 */
 	public void setUser(User user) {
 		this.user = user;
 	}
 	
+	/**
+	 * Setter for the preference in the arrival station (avoid plus, prefer plus or no preference ?)
+	 * @param preference	the preference among the three types
+	 */
 	public void setPreference(ArrivalStationPreferenceVisitable preference) {
 		this.arrivalStationPreference=preference;
 	}
 	
+	/**
+	 * The setter for the ArrayList containing all stations present in the network.
+	 * @param allStation	the ArrayList conaining all stations of the network
+	 */
 	public void setAllStations(ArrayList<Station> allStation) {
 		this.allStations=allStation;
 	}
 	
+	/**
+	 * Setter used to set the arrival station at which the user should drop his bike off
+	 * @param arrivalStation	the station at which the user should drop his bike off
+	 */
 	public void setArrivalStation(Station arrivalStation) {
 		this.arrivalStation=arrivalStation;
 	}
 	
+	/**
+	 * Setter used to set the departure station from which the user should pick up his bike
+	 * @param departure	the station from which the user should pick up his bike 
+	 */
 	public void setDepartureStation(Station departureStation) {
 		this.departureStation=departureStation;
+	}
+	
+	/**
+	 * The setter for the credit earned for the user during this ride (if arrival is a plus station)
+	 * @param creditEarned	the credit earned for this ride
+	 */
+	public void setCreditEarned(int creditEarned) {
+		this.creditEarned = creditEarned;
+	}
+	
+	/**
+	 * The setter for the price to pay for the ride
+	 * @param priceOfRide	the price to pay for the ride
+	 */
+	public void setPriceOfRide(double priceOfRide) {
+		this.priceOfRide = priceOfRide;
+	}
+	
+	/**
+	 * The setter for the time the user has spent on a bike during this ride
+	 * @param timeOnBike	the time he has spent on a bike during this ride
+	 */
+	public void setTimeOnBike(int timeOnBike) {
+		this.timeOnBike = timeOnBike;
 	}
 	
 	@Override

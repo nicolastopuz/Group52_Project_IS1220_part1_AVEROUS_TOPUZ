@@ -100,6 +100,31 @@ public class ShortestPath implements PathPreferenceVisitor {
 		return departureAndArrival;
 	}
 
+	public Station getUpdateOnArrivalStation(GPScoordinates departure) {
+		GPScoordinates arrival = this.ride.getArrival();
+		ArrayList<Station> arrivalStations = this.ride.getArrivalStations();
+		
+		double[] distanceNextStationToArrival = ride.distanceToArrival(arrivalStations);
+		double[] distanceToNextStation = new double[arrivalStations.size()];
+		double[] totalDistances = new double[arrivalStations.size()];
+		
+		
+		for (int i = 0; i < arrivalStations.size(); i++) {
+			distanceToNextStation[i] = arrival.distanceTo(arrivalStations.get(i).getLocation()) ;
+			totalDistances[i] = distanceToNextStation[i] + distanceNextStationToArrival[i];
+		}
+		
+		int arrivalIndex = 0;
+		double minDistance = totalDistances[0];
+		for (int i = 0; i < totalDistances.length; i++) {
+			if(minDistance > totalDistances[i]) {
+				arrivalIndex = i;
+				minDistance = totalDistances[i];
+			}
+		}
+		
+		return arrivalStations.get(arrivalIndex);
+	}
 	
 	//Getters
 	

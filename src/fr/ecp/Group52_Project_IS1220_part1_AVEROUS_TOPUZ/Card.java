@@ -58,6 +58,15 @@ public abstract class Card {
 	}
 	
 	/**
+	  * This method returns the price to pay for a given type of bike rented for a given
+	  * duration, depending on the card the user owns (or if he has none)
+	  * @param type	The type of bike used on the ride
+	  * @param rideDuration	The duration of the ride in minutes
+	  * @return	The cost in euros of the ride
+	  */
+	public abstract double pay(BikesType type, double rideDuration);
+	
+	/**
 	 * A getter returning the number of cards 
 	 * @return the number of cards as a double
 	 */

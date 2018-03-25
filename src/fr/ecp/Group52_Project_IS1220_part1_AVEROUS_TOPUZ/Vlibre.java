@@ -26,5 +26,26 @@ public class Vlibre extends Card implements CardVisitor {
 		this.cardNumber=Card.cardCounter;
 		this.type=CardTypes.Vlibre;
 	}
+	
+	@Override
+	public double pay(BikesType type, double rideDuration) {
+		double finalPrice = 0;
+		if(type == BikesType.Mechanical) {
+			int hourDuration = (int) rideDuration/60;
+			if (hourDuration > 1) {
+				finalPrice = rideDuration/60 - 1;
+			}
+		}
+		else {
+			int hourDuration = (int) rideDuration/60;
+			if (hourDuration >= 1) {
+				finalPrice = rideDuration/30 - 1;
+			}
+			else {
+				finalPrice = rideDuration/60;
+			}
+		}
+		return finalPrice;
+	}
 
 }

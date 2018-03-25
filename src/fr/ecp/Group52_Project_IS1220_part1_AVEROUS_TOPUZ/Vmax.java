@@ -26,5 +26,14 @@ public class Vmax extends Card implements CardVisitor {
 		this.cardNumber=Card.cardCounter;
 		this.type=CardTypes.Vmax;
 	}
-
+	
+	@Override
+	public double pay(BikesType type, double rideDuration) {
+		double finalPrice = 0;
+		int hourDuration = (int) rideDuration/60;
+		if (hourDuration > 1) {
+			finalPrice = rideDuration/60 - 1;
+		}
+		return finalPrice;
+	}
 }

@@ -7,7 +7,6 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.EmptySlotExc
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoAvailableBikeException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoFreeSlotException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NotOnRideException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OccupiedSlotException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
 
@@ -110,6 +109,9 @@ public class User implements VisitableItems, Observer {
 	 */
 	protected ArrayList<Ride> rides;
 
+	protected int timeCredit;
+	
+	protected PaymentCenter paymentCenter;
 	
 	/**
 	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
@@ -122,6 +124,7 @@ public class User implements VisitableItems, Observer {
 		this.card=CardFactory.create(this, CardTypes.NoCard);
 		this.onARide=false;
 		this.rides=new ArrayList<Ride>();
+		this.timeCredit = 0;
 	}
 
 
@@ -136,9 +139,8 @@ public class User implements VisitableItems, Observer {
 		this.numericalId=User.userCounter;
 		this.card=CardFactory.create(this, type);
 		this.rides=new ArrayList<Ride>();
+		this.timeCredit = 0;
 	}
-
-
 
 
 	/**
@@ -152,11 +154,13 @@ public class User implements VisitableItems, Observer {
 			this.behavior = this.bike.getBehavior();
 			double numberOfRent = s.getNumberOfRent()+1;
 			s.setNumberOfRent(numberOfRent);
-
+			paymentCenter.startOnBike();
 		}
 		catch(EmptySlotException e) {
 		}
 		catch(NoAvailableBikeException e) {
+		}
+		catch(NoRideException e) {
 		}
 	}
 	
@@ -171,19 +175,22 @@ public class User implements VisitableItems, Observer {
 			this.behavior = new Walking();
 			double numberOfReturn = s.getNumberOfReturn();
 			s.setNumberOfReturn(numberOfReturn);
+			paymentCenter.stopOnBike();
 		}
 		catch(OccupiedSlotException e) {
 		}
 		catch(NoFreeSlotException e) {
 		}
+		catch(NoRideException e) {
+		}
 	}
 	
-	public void update() throws NotOnRideException {
+	public void update() throws NoRideException {
 		if(this.isOnARide()) {
-			goTo(this.arrival, this.arrivalStationPreference, this.pathPreference);
+			this.ride.updateArrivalStation();
 		}
 		else {
-			throw new NotOnRideException();
+			throw new NoRideException();
 		}
 	}
 	
@@ -202,6 +209,8 @@ public class User implements VisitableItems, Observer {
 	public void goTo(GPScoordinates arrival) {
 		this.goTo(arrival, new NoPreference(), new FastestPath());
 	}
+	
+	
 	//Getters 
 	/**
 	 * A getter returning the name of the user
@@ -258,6 +267,25 @@ public class User implements VisitableItems, Observer {
 	public Bike getBike() {
 		return bike;
 	}
+	
+	/**
+	 * A getter returning the TimeCredit of the user
+	 * @return	the time credit of the user as an int
+	 */
+	public int getTimeCredit() {
+		return timeCredit;
+	}
+	
+	/**
+	 * A getter returning the PaymentCenter associated to a ride the user is on
+	 * @return	a PaymentCenter object associated to a ride
+	 */
+	public PaymentCenter getPaymentCenter() {
+		return paymentCenter;
+	}
+	
+	
+	//Setters
 	
 	/**
 	 * A setter to change the name of the user 
@@ -337,13 +365,29 @@ public class User implements VisitableItems, Observer {
 	}
 	
 	/**
-	 * A getter to get the array list rides storing all the rides done by the user
-	 * @return rides an ArrayList storing all the rides done by the user
+	 * A setter to set the user's time credit
+	 * @param timeCredit an int indicating the user's new time credit
+	 */
+	public void setTimeCredit(int timeCredit) {
+		this.timeCredit = timeCredit;
+	}
+	
+	/**
+	 * A setter to set the array list rides storing all the rides done by the user
+	 * @param rides an ArrayList storing all the rides done by the user
 	 */
 	public ArrayList<Ride> getRides() {
 		return rides;
 	}
-
+	
+	/**
+	 * A setter to set the paymentCenter associated to a ride
+	 * @param paymentCenter	The payment center used to pay a given ride.
+	 */
+	public void setPaymentCenter(PaymentCenter paymentCenter) {
+		this.paymentCenter = paymentCenter;
+	}
+	
 	/**
 	 * A Method to store a done ride in the ArrayLists rides
 	 * @param ride The finished ride to add to the list

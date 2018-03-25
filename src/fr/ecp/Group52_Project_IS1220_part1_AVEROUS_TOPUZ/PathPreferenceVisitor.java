@@ -4,6 +4,8 @@ public interface PathPreferenceVisitor {
 	
 	public Station[] departureAndArrival();
 	
+	public Station getUpdateOnArrivalStation(GPScoordinates departure);
+	
 	public void setRide(Ride ride);
 	
 }
