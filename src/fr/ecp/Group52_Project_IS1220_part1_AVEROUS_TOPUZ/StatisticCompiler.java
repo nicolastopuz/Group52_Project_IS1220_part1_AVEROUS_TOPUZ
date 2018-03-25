@@ -1,5 +1,8 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 /**
  * The StatisticCompiler Object implements the StatisticVisitor interface.
  * It implements a visit method for each visitable items in order to compute statistics for each type of item. 
@@ -48,11 +51,37 @@ public class StatisticCompiler implements StatisticVisitor {
 	}
 
 
-
+	/**
+	 * This method returns as a string the relevant statistics for a network which is to say : <p>
+	 * - the number of stations <p>
+	 * - the number of bikes <p>
+	 * - the number of users <p>
+	 * - a list of the stations sorted according to the most used station or the least occupied station<p>
+	 */
 	@Override
 	public String visit(Network n) {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.sortingMethod==NetworkStatisticsSortingMethods.MostUsed) {
+			ArrayList<ArrayList> stations = new ArrayList<ArrayList>();
+			Hashtable sortedStations = new Hashtable();
+			for (Station s : n.getStationList()) {
+				stations.put(s.getStationID(), s.getNumberOfRent()+s.getNumberOfReturn());
+			}
+			while (!stations.isEmpty()) {
+				double key =0;
+				double val =-1;
+				Enumeration e = stations.elements();
+				
+				
+			}
+			
+		}
+		else if (this.sortingMethod==NetworkStatisticsSortingMethods.LeastOccupied) {
+			Hashtable stations = new Hashtable();
+			Hashtable sortedStations = new Hashtable();
+			for (Station s : n.getStationList()) {
+				stations.put(s.getStationID(), s.getAverageTimeOfOccupation());
+			}
+		}
 	}
 
 	/**
