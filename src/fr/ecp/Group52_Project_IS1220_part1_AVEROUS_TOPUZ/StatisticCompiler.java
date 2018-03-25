@@ -93,6 +93,10 @@ public class StatisticCompiler implements StatisticVisitor {
 		return null;
 	}
 
+	/**
+	 * This method returns as a string the relevant statistics for a user which is to say : <p>
+	 * - the occupation time of the parking slot 
+	 */
 	@Override
 	public String visit(ParkingSlot ps) {		
 		return ("The Parking Slot number "+ps.getParkingSlotID()+" of station number "+ps.getStation().getStationID()+" has a total time  of occupation of "+ps.getTimeOfOccupation()+" hours.\n");
