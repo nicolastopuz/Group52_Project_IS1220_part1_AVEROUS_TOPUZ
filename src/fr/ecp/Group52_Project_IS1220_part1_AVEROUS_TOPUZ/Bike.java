@@ -40,6 +40,11 @@ public abstract class Bike {
 	 * The MovingBehavior associated to the type of bike
 	 */
 	protected MovingBehavior behavior;
+	
+	/**
+	 * The Network the Bike belongs to
+	 */
+	protected Network network;
 
 	/**
 	 * The general constructor of the Bike abstract class
@@ -74,8 +79,28 @@ public abstract class Bike {
 		return type;
 	}
 	
+	/**
+	 * A getter for the MovingBehavior associated with this type of bike
+	 * @return the MovingBehavior associated with this type of bike
+	 */
 	public MovingBehavior getBehavior() {
 		return this.behavior;
+	}
+	
+	/**
+	 * A getter got the Network the Bike belongs to
+	 * @return the Network the Bike belongs to
+	 */
+	public Network getNetwork() {
+		return network;
+	}
+	
+	/**
+	 * A setter for the Network the Bike belongs to
+	 * @param network	the Network the Bike belongs to
+	 */
+	public void setNetwork(Network network) {
+		this.network = network;
 	}
 	
 	@Override

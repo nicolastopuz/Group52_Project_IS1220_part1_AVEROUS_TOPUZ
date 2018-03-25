@@ -55,6 +55,7 @@ public class Station implements VisitableItems, Observable {
 	protected ArrayList<Observer> departureObserverList, arrivalObserverList;
 	protected int freeSlotNumber, availableBikeNumber;
 	protected int bonusCredit;
+	protected Network network;
 	
 	/**
 	 * A read-only double to know the total number of rented bikes in this station 
@@ -379,6 +380,14 @@ public class Station implements VisitableItems, Observable {
 	public int getBonusCredit() {
 		return bonusCredit;
 	}
+	
+	/**
+	 * Getter for the Network the station is built in
+	 * @return	the Network the station is built in
+	 */
+	public Network getNetwork() {
+		return network;
+	}
 
 
 	//Mise en place des setters
@@ -429,6 +438,14 @@ public class Station implements VisitableItems, Observable {
 	 */
 	public void setNumberOfReturn(double numberOfReturn) {
 		this.numberOfReturn = numberOfReturn;
+	}
+	
+	/**
+	 * A setter for the Network the station is built in
+	 * @param network the Network the station is built in
+	 */
+	public void setNetwork(Network network) {
+		this.network = network;
 	}
 
 	@Override

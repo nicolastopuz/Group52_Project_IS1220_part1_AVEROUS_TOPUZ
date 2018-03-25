@@ -71,6 +71,11 @@ public class Ride {
 	 */
 	protected long timeBikeTaken, timeBikeDropped;
 	
+	/**
+	 * The Network in which a user is making this ride
+	 */
+	protected Network network;
+	
 	//Methods start here
 	
 	/**
@@ -317,6 +322,14 @@ public class Ride {
 		return timeOnBike;
 	}
 	
+	/**
+	 * The getter for the Network in which a user is making this ride
+	 * @return	the Network in which a user is making this ride
+	 */
+	public Network getNetwork() {
+		return network;
+	}
+	
 	//Les Setters
 	
 	/**
@@ -397,6 +410,14 @@ public class Ride {
 	 */
 	public void setTimeOnBike(int timeOnBike) {
 		this.timeOnBike = timeOnBike;
+	}
+	
+	/**
+	 * The setter for the Network in which a user is making this ride
+	 * @param network	the Network in which a user is making this ride
+	 */
+	public void setNetwork(Network network) {
+		this.network = network;
 	}
 	
 	@Override

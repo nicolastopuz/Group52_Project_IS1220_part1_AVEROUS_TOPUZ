@@ -108,7 +108,15 @@ public class User implements VisitableItems, Observer {
 	 * An ArrayList of Rides to keep the record of all the rides performed by the user
 	 */
 	protected ArrayList<Ride> rides;
-
+	
+	/**
+	 * The Network the User belongs to
+	 */
+	protected Network network;
+	
+	/**
+	 * The user's time credit
+	 */
 	protected int timeCredit;
 	
 	/**
@@ -196,7 +204,7 @@ public class User implements VisitableItems, Observer {
 		this.arrival = arrival;
 		this.arrivalStationPreference = arrivalStationPreference;
 		this.pathPreference = pathPreference;
-		this.ride = new Ride(this, arrival, allStations, arrivalStationPreference, pathPreference);
+		this.ride = new Ride(this, arrival, this.network.getStationList(), arrivalStationPreference, pathPreference);
 		this.setOnARide(true);
 		this.departureOfRide = this.ride.getDepartureStation();
 		this.arrivalOfRide = this.ride.getArrivalStation();
@@ -272,6 +280,14 @@ public class User implements VisitableItems, Observer {
 	 */
 	public int getTimeCredit() {
 		return timeCredit;
+	}
+	
+	/**
+	 * A getter returning the Network the User belongs to
+	 * @return	the Network the User belongs to
+	 */
+	public Network getNetwork() {
+		return network;
 	}
 	
 	
@@ -368,6 +384,14 @@ public class User implements VisitableItems, Observer {
 	 */
 	public ArrayList<Ride> getRides() {
 		return rides;
+	}
+	
+	/**
+	 * a setter for the Network the User belongs to
+	 * @param network the Network the User belongs to
+	 */
+	public void setNetwork(Network network) {
+		this.network = network;
 	}
 	
 	/**
