@@ -1,8 +1,8 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
 /**
- * The NoCard class extends the abstract class Card 
- * and defines the type of card corresponding to no card at all.
+ * The Vmax class extends the abstract class Card 
+ * and defines the type of card corresponding to a Vmax card.
  * 
  * @see Card
  * @see CardTypes
