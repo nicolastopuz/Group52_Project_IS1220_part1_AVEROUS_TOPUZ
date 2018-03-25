@@ -20,6 +20,31 @@ public class Network implements VisitableItems {
 	@Override
 	public String accept(StatisticCompiler v) {
 		return v.visit(this);	}
+
+	public ArrayList<User> getUserList() {
+		return userList;
+	}
+
+	public ArrayList<Station> getStationList() {
+		return stationList;
+	}
+
+	public ArrayList<Bike> getBikeList() {
+		return bikeList;
+	}
+
+	public void setUserList(ArrayList<User> userList) {
+		this.userList = userList;
+	}
+
+	public void setStationList(ArrayList<Station> stationList) {
+		this.stationList = stationList;
+	}
+
+	public void setBikeList(ArrayList<Bike> bikeList) {
+		this.bikeList = bikeList;
+	}
+	
 	
 	
 }

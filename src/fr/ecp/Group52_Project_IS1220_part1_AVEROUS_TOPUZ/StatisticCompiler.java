@@ -1,5 +1,9 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 /**
  * The StatisticCompiler Object implements the StatisticVisitor interface.
  * It implements a visit method for each visitable items in order to compute statistics for each type of item. 
@@ -48,10 +52,61 @@ public class StatisticCompiler implements StatisticVisitor {
 	}
 
 
-
+	/**
+	 * This method returns as a string the relevant statistics for a network which is to say : <p>
+	 * - the number of stations <p>
+	 * - the number of bikes <p>
+	 * - the number of users <p>
+	 * - a list of the stations sorted according to the most used station or the least occupied station<p>
+	 */
 	@Override
 	public String visit(Network n) {
-		// TODO Auto-generated method stub
+		if (this.sortingMethod==NetworkStatisticsSortingMethods.MostUsed) {
+			ArrayList<ArrayList<Double>> stations = new ArrayList<ArrayList<Double>>();
+			ArrayList<ArrayList<Double>>  sortedStations = new ArrayList<ArrayList<Double>>();
+			for (Station s : n.getStationList()) {
+				ArrayList<Double> paire= new ArrayList<Double>();
+				paire.add(s.getStationID());
+				paire.add(s.getNumberOfRent()+s.getNumberOfReturn());
+				stations.add(paire);
+			}
+			while (!stations.isEmpty()) {
+				int indice_max=-1;
+				double max=-1;
+				for (int i=0; i<stations.size();i++) {
+					if (stations.get(i).get(1)>max) {
+						indice_max=i;
+						max = stations.get(i).get(1);
+					}
+				}
+				sortedStations.add(stations.get(indice_max));
+				stations.remove(indice_max);
+			}
+			return ("This Network has "+n.getStationList().size()+" stations, "+n.getBikeList().size()+" bikes and "+n.getUserList().size()+" users.\nThe list of it's stations sorted from the most used to the least used is the following :"+sortedStations.toString());
+		}
+		else if (this.sortingMethod==NetworkStatisticsSortingMethods.LeastOccupied) {
+			ArrayList<ArrayList<Double>> stations = new ArrayList<ArrayList<Double>>();
+			ArrayList<ArrayList<Double>>  sortedStations = new ArrayList<ArrayList<Double>>();
+			for (Station s : n.getStationList()) {
+				ArrayList<Double> paire= new ArrayList<Double>();
+				paire.add(s.getStationID());
+				paire.add((double) s.getAverageTimeOfOccupation());
+				stations.add(paire);
+			}
+			while (!stations.isEmpty()) {
+				int indice_min=-1;
+				double min=200000000;
+				for (int i=0; i<stations.size();i++) {
+					if (stations.get(i).get(1)<min) {
+						indice_min=i;
+						min = stations.get(i).get(1);
+					}
+				}
+				sortedStations.add(stations.get(indice_min));
+				stations.remove(indice_min);
+			}
+			return ("This Network has "+n.getStationList().size()+" stations, "+n.getBikeList().size()+" bikes and "+n.getUserList().size()+" users.\nThe list of it's stations sorted from the least occupied to the most occupied is the following :"+sortedStations.toString());
+		}
 		return null;
 	}
 
@@ -77,22 +132,23 @@ public class StatisticCompiler implements StatisticVisitor {
 	public String visit(User u) {
 		double numberOfRides = u.getRides().size();
 		
-		double timeSpentOnABike;
-		double totalPrice;
-		double totalCreditTimeEarned;
+		double timeSpentOnABike = 0;
+		double totalPrice = 0;
+		double totalCreditTimeEarned = 0;
 		
 		for (Ride r : u.getRides()) {
-			timeSpentOnABike+=r.getTimeOnABike();
-			totalPrice+=r.getPrice();
-			totalCreditTimeEarned+=r.getCreditTimeEarned();
+			timeSpentOnABike+=r.getTimeOnBike();
+			totalPrice+=r.getPriceOfRide();
+			totalCreditTimeEarned+=r.getCreditEarned();
 		}
 		
 		return ("The User "+ u.getName()+", ID number "+u.getNumericalId()+", has done "+numberOfRides+" rides. He has spent "+timeSpentOnABike+" hours on a bike, paid a total amount of charges of "+totalPrice+"€ and earned a total amount of time credit of "+totalCreditTimeEarned+" minutes.\n");
-		
-
-		return null;
 	}
 
+	/**
+	 * This method returns as a string the relevant statistics for a user which is to say : <p>
+	 * - the occupation time of the parking slot 
+	 */
 	@Override
 	public String visit(ParkingSlot ps) {		
 		return ("The Parking Slot number "+ps.getParkingSlotID()+" of station number "+ps.getStation().getStationID()+" has a total time  of occupation of "+ps.getTimeOfOccupation()+" hours.\n");
