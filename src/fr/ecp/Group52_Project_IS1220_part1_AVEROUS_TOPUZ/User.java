@@ -111,8 +111,6 @@ public class User implements VisitableItems, Observer {
 
 	protected int timeCredit;
 	
-	protected PaymentCenter paymentCenter;
-	
 	/**
 	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
 	 * @param name A string defining the name of the user 
@@ -154,7 +152,7 @@ public class User implements VisitableItems, Observer {
 			this.behavior = this.bike.getBehavior();
 			double numberOfRent = s.getNumberOfRent()+1;
 			s.setNumberOfRent(numberOfRent);
-			paymentCenter.startOnBike();
+			this.ride.startOnBike();
 		}
 		catch(EmptySlotException e) {
 		}
@@ -175,7 +173,7 @@ public class User implements VisitableItems, Observer {
 			this.behavior = new Walking();
 			double numberOfReturn = s.getNumberOfReturn();
 			s.setNumberOfReturn(numberOfReturn);
-			paymentCenter.stopOnBike();
+			this.ride.stopOnBike();
 		}
 		catch(OccupiedSlotException e) {
 		}
@@ -276,14 +274,6 @@ public class User implements VisitableItems, Observer {
 		return timeCredit;
 	}
 	
-	/**
-	 * A getter returning the PaymentCenter associated to a ride the user is on
-	 * @return	a PaymentCenter object associated to a ride
-	 */
-	public PaymentCenter getPaymentCenter() {
-		return paymentCenter;
-	}
-	
 	
 	//Setters
 	
@@ -378,14 +368,6 @@ public class User implements VisitableItems, Observer {
 	 */
 	public ArrayList<Ride> getRides() {
 		return rides;
-	}
-	
-	/**
-	 * A setter to set the paymentCenter associated to a ride
-	 * @param paymentCenter	The payment center used to pay a given ride.
-	 */
-	public void setPaymentCenter(PaymentCenter paymentCenter) {
-		this.paymentCenter = paymentCenter;
 	}
 	
 	/**
