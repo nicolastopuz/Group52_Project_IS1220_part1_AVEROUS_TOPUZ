@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.EmptySlotException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OccupiedSlotException;
 
 /**
@@ -116,8 +117,9 @@ public class ParkingSlot implements VisitableItems{
 	 * @param	u	User who drops bike
 	 * @see		User 
 	  */
-	public void acceptBike(User u) throws OccupiedSlotException {
+	public void acceptBike(User u) throws OccupiedSlotException, NoRideException {
 		if (!this.isFree()) {throw new OccupiedSlotException();}
+		if (!u.isOnARide()) {throw new NoRideException();}
 		else {
 			this.bike = u.getBike();
 			u.setBike(null);
@@ -125,7 +127,11 @@ public class ParkingSlot implements VisitableItems{
 			this.station.setAvailableBikeNumber(this.station.getAvailableBikeNumber()+1);
 			this.station.setFreeSlotNumber(this.station.getFreeSlotNumber()-1);
 			if(this.station.getFreeSlotNumber() == 0) {
-				this.station.notifyAllArrivalObservers();
+				try {
+					this.station.notifyAllArrivalObservers();
+				} catch (NoRideException e) {
+					e.printStackTrace();
+				}
 			}
 		}	
 	}
@@ -137,8 +143,9 @@ public class ParkingSlot implements VisitableItems{
 	 * @param	u	User who takes bike
 	 * @see		User 
 	  */
-	public void giveBike(User u) throws EmptySlotException {
+	public void giveBike(User u) throws EmptySlotException, NoRideException {
 		if (!this.isBike()) {throw new EmptySlotException();}
+		if (!u.isOnARide()) {throw new NoRideException();}
 		else {
 			u.setBike(this.bike);
 			this.bike = null;
@@ -146,7 +153,11 @@ public class ParkingSlot implements VisitableItems{
 			this.station.setAvailableBikeNumber(this.station.getAvailableBikeNumber()-1);
 			this.station.setFreeSlotNumber(this.station.getFreeSlotNumber()+1);
 			if(this.station.getAvailableBikeNumber() == 0) {
-				this.station.notifyAllDepartureObservers();
+				try {
+					this.station.notifyAllDepartureObservers();
+				} catch (NoRideException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

@@ -34,6 +34,7 @@ public class StationPlus extends Station {
 	 */
 	public StationPlus(int numberofslots, GPScoordinates location) {
 		super(numberofslots, location);
+		this.bonusCredit = 5;
 	}
 	
 	/**

@@ -106,6 +106,39 @@ public class FastestPath implements PathPreferenceVisitor {
 		return departureAndArrival;
 	}
 	
+	public Station getUpdateOnArrivalStation(GPScoordinates departure) {
+		GPScoordinates arrival = this.ride.getArrival();
+		ArrayList<Station> arrivalStations = this.ride.getArrivalStations();
+		
+		double[] distanceNextStationToArrival = ride.distanceToArrival(arrivalStations);
+		double[] distanceToNextStation = new double[arrivalStations.size()];
+		double[] totalMecaDurations = new double[arrivalStations.size()];
+		double[] totalElecDurations = new double[arrivalStations.size()];
+		
+		
+		for (int i = 0; i < arrivalStations.size(); i++) {
+			distanceToNextStation[i] = arrival.distanceTo(arrivalStations.get(i).getLocation()) ;
+			totalMecaDurations[i] = distanceToNextStation[i]*meca.getSpeed() + distanceNextStationToArrival[i]*walk.getSpeed();
+			totalElecDurations[i] = distanceToNextStation[i]*elec.getSpeed() + distanceNextStationToArrival[i]*walk.getSpeed();
+		}
+		
+		int arrivalIndex = 0;
+		double minMecaTime = totalMecaDurations[0];
+		double minElecTime = totalElecDurations[0];
+		for (int i = 0; i < totalMecaDurations.length; i++) {
+			if(minMecaTime > totalMecaDurations[i]) {
+				arrivalIndex = i;
+				minMecaTime = totalMecaDurations[i];
+				minElecTime = totalElecDurations[i];
+			}
+		}
+		
+		this.mechanicalRideDuration = minMecaTime;
+		this.electricalRideDuration = minElecTime;
+		
+		return arrivalStations.get(arrivalIndex);
+	}
+	
 	//Getters
 	
 	/**

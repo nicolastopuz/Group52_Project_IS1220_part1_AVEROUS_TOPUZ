@@ -18,13 +18,25 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 public class NoCard extends Card implements CardVisitor{
 
 	/**
-	 * A constructor creating a Vlibre card object, assigning it a user, a unique card number and incrementing the card counter
+	 * A constructor creating a NoCard card object, assigning it a user, a unique card number and incrementing the card counter
 	 * @param user A User object defining the user of the card
 	 */
 	public NoCard(User user) {
 		super(user);
 		this.type=CardTypes.NoCard;
 		this.cardNumber= -1;
+	}
+
+	@Override
+	public double pay(BikesType type, double rideDuration) {
+		double finalPrice = 0;
+		if(type == BikesType.Mechanical) {
+			finalPrice =  rideDuration/60;
+		}
+		else {
+			finalPrice = rideDuration/30;
+		}
+		return finalPrice;
 	}
 	
 	@Override
