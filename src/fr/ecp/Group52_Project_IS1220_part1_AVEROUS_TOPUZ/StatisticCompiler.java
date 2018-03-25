@@ -77,20 +77,17 @@ public class StatisticCompiler implements StatisticVisitor {
 	public String visit(User u) {
 		double numberOfRides = u.getRides().size();
 		
-		double timeSpentOnABike;
-		double totalPrice;
-		double totalCreditTimeEarned;
+		double timeSpentOnABike = 0;
+		double totalPrice = 0;
+		double totalCreditTimeEarned = 0;
 		
 		for (Ride r : u.getRides()) {
-			timeSpentOnABike+=r.getTimeOnABike();
-			totalPrice+=r.getPrice();
-			totalCreditTimeEarned+=r.getCreditTimeEarned();
+			timeSpentOnABike+=r.getTimeOnBike();
+			totalPrice+=r.getPriceOfRide();
+			totalCreditTimeEarned+=r.getCreditEarned();
 		}
 		
 		return ("The User "+ u.getName()+", ID number "+u.getNumericalId()+", has done "+numberOfRides+" rides. He has spent "+timeSpentOnABike+" hours on a bike, paid a total amount of charges of "+totalPrice+"€ and earned a total amount of time credit of "+totalCreditTimeEarned+" minutes.\n");
-		
-
-		return null;
 	}
 
 	/**
