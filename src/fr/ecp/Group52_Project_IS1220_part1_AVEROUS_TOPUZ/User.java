@@ -191,7 +191,7 @@ public class User implements VisitableItems, Observer {
 		}
 	}
 	
-	
+	@Override
 	public void update() throws NoRideException {
 		if(this.isOnARide()) {
 			this.ride.updateArrivalStation();
@@ -201,6 +201,13 @@ public class User implements VisitableItems, Observer {
 		}
 	}
 	
+	/**
+	 * Method used by users to go to a specific point using the myVelib system.
+	 * 
+	 * @param arrival	The GPScoordinates of where the user wishes to go to
+	 * @param arrivalStationPreference	The Preference the user has in the nature of the arrival station
+	 * @param pathPreference	The preference the user has concerning the path to take to reach his goal
+	 */
 	public void goTo(GPScoordinates arrival, ArrivalStationPreferenceVisitable arrivalStationPreference, PathPreferenceVisitor pathPreference) {
 		this.arrival = arrival;
 		this.arrivalStationPreference = arrivalStationPreference;
@@ -213,6 +220,11 @@ public class User implements VisitableItems, Observer {
 		arrivalOfRide.addArrivalObserver(this);
 	}
 	
+	/**
+	 * Default method used by users to go to a specific point using the myVelib system.
+	 * 
+	 * @param arrival	The GPScoordinates of where the user wishes to go to
+	 */
 	public void goTo(GPScoordinates arrival) {
 		this.goTo(arrival, new NoPreference(), new FastestPath());
 	}
@@ -428,19 +440,7 @@ public class User implements VisitableItems, Observer {
 	@Override
 	public int hashCode() {
 		return (int) (41*(41+this.name.hashCode())+this.numericalId);
-	}
-
-	public static void main(String[] args) {
-		GPScoordinates location1;
-		try {
-			location1 = new GPScoordinates(10,10);
-			Station station1 = new Station(10,location1);
-			System.out.println(station1.getStationID());
-		} catch(OutOfBoundsException e) {
-			e.printStackTrace();
-		}
-	}
-	
+	}	
 
 	@Override
 	public String accept(StatisticCompiler v) {

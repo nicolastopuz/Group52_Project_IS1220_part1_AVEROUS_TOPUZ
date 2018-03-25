@@ -13,7 +13,11 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideExcept
  */
 public interface Observer {
 	
-	
+	/**
+	 * The method to update a users's ride status when there is a change
+	 * in his itinerary
+	 * @throws NoRideException
+	 */
 	public void update() throws NoRideException;
 
 }
