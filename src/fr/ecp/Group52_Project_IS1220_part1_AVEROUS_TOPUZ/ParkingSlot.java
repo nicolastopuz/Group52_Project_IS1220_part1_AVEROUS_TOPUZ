@@ -111,6 +111,18 @@ public class ParkingSlot implements VisitableItems{
 	}
 	
 	/**
+	 * This method tells if there is a bike of type <code>type</type> on the parking slot or not.
+	 * It returns <code>false</code> if there is no bike, or <code>true</code> if there is one.
+	 * 
+	 * @param	type	The type of bike to check if there is
+	 * @return a boolean, tells if there's a bike (<code>true</code>) or not (<code>false</code>)
+	 */
+	public boolean isBike(BikesType type) {
+		if (this.state == ParkingSlotState.taken && this.bike.getType()==type) { return true; }
+		else { return false; }
+	}
+	
+	/**
 	 * This method allows a User to drop a bike in a parking slot.
 	 * It is called upon by the User class.
 	 * 
