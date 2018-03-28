@@ -1,8 +1,8 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.BikeFactory;
@@ -10,6 +10,7 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.BikesType;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.ElectricalBike;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.GPScoordinates;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.MechanicalBike;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Network;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.ParkingSlot;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.ParkingSlotState;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Station;
@@ -17,14 +18,14 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.EmptySlotExc
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
 
 public class ParkingSlotTest {
-	
+	Network network = new Network();
 
 	@Test
 	public void testHashCode() {
 		GPScoordinates location;
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);
 			ParkingSlot ps_2 = new ParkingSlot(station);
 			assertTrue("Test pour le hashcode", ps_1.hashCode()!=ps_2.hashCode());
@@ -39,7 +40,7 @@ public class ParkingSlotTest {
 		GPScoordinates location;
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);
 			assertTrue("Test du constructeur", ps_1 instanceof ParkingSlot && ps_1.getState()==ParkingSlotState.free && ps_1.getStation()==station && ps_1.getParkingSlotID()==10 && ps_1.getStation().getParkingCounter()==11);
 		} catch (OutOfBoundsException e) {
@@ -51,7 +52,7 @@ public class ParkingSlotTest {
 		GPScoordinates location;
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);	
 			assertTrue("Test de isFree dans le cas positif", ps_1.isFree());
 			ps_1.setState(ParkingSlotState.outOfOrder);
@@ -69,7 +70,7 @@ public class ParkingSlotTest {
 		GPScoordinates location;
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);	
 			ParkingSlot ps_2 = new ParkingSlot(station);
 			ps_1.setState(ParkingSlotState.outOfOrder);
@@ -87,7 +88,7 @@ public class ParkingSlotTest {
 		GPScoordinates location;
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);	
 			assertTrue("Test de getState pour free", ps_1.getState()==ParkingSlotState.free);
 			ps_1.setState(ParkingSlotState.outOfOrder);
@@ -104,7 +105,7 @@ public class ParkingSlotTest {
 		GPScoordinates location;
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);	
 			assertTrue("Test de getParkingSlotID ", ps_1.getParkingSlotID()==10);
 		} catch (OutOfBoundsException e){
@@ -117,7 +118,7 @@ public class ParkingSlotTest {
 		GPScoordinates location;
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);	
 			assertTrue("Test de getStation", ps_1.getStation()==station);
 		} catch (OutOfBoundsException e){
@@ -132,7 +133,7 @@ public class ParkingSlotTest {
 		MechanicalBike mechaBike = (MechanicalBike) BikeFactory.create(BikesType.Mechanical);
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);	
 			ps_1.setBike(elecBike);
 			assertTrue("Test de SetBike pour une electrical bike", ps_1.getBike()==elecBike);
@@ -148,7 +149,7 @@ public class ParkingSlotTest {
 		GPScoordinates location;
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);	
 			ps_1.getBike();		
 		} catch (OutOfBoundsException e){
@@ -161,7 +162,7 @@ public class ParkingSlotTest {
 		GPScoordinates location;
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);	
 			assertTrue("Test de getState pour free", ps_1.getState()==ParkingSlotState.free);
 			ps_1.setState(ParkingSlotState.outOfOrder);
@@ -180,7 +181,7 @@ public class ParkingSlotTest {
 		MechanicalBike mechaBike = (MechanicalBike) BikeFactory.create(BikesType.Mechanical);
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);	
 			ps_1.setBike(elecBike);
 			assertTrue("Test de SetBike pour une electrical bike", ps_1.getBike()==elecBike);
@@ -196,7 +197,7 @@ public class ParkingSlotTest {
 		GPScoordinates location;
 		try {
 			location = new GPScoordinates(40, 50);
-			Station station = new Station(10, location);
+			Station station = new Station(network, 10, location);
 			ParkingSlot ps_1 = new ParkingSlot(station);	
 			String str = ("This is parking slot number " + ps_1.getParkingSlotID() + ", situated within station number " + ps_1.getStation().getStationID() +".");
 			str += "\n";
@@ -214,10 +215,10 @@ public class ParkingSlotTest {
 		try {
 			location1 = new GPScoordinates(40, 50);
 			location2 = new GPScoordinates(10,20);
-			Station station1 = new Station(10, location1);
+			Station station1 = new Station(network, 10, location1);
 			ParkingSlot ps_1 = new ParkingSlot(station1);	
 			ParkingSlot ps_2 = new ParkingSlot(station1);
-			Station station2 = new Station(10, location2);
+			Station station2 = new Station(network, 10, location2);
 			ParkingSlot ps_3 = new ParkingSlot(station2);
 			assertFalse("Test de equals pour deux parking slots d'une même station", ps_1.equals(ps_2));
 			assertTrue("Test de reflexivité", ps_1.equals(ps_1));

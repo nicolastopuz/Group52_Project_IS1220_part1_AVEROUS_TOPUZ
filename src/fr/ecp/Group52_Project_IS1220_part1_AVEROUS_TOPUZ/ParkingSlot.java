@@ -79,7 +79,7 @@ public class ParkingSlot implements VisitableItems{
 		this.parkingSlotID = station.getParkingCounter();
 		station.countUp();
 		this.station = station;
-		this.state = ParkingSlotState.free;
+		this.state = ParkingSlotState.taken;
 		this.bike = bike;
 		this.lastChange = LocalDateTime.now();
 		this.timeOfOccupation =0;

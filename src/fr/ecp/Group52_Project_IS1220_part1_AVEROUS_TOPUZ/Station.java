@@ -143,12 +143,14 @@ public class Station implements VisitableItems, Observable {
 			this.location = location;
 			this.parkingSlots = new ArrayList<ParkingSlot>();
 			for (int i = 0; i < numberOfSlots; i++) {
-				this.parkingSlots.add(new ParkingSlot(this));
 				if(i < numberOfBikes*mechanicalBikeProportion) {
-					this.parkingSlots.get(i).setBike( network.createBike(BikesType.Mechanical) );
+					this.parkingSlots.add(new ParkingSlot(this, network.createBike(BikesType.Mechanical)));
 				}
 				else if (i < numberOfBikes) {
-					this.parkingSlots.get(i).setBike( network.createBike(BikesType.Electrical) );	
+					this.parkingSlots.add(new ParkingSlot(this, network.createBike(BikesType.Electrical)));
+				}
+				else {
+					this.parkingSlots.add(new ParkingSlot(this));
 				}
 			}
 			this.isOnline = true;

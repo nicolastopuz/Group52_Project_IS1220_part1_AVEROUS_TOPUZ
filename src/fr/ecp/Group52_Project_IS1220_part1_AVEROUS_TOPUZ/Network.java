@@ -31,6 +31,14 @@ public class Network implements VisitableItems {
 	 */
 	protected ArrayList<Bike> bikeList;
 	
+	/**
+	 * The constructor for making a Network instance.
+	 */
+	public Network() {
+		this.bikeList = new ArrayList<Bike>();
+		this.stationList = new ArrayList<Station>();
+		this.userList = new ArrayList<User>();
+	}
 	
 	/**
 	 * The constructor for making a Network instance. 
@@ -45,9 +53,9 @@ public class Network implements VisitableItems {
 		Double d = (slotsPerStation*fillingPercentage);
 		int bikesPerStation = d.intValue();
 		
-		ArrayList<Bike> bikeList = new ArrayList<Bike>();
-		ArrayList<Station> stationList = new ArrayList<Station>();
-		ArrayList<User> userList = new ArrayList<User>();
+		this.userList = new ArrayList<User>();
+		this.stationList = new ArrayList<Station>();
+		this.bikeList = new ArrayList<Bike>();
 		
 		for (int i = 0; i < numberOfStations; i++) {
 			try {
@@ -59,11 +67,7 @@ public class Network implements VisitableItems {
 			catch(InvalidProportionsException e) {
 				e.printStackTrace();
 			}
-		}
-		
-		this.userList = new ArrayList<User>();
-		this.stationList = new ArrayList<Station>();
-		this.bikeList = new ArrayList<Bike>();
+		}	
 	}
 	
 	/**
