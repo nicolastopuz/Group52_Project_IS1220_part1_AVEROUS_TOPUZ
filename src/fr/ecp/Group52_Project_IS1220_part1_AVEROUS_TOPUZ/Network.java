@@ -45,6 +45,10 @@ public class Network implements VisitableItems {
 		Double d = (slotsPerStation*fillingPercentage);
 		int bikesPerStation = d.intValue();
 		
+		ArrayList<Bike> bikeList = new ArrayList<Bike>();
+		ArrayList<Station> stationList = new ArrayList<Station>();
+		ArrayList<User> userList = new ArrayList<User>();
+		
 		for (int i = 0; i < numberOfStations; i++) {
 			try {
 				Station s = this.createStation(slotsPerStation, GPScoordinates.randomLocation(), bikesPerStation, 0.7f);
@@ -69,9 +73,8 @@ public class Network implements VisitableItems {
 	 * @return	the new Station object
 	 */
 	public Station createStation(int numberOfSlots, GPScoordinates location) {
-		Station s = new Station(numberOfSlots, location);
+		Station s = new Station(this, numberOfSlots, location);
 		this.addStation(s);
-		s.setNetwork(this);
 		return s;
 	}
 	/**
@@ -85,9 +88,8 @@ public class Network implements VisitableItems {
 	 * @throws InvalidProportionsException
 	 */
 	public Station createStation(int numberOfSlots, GPScoordinates location, int numberOfBikes, float mechanicalBikeProportion) throws MoreBikesThanSlotsException, InvalidProportionsException {
-		Station s = new Station(numberOfSlots, location, numberOfBikes, mechanicalBikeProportion);
+		Station s = new Station(this, numberOfSlots, location, numberOfBikes, mechanicalBikeProportion);
 		this.addStation(s);
-		s.setNetwork(this);
 		return s;
 	}
 	
