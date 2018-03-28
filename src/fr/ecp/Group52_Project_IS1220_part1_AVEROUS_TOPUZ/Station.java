@@ -254,12 +254,13 @@ public class Station implements VisitableItems, Observable {
 		else {
 			int l = this.parkingSlots.size();
 			int i = 0;
+			
 			boolean isFree = false;
 			while(i<l && !isFree) {
 				isFree = parkingSlots.get(i).isFree();
 				i++;
 			}	
-			return this.parkingSlots.get(i);
+			return this.parkingSlots.get(i-1);
 		}
 	}
 	
@@ -319,7 +320,7 @@ public class Station implements VisitableItems, Observable {
 				isBike = parkingSlots.get(i).isBike();
 				i++;
 			}
-			return parkingSlots.get(i);
+			return parkingSlots.get(i-1);
 		}
 	}
 	
