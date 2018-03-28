@@ -49,9 +49,6 @@ public class Network implements VisitableItems {
 			try {
 				Station s = this.createStation(slotsPerStation, GPScoordinates.randomLocation(), bikesPerStation, 0.7f);
 			}
-			catch(OutOfBoundsException e) {
-				e.printStackTrace();
-			}
 			catch(MoreBikesThanSlotsException e) {
 				e.printStackTrace();
 			}

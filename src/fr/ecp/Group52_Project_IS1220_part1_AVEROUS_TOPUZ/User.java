@@ -131,6 +131,7 @@ public class User implements VisitableItems, Observer {
 		this.onARide=false;
 		this.rides=new ArrayList<Ride>();
 		this.timeCredit = 0;
+		this.position = GPScoordinates.randomLocation();
 	}
 
 
@@ -146,6 +147,7 @@ public class User implements VisitableItems, Observer {
 		this.card=CardFactory.create(this, type);
 		this.rides=new ArrayList<Ride>();
 		this.timeCredit = 0;
+		this.position = GPScoordinates.randomLocation();
 	}
 
 
