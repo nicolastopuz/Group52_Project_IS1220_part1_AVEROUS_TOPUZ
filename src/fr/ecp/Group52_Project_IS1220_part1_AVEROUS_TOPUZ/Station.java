@@ -278,6 +278,25 @@ public class Station implements VisitableItems, Observable {
 	}
 	
 	/**
+	 * This method tells if there is an available bicycle of type <code>type</type> in the station.
+	 * It checks all parking slots, and returns <code>true</code> if one of them has 
+	 * an available bicycle, <code>false</code> if there is none. 
+	 * 
+	 * @param	type	The type of bike to check upon.
+	 * @return <code>true</code> if there is an available bicycle, <code>false</code> if not
+	 */
+	public boolean isAvailableBicycle(BikesType type) {
+		int l = this.parkingSlots.size();
+		int i = 0;
+		boolean isBike = false;
+		while(i<l && !isBike) {
+			isBike = parkingSlots.get(i).isBike(type);
+			i++;
+		}
+		return isBike;
+	}
+	
+	/**
 	 * This method must be used after checking that there is indeed an available
 	 * bicycle in the station. It then returns the parking slot on which the
 	 * available bicycle is stationed.
@@ -294,6 +313,30 @@ public class Station implements VisitableItems, Observable {
 			boolean isBike = false;
 			while(i<l && !isBike) {
 				isBike = parkingSlots.get(i).isBike();
+				i++;
+			}
+			return parkingSlots.get(i);
+		}
+	}
+	
+	/**
+	 * This method must be used after checking that there is indeed an available
+	 * bicycle of type <code>type</type> in the station. It then returns the parking slot on which the
+	 * available bicycle is stationed.
+	 * 
+	 * @param 	type	The type of bike the user wants to get
+	 * @return	a parking slot with an available bike in the station
+	 */
+	public ParkingSlot getAvailableBicycle(BikesType type) throws NoAvailableBikeException {
+		if(!this.isAvailableBicycle(type)) {
+			throw new NoAvailableBikeException();
+		}
+		else {
+			int l = this.parkingSlots.size();
+			int i = 0;
+			boolean isBike = false;
+			while(i<l && !isBike) {
+				isBike = parkingSlots.get(i).isBike(type);
 				i++;
 			}
 			return parkingSlots.get(i);
