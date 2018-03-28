@@ -74,7 +74,7 @@ public class GPScoordinates {
 	 * @return a GPScoordinates object, with random coordinates.
 	 * @throws OutOfBoundsException
 	 */
-	public static GPScoordinates randomLocation() throws OutOfBoundsException{
+	public static GPScoordinates randomLocation() {
 		Random randomGenerator = new Random();
 		double randomLatitude = 0, randomLongitude = 0;
 		int plusOrMinus = randomGenerator.nextInt(1);
@@ -93,7 +93,14 @@ public class GPScoordinates {
 			randomLongitude = randomGenerator.nextInt(180);
 		}
 		
-		return new GPScoordinates(randomLatitude, randomLongitude);
+		GPScoordinates coord = null;		
+		try {
+			coord = new GPScoordinates(randomLatitude, randomLongitude);
+		}
+		catch(OutOfBoundsException e) {
+			e.printStackTrace();
+		}
+		return coord;
 	}
 	
 	//Autres m�thodes
