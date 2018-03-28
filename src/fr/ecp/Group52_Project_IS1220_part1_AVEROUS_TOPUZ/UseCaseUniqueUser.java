@@ -14,7 +14,7 @@ public class UseCaseUniqueUser {
 	public static void main(String[] args) {
 		Network n = new Network(10,10,0.7f);
 		n.createUser("Pierre");
-		
+		System.out.println(n.getUserList().get(0));
 		
 	}
 
