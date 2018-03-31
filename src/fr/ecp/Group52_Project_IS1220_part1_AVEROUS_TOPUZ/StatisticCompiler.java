@@ -63,7 +63,7 @@ public class StatisticCompiler implements StatisticVisitor {
 	public String visit(Network n) {
 		if (this.sortingMethod==NetworkStatisticsSortingMethods.MostUsed) {
 			ArrayList<ArrayList<Double>> stations = new ArrayList<ArrayList<Double>>();
-			ArrayList<ArrayList<Double>>  sortedStations = new ArrayList<ArrayList<Double>>();
+			ArrayList<ArrayList<Double>> sortedStations = new ArrayList<ArrayList<Double>>();
 			for (Station s : n.getStationList()) {
 				ArrayList<Double> paire= new ArrayList<Double>();
 				paire.add(s.getStationID());

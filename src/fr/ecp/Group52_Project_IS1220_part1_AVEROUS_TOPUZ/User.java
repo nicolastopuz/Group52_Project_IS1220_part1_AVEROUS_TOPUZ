@@ -102,7 +102,7 @@ public class User implements VisitableItems, Observer {
 	/**
 	 * The user preference for which path should be taken (fastest/shortest)
 	 */
-	protected PathPreferenceVisitor pathPreference;
+	protected PathPreferences pathPreference;
 	
 	/**
 	 * An ArrayList of Rides to keep the record of all the rides performed by the user
@@ -210,7 +210,7 @@ public class User implements VisitableItems, Observer {
 	 * @param arrivalStationPreference	The Preference the user has in the nature of the arrival station
 	 * @param pathPreference	The preference the user has concerning the path to take to reach his goal
 	 */
-	public void goTo(GPScoordinates arrival, ArrivalStationPreferenceVisitable arrivalStationPreference, PathPreferenceVisitor pathPreference) {
+	public void goTo(GPScoordinates arrival, ArrivalStationPreferenceVisitable arrivalStationPreference, PathPreferences pathPreference) {
 		this.arrival = arrival;
 		this.arrivalStationPreference = arrivalStationPreference;
 		this.pathPreference = pathPreference;
@@ -228,7 +228,7 @@ public class User implements VisitableItems, Observer {
 	 * @param arrival	The GPScoordinates of where the user wishes to go to
 	 */
 	public void goTo(GPScoordinates arrival) {
-		this.goTo(arrival, new NoPreference(), new FastestPath());
+		this.goTo(arrival, new NoPreference(), PathPreferences.Fastest);
 	}
 	
 	

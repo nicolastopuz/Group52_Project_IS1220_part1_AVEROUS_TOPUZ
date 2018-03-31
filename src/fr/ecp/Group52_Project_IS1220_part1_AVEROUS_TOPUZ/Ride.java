@@ -98,15 +98,15 @@ public class Ride {
 	 * @param arrivalStationPreference	The preference for the arrival Station (plus station or not)
 	 * @param pathPreference	The preference in the path to be taken to the arrival (Fastest or Shortest)
 	 */
-	public Ride(User user, GPScoordinates arrival, ArrayList<Station> allStations, ArrivalStationPreferenceVisitable arrivalStationPreference, PathPreferenceVisitor pathPreference) {
+	public Ride(User user, GPScoordinates arrival, ArrayList<Station> allStations, ArrivalStationPreferenceVisitable arrivalStationPreference, PathPreferences preference) {
 		this.user = user; 
 		this.departure=user.getPosition();
 		this.arrival = arrival;
 		this.allStations = allStations;
 		this.arrivalStationPreference = arrivalStationPreference;
-		this.pathPreference = pathPreference;
+		this.pathPreference = preference.getPathPreference();
 		this.pathPreference.setRide(this);
-		Station[] departureAndArrival = pathPreference.departureAndArrival();
+		Station[] departureAndArrival = this.pathPreference.departureAndArrival();
 		this.departureStation = departureAndArrival[0];
 		this.arrivalStation = departureAndArrival[1];
 	}

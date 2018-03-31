@@ -41,7 +41,6 @@ public class ShortestPath implements PathPreferenceVisitor {
 		this.walk = new Walking();
 		this.elec = new ElectricalBiking();
 		this.meca = new MecanicalBiking();
-		this.departureAndArrival = this.departureAndArrival();
 	}
 	
 	

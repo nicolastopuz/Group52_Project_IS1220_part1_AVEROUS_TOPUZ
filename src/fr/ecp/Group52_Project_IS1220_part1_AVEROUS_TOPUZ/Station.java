@@ -109,6 +109,9 @@ public class Station implements VisitableItems, Observable {
 	 * @param location	the location of the station, as GPScoordinates.
 	 */
 	public Station(Network network, int numberOfSlots, GPScoordinates location) {
+		this.departureObserverList = new ArrayList<Observer>();
+		this.arrivalObserverList = new ArrayList<Observer>();
+		
 		this.network = network;
 		this.stationID = Station.stationCounter;
 		Station.stationCounter++;
@@ -133,6 +136,9 @@ public class Station implements VisitableItems, Observable {
 	 * @param mechanicalBikeProportion	the proportion of mechanical bikes to create, as a float between 0 and 1
 	 */
 	public Station(Network network, int numberOfSlots, GPScoordinates location, int numberOfBikes, float mechanicalBikeProportion) throws MoreBikesThanSlotsException, InvalidProportionsException{
+		this.departureObserverList = new ArrayList<Observer>();
+		this.arrivalObserverList = new ArrayList<Observer>();
+		
 		if(numberOfBikes>numberOfSlots || numberOfBikes<0) {throw new MoreBikesThanSlotsException();}
 		else if(mechanicalBikeProportion>1 || mechanicalBikeProportion<0) {throw new InvalidProportionsException();}
 		else {
