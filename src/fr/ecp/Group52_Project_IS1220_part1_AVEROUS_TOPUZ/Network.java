@@ -2,7 +2,10 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
 import java.util.ArrayList;
 
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.*;
+import org.omg.CORBA.DynAnyPackage.Invalid;
+
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidProportionsException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.MoreBikesThanSlotsException;
 
 /**
  * The myVelib global network. It contains all users, all stations,
@@ -49,25 +52,28 @@ public class Network implements VisitableItems {
 	 * @param slotsPerStation	The number of parking slots to build within each station, as an int
 	 * @param fillingPercentage	The filling rate of each station with bikes, as a double
 	 */
-	public Network(int numberOfStations, int slotsPerStation, double fillingPercentage) {
-		Double d = (slotsPerStation*fillingPercentage);
-		int bikesPerStation = d.intValue();
-		
-		this.userList = new ArrayList<User>();
-		this.stationList = new ArrayList<Station>();
-		this.bikeList = new ArrayList<Bike>();
-		
-		for (int i = 0; i < numberOfStations; i++) {
-			try {
-				Station s = this.createStation(slotsPerStation, GPScoordinates.randomLocation(), bikesPerStation, 0.7f);
-			}
-			catch(MoreBikesThanSlotsException e) {
-				e.printStackTrace();
-			}
-			catch(InvalidProportionsException e) {
-				e.printStackTrace();
-			}
-		}	
+	public Network(int numberOfStations, int slotsPerStation, double fillingPercentage) throws InvalidProportionsException{
+		if(fillingPercentage<0 || fillingPercentage>1) {throw new InvalidProportionsException();}
+		else {			
+			Double d = (slotsPerStation*fillingPercentage);
+			int bikesPerStation = d.intValue();
+						
+			this.userList = new ArrayList<User>();
+			this.stationList = new ArrayList<Station>();
+			this.bikeList = new ArrayList<Bike>();
+			
+			for (int i = 0; i < numberOfStations; i++) {
+				try {
+					Station s = this.createStation(slotsPerStation, GPScoordinates.randomLocation(), bikesPerStation, 0.7f);
+				}
+				catch(MoreBikesThanSlotsException e) {
+					e.printStackTrace();
+				}
+				catch(InvalidProportionsException e) {
+					e.printStackTrace();
+				}
+			}	
+		}
 	}
 	
 	/**
