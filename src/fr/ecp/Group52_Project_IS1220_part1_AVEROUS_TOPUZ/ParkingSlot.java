@@ -144,6 +144,7 @@ public class ParkingSlot implements VisitableItems{
 				} catch (NoRideException e) {
 					e.printStackTrace();
 				}
+			u.setBehavior(new Walking());
 			}
 		}	
 	}
@@ -160,6 +161,12 @@ public class ParkingSlot implements VisitableItems{
 		if (!u.isOnARide()) {throw new NoRideException();}
 		else {
 			u.setBike(this.bike);
+			if (this.bike.getType()==BikesType.Electrical) {
+				u.setBehavior(new ElectricalBiking());
+			}
+			else if(this.bike.getType()==BikesType.Mechanical) {
+				u.setBehavior(new MecanicalBiking());
+			}
 			this.bike = null;
 			this.state = ParkingSlotState.free;
 			this.station.setAvailableBikeNumber(this.station.getAvailableBikeNumber()-1);
