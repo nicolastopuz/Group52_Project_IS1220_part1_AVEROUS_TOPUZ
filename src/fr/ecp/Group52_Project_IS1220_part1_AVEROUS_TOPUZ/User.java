@@ -155,7 +155,7 @@ public class User implements VisitableItems, Observer {
 	 * Method for user to pick up a Bike at a given Station. 
 	 * @param s	The station from which the user should pick up the bike from.
 	 */
-	public void takeBike(Station s) {
+	public synchronized void takeBike(Station s) {
 		try {
 			ParkingSlot p = s.getAvailableBicycle();
 			p.giveBike(this);
@@ -176,7 +176,7 @@ public class User implements VisitableItems, Observer {
 	 * Method for User to drop off a Bike at a given Station.
 	 * @param s The station where the Bike should be dropped off to.
 	 */
-	public void dropBike(Station s) {
+	public synchronized void dropBike(Station s) {
 		try {
 			ParkingSlot p = s.getFreeSlot();
 			p.acceptBike(this);
@@ -229,6 +229,25 @@ public class User implements VisitableItems, Observer {
 	 */
 	public void goTo(GPScoordinates arrival) {
 		this.goTo(arrival, new NoPreference(), PathPreferences.Fastest);
+	}
+	
+	/**
+	 * A method allowing the user to actually do the planified ride 
+	 * @throws NoRideException
+	 */
+	public void doTheRide() throws NoRideException {
+		if (this.ride==null) {
+			throw new NoRideException();
+		}
+		else {
+			Thread t1 = new Thread(this.ride);
+			try {
+				t1.start();
+				t1.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Nicolas Topuz
  * @since 1.0
  */
-public class Ride {
+public class Ride implements Runnable {
 	//Class Attributes start here
 	/**
 	 * The coordinates from which the user starts his ride.
@@ -455,6 +455,40 @@ public class Ride {
 	@Override
 	public int hashCode() {
 		return (int) (41*(41+this.bike.hashCode() + this.arrivalStation.hashCode()));
+	}
+
+	/**
+	 * This method overrides the run method and actually implements the ride taking place
+	 */
+	@Override
+	public void run() {
+		try {
+			System.out.println("The user "+this.user.getName()+" starts the ride.");
+			this.deplacement(this.user,this.user.getPosition(),this.departureStation.getLocation());
+			this.user.takeBike(this.departureStation);
+			System.out.println("The user "+this.user.getName()+" gets a bike.");
+			this.deplacement(this.user, this.departureStation.getLocation(), this.arrivalStation.getLocation());
+			this.user.dropBike(this.arrivalStation);
+			System.out.println("The user "+this.user.getName()+" drops the bike.");
+			this.deplacement(this.user, this.arrivalStation.getLocation(), this.arrival);
+			System.out.println("The user has finished the ride.");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * This method implements a deplacement from a user from a point to another.
+	 * @param u A user object : the user realizing the deplacement
+	 * @param departure A GPScoordinate object : the departure point
+	 * @param arrival A GPScoordinate object : the arrival point
+	 * @throws InterruptedException
+	 */
+	public void deplacement(User u,GPScoordinates departure,GPScoordinates arrival) throws InterruptedException {
+		double distance = GPScoordinates.distanceAB(departure, arrival);
+		double vitesse = u.getBehavior().getSpeed();
+		double time = distance/vitesse;
+		Thread.sleep((long) time);
 	}
 	
 }
