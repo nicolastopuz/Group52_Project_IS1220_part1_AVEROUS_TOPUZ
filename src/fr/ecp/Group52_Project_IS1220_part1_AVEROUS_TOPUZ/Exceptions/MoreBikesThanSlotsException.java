@@ -15,4 +15,9 @@ public class MoreBikesThanSlotsException extends Exception {
 	public MoreBikesThanSlotsException() {
 		super();
 	}
+	
+	@Override
+	public void printStackTrace() {
+		System.out.println("Impossible to create station. There are not enough slots for this number of bikes.");
+	}
 }

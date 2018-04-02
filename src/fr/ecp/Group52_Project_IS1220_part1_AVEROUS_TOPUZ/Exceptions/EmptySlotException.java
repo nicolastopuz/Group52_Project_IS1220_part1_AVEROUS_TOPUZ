@@ -16,4 +16,9 @@ public class EmptySlotException extends Exception {
 	public EmptySlotException() {
 		super();
 	}
+	
+	@Override
+	public void printStackTrace() {
+		System.out.println("There is no bike here.");
+	}
 }

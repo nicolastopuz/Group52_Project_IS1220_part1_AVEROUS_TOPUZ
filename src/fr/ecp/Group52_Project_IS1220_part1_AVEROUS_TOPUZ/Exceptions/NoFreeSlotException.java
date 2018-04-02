@@ -16,4 +16,9 @@ public class NoFreeSlotException extends Exception {
 	public NoFreeSlotException() {
 		super();
 	}
+	
+	@Override
+	public void printStackTrace() {
+		System.out.println("There is no free slot here.");
+	}
 }

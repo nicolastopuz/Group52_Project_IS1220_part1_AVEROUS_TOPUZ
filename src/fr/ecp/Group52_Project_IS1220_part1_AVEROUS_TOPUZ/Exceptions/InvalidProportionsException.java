@@ -15,4 +15,9 @@ public class InvalidProportionsException extends Exception {
 	public InvalidProportionsException() {
 		super();
 	}
+	
+	@Override
+	public void printStackTrace() {
+		System.out.println("Proportions are incoherent. Could not create station.");
+	}
 }

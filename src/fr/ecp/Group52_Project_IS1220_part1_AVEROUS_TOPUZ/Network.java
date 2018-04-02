@@ -35,9 +35,27 @@ public class Network implements VisitableItems {
 	protected ArrayList<Bike> bikeList;
 	
 	/**
+	 * A string to store the name of the network
+	 */
+	protected String name;
+	
+	/**
+	 * each network's ID
+	 */
+	protected int networkID;
+	
+	/**
+	 * A counter to guarantee each network has a unique ID
+	 */
+	protected static int networkCounter;
+	
+	/**
 	 * The constructor for making a Network instance.
 	 */
-	public Network() {
+	public Network(String name) {
+		this.name = name;
+		networkCounter++;
+		this.networkID = networkCounter;
 		this.bikeList = new ArrayList<Bike>();
 		this.stationList = new ArrayList<Station>();
 		this.userList = new ArrayList<User>();
@@ -52,12 +70,15 @@ public class Network implements VisitableItems {
 	 * @param slotsPerStation	The number of parking slots to build within each station, as an int
 	 * @param fillingPercentage	The filling rate of each station with bikes, as a double
 	 */
-	public Network(int numberOfStations, int slotsPerStation, double fillingPercentage) throws InvalidProportionsException{
+	public Network(String name, int numberOfStations, int slotsPerStation, double fillingPercentage) throws InvalidProportionsException{
 		if(fillingPercentage<0 || fillingPercentage>1) {throw new InvalidProportionsException();}
 		else {			
 			Double d = (slotsPerStation*fillingPercentage);
 			int bikesPerStation = d.intValue();
-						
+			
+			this.name = name;
+			networkCounter++;
+			this.networkID = networkCounter;
 			this.userList = new ArrayList<User>();
 			this.stationList = new ArrayList<Station>();
 			this.bikeList = new ArrayList<Bike>();
@@ -168,6 +189,19 @@ public class Network implements VisitableItems {
 	public String accept(StatisticCompiler v) {
 		return v.visit(this);	}
 	
+	/**
+	 * Method to find a station in the Network using its unique ID.
+	 * @param stationID the ID of the station, as an int
+	 * @return	The station whose ID was stationID
+	 */
+	public Station findStation(int stationID) {
+		for(Station station : stationList) {
+			if (station.getStationID() == stationID)
+				return station;
+		}
+		return null;
+	}
+	
 	//Getters
 	
 	/**
@@ -194,6 +228,14 @@ public class Network implements VisitableItems {
 		return bikeList;
 	}
 	
+	/**
+	 * Getter method for the String object containing the name of the network
+	 * @return	The name of the network as a String.
+	 */
+	public String getName() {
+		return this.name;
+	}
+	
 	
 	//Setters
 	/**
@@ -218,6 +260,14 @@ public class Network implements VisitableItems {
 	 */
 	public void setBikeList(ArrayList<Bike> bikeList) {
 		this.bikeList = bikeList;
+	}
+	
+	/**
+	 * Setter method for the name of the network
+	 * @param name	The name of the network as a String
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

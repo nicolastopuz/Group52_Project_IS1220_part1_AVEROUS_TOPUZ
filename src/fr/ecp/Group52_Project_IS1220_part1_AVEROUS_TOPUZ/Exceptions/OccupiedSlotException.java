@@ -17,4 +17,9 @@ public class OccupiedSlotException extends Exception {
 	public OccupiedSlotException() {
 		super();
 	}
+	
+	@Override
+	public void printStackTrace() {
+		System.out.println("There no free slot here.");
+	}
 }

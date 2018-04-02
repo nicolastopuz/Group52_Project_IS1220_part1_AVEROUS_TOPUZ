@@ -13,7 +13,7 @@ public class StatisticCompilerTest {
 	
 	public Network setNetwork() {
 		try {
-			return( new Network(10,10,0.7));
+			return( new Network("network",10,10,0.7));
 		} catch(InvalidProportionsException e) {
 			e.printStackTrace();
 		}

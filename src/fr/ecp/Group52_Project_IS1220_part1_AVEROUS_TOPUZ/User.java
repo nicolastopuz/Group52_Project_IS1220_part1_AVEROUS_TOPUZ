@@ -165,10 +165,13 @@ public class User implements VisitableItems, Observer {
 			this.ride.startOnBike();
 		}
 		catch(EmptySlotException e) {
+			e.printStackTrace();
 		}
 		catch(NoAvailableBikeException e) {
+			e.printStackTrace();
 		}
 		catch(NoRideException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -186,10 +189,13 @@ public class User implements VisitableItems, Observer {
 			this.ride.stopOnBike();
 		}
 		catch(OccupiedSlotException e) {
+			e.printStackTrace();
 		}
 		catch(NoFreeSlotException e) {
+			e.printStackTrace();
 		}
 		catch(NoRideException e) {
+			e.printStackTrace();
 		}
 	}
 	

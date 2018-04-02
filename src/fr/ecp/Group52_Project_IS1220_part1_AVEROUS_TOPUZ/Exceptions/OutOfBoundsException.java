@@ -16,4 +16,9 @@ public class OutOfBoundsException extends Exception {
 	public OutOfBoundsException() {
 		super();
 	}
+	
+	@Override
+	public void printStackTrace() {
+		System.out.println("Entered data is out of bounds.");
+	}
 }

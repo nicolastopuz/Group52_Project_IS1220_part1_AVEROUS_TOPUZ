@@ -14,4 +14,9 @@ public class NoRideException extends Exception {
 	public NoRideException() {
 		super();
 	}
+	
+	@Override
+	public void printStackTrace() {
+		System.out.println("User is not on a ride. Impossible to unlock bike. \nPlease start a ride before trying again.");
+	}
 }

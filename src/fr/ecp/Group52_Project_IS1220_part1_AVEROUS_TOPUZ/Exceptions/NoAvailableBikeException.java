@@ -16,4 +16,9 @@ public class NoAvailableBikeException extends Exception {
 	public NoAvailableBikeException() {
 		super();
 	}
+	
+	@Override
+	public void printStackTrace() {
+		System.out.println("There is no available bike here.");
+	}
 }

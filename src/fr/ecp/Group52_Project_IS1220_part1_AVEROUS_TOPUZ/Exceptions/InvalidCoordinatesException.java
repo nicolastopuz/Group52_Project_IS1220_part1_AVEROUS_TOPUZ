@@ -16,4 +16,9 @@ public class InvalidCoordinatesException extends Exception {
 	public InvalidCoordinatesException() {
 		super();
 	}
+	
+	@Override
+	public void printStackTrace() {
+		System.out.println("GPS coordinates are invalid.");
+	}
 }

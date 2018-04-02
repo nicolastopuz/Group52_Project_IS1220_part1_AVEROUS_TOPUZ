@@ -18,7 +18,7 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.EmptySlotExc
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
 
 public class ParkingSlotTest {
-	Network network = new Network();
+	Network network = new Network("network");
 
 	@Test
 	public void testHashCode() {

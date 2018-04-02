@@ -15,4 +15,9 @@ public class BadCoordinatesSyntaxException extends Exception {
 	public BadCoordinatesSyntaxException() {
 		super();
 	}
+	
+	@Override
+	public void printStackTrace() {
+		System.out.println("The syntax of coordinates was wrong. \nFormat should be DD\"MM'SS,SSS.");
+	}
 }
