@@ -1,10 +1,10 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
 public enum AvailableCommands {
-	setup("setup <networkName> \nsetup <networkName> <nstations> <nslots> <fillingPercentage>", "	 * Command to create a myVelib network named <networkName> and consisting \r\n" + 
+	setup("setup <networkName> \nsetup <networkName> <nstations> <nslots> <sidearea> <fillingPercentage>", "	 * Command to create a myVelib network named <networkName> and consisting \r\n" + 
 			"	 * of <nstations> (default: 10) stations each of which has <nslots> (default :10) parking slots and such that stations \r\n" + 
 			"	 * are initially populated with <fillingPercentage> (default: 70%) bikes randomly equally distrubuted\r\n" + 
-			"	 * in each of the 10 stations."),
+			"	 * in each of the 10 stations. Stations are randomly placed in a square of side <sidearea> in km (default: 4km)"),
 	
 	addUser("addUser <userName> <networkName> \naddUser <userName> <cardType> <networkName>", "	 * Command to add a user named <userName> to the network\r\n" + 
 			"	 * within the network <networkName>, with a card of type <cardType> (default: no card) "),

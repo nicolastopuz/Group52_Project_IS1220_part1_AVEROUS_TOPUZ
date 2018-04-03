@@ -51,6 +51,8 @@ public class Network implements VisitableItems {
 	
 	/**
 	 * The constructor for making a Network instance.
+	 * 
+	 * @param name	The name of the network, as a String
 	 */
 	public Network(String name) {
 		this.name = name;
@@ -64,13 +66,30 @@ public class Network implements VisitableItems {
 	/**
 	 * The constructor for making a Network instance. 
 	 * This constructor creates a Network in which the Stations are located 
-	 * at random on the Earth's surface.
+	 * at random in a square of side <code>4</code> on the earth's surface.
+	 * This is the default constructor for making a Network within a square.
 	 * 
+	 * @param name				The name of the network, as a String
 	 * @param numberOfStations	The number of stations to be built in the network, as an int
 	 * @param slotsPerStation	The number of parking slots to build within each station, as an int
 	 * @param fillingPercentage	The filling rate of each station with bikes, as a double
 	 */
 	public Network(String name, int numberOfStations, int slotsPerStation, double fillingPercentage) throws InvalidProportionsException{
+		this(name, numberOfStations, slotsPerStation, 4, fillingPercentage);
+	}
+	
+	/**
+	 * The constructor for making a Network instance. 
+	 * This constructor creates a Network in which the Stations are located 
+	 * at random in a square of side <code>sideArea</code> on the earth's surface.
+	 * 
+	 * @param name				The name of the network, as a String
+	 * @param numberOfStations	The number of stations to be built in the network, as an int
+	 * @param slotsPerStation	The number of parking slots to build within each station, as an int
+	 * @param sideArea			The side of the square will randomly pop into (in km) as a double
+	 * @param fillingPercentage	The filling rate of each station with bikes, as a double
+	 */
+	public Network(String name, int numberOfStations, int slotsPerStation, double sideArea, double fillingPercentage) throws InvalidProportionsException{
 		if(fillingPercentage<0 || fillingPercentage>1) {throw new InvalidProportionsException();}
 		else {			
 			Double d = (slotsPerStation*fillingPercentage);
@@ -85,7 +104,7 @@ public class Network implements VisitableItems {
 			
 			for (int i = 0; i < numberOfStations; i++) {
 				try {
-					Station s = this.createStation(slotsPerStation, GPScoordinates.randomLocation(), bikesPerStation, 0.7f);
+					Station s = this.createStation(slotsPerStation, GPScoordinates.randomLocation(sideArea), bikesPerStation, 0.7f);
 				}
 				catch(MoreBikesThanSlotsException e) {
 					e.printStackTrace();

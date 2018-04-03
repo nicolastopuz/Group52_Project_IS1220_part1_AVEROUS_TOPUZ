@@ -65,9 +65,9 @@ public class MyVelibCMD {
 				if(allCommands.length == 2) {
 					setup(allCommands[1]);
 				}
-				else if(allCommands.length == 5) {
+				else if(allCommands.length == 6) {
 					try {
-						setup(allCommands[1], Integer.parseInt(allCommands[2]), Integer.parseInt(allCommands[3]), Double.parseDouble(allCommands[4]));
+						setup(allCommands[1], Integer.parseInt(allCommands[2]), Integer.parseInt(allCommands[3]), Double.parseDouble(allCommands[4]), Double.parseDouble(allCommands[5]));
 					} catch (NumberFormatException e) {
 						throw new InvalidSyntaxException();
 					}
@@ -338,7 +338,7 @@ public class MyVelibCMD {
 	 * @param allNetworks		List of all networks, to add the new network to
 	 */
 	public static void setup(String name) {
-		setup(name, 10, 10, 0.7);
+		setup(name, 10, 10, 4, 0.7);
 	}
 	
 	/**
@@ -352,9 +352,9 @@ public class MyVelibCMD {
 	 * @param fillingPercentage	Percentage of slots to fill with bikes
 	 * @param allNetworks		List of all networks, to add the new network to
 	 */
-	public static void setup(String name, int numberOfStations, int slotsPerStation, double fillingPercentage) {
+	public static void setup(String name, int numberOfStations, int slotsPerStation, double sideArea, double fillingPercentage) {
 		try {
-			allNetworks.add(new Network(name, numberOfStations, slotsPerStation, fillingPercentage));
+			allNetworks.add(new Network(name, numberOfStations, slotsPerStation, sideArea, fillingPercentage));
 		}
 		catch( InvalidProportionsException e ) {e.printStackTrace();}
 	}

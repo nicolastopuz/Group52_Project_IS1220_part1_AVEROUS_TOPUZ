@@ -104,6 +104,35 @@ public class GPScoordinates {
 		return coord;
 	}
 	
+	/**
+	 * A simple method that returns a random location in a square of side <code>range</code> 
+	 * on the planet.
+	 *  	
+	 * @return a GPScoordinates object, with random coordinates.
+	 * @param	range	the range in which you want the coordinates to pop, in km.
+	 * @throws OutOfBoundsException
+	 */
+	public static GPScoordinates randomLocation(double range) {
+
+		double randomLatitude = Math.random()*range*0.008983 - 0.008983*range/2;
+		double randomLongitude = Math.random()*range*0.008983 - 0.008983*range/2;
+		
+		/* 
+		 * I here used the fact that moving in latitude by .008983 degrees, is 
+		 * approximately equivalent to moving 1km. So moving range*0.008983 is 
+		 * equivalent to moving by range kilometers on earth's surface.
+		 */
+		
+		GPScoordinates coord = null;		
+		try {
+			coord = new GPScoordinates(randomLatitude, randomLongitude);
+		}
+		catch(OutOfBoundsException e) {
+			e.printStackTrace();
+		}
+		return coord;
+	}
+	
 	//Autres m�thodes
 	/**
 	 * This method calculates the distance in kilometers between
