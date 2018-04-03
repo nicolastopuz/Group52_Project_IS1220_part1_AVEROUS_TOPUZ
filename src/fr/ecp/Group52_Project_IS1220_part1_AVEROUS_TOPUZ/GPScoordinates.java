@@ -4,6 +4,7 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.BadCoordinat
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidCoordinatesException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
 import java.util.Random;
+import java.util.function.LongToIntFunction;
 
 /**
  * This class defines the GPS coordinates of an element. It is here used
@@ -236,6 +237,22 @@ public class GPScoordinates {
 	public double getLongitude() {
 		return this.longitude;
 	}
+	
+	public static GPScoordinates intermediateDistance(GPScoordinates departure, GPScoordinates expectedArrival, double ratio) {
+		double latitudeDifference=expectedArrival.getLatitude()-departure.getLatitude();
+		double longitudeDifference=expectedArrival.getLongitude()-departure.getLongitude();
+		double latitudeAdd=ratio*latitudeDifference;;
+		double longitudeAdd=ratio*longitudeDifference;
+		GPScoordinates result = null;
+		try {
+			result = new GPScoordinates(departure.getLatitude()+latitudeAdd, departure.getLongitude()+longitudeAdd);
+			return result;
+		} catch (OutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 		
 	
 	@Override
@@ -266,5 +283,6 @@ public class GPScoordinates {
 		b = (b>0 ? 2*b : -2*b+1);
 		return (int) (41*(41+(a+b)*(a+b+1)/2+b)); 
 	}
+		
 	
 }
