@@ -472,6 +472,7 @@ public class Ride implements Runnable {
 			System.out.println("The user "+this.user.getName()+" drops the bike.");
 			this.deplacement(this.user, this.arrivalStation.getLocation(), this.arrival);
 			System.out.println("The user has finished the ride.");
+			this.user.setRide(null);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -489,6 +490,7 @@ public class Ride implements Runnable {
 		double vitesse = u.getBehavior().getSpeed();
 		double time = distance/vitesse;
 		Thread.sleep((long) time);
+		u.setPosition(arrival);
 	}
 	
 }
