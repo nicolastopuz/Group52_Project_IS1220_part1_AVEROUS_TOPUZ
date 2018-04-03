@@ -1,4 +1,6 @@
-package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
+//package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
+
+import static org.junit.Assert.assertArrayEquals;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -53,8 +55,12 @@ public class MyVelibCMD {
 	}
 
 	public static void executeCommand(String[] allCommands) throws InvalidSyntaxException {
-		
-		switch (allCommands[0]) {
+		if(allCommands.length == 2) {
+			if(allCommands[1].equals("/h") && whatCommand(allCommands[0])!=null) 
+				help(whatCommand(allCommands[0]));
+		}
+		else {
+			switch (allCommands[0]) {
 			case "setup":
 				if(allCommands.length == 2) {
 					setup(allCommands[1]);
@@ -209,9 +215,14 @@ public class MyVelibCMD {
 			case "exit":
 				exit();
 				break;
+			
+			case "/h":
+				help();
+				break;
 				
 			default:
 				System.out.println("Unknown command.");
+			}
 		}
 	}
 	
@@ -278,6 +289,15 @@ public class MyVelibCMD {
 		return allcmd;
 	}
 	
+	public static AvailableCommands whatCommand(String cmd) {
+		AvailableCommands[] commands = AvailableCommands.values();
+		for (int i = 0; i < commands.length; i++) {
+			if(cmd.equals(commands[i].toString()))
+				return commands[i];
+		}
+		return null;
+	}
+	
 	/**
 	 * Simple method to find a User knowing only his UserID
 	 * @param userID	the ID of the user you wish to find
@@ -311,14 +331,14 @@ public class MyVelibCMD {
 	/**
 	 * command to create a myVelib network with given name and consisting 
 	 * of 10 stations each of which has 10 parking slots and such that stations 
-	 * are arranged on a square grid whose of side 4km and initially populated 
-	 * with a 75% bikes randomly distributed over the 10 stations 	 
+	 * are initially populated with 70% bikes randomly equally distrubuted
+	 * in each of the 10 stations 	 
 	 * 
 	 * @param name the name to be given to the network
 	 * @param allNetworks		List of all networks, to add the new network to
 	 */
 	public static void setup(String name) {
-		setup(name, 10, 10, 0.75);
+		setup(name, 10, 10, 0.7);
 	}
 	
 	/**
@@ -455,5 +475,21 @@ public class MyVelibCMD {
 		input.close();
 	}
 	
+	public static void help() {
+		AvailableCommands[] totalCommands = AvailableCommands.values();
+		System.out.println("----------------- Help -----------------");
+		System.out.println("---- List of all available commands ----\n");
+		for (int i = 0; i < totalCommands.length; i++) {
+			System.out.println(totalCommands[i].getSyntax());
+			System.out.println(totalCommands[i].getDoc());
+			System.out.println();
+		}
+	}
+	
+	public static void help(AvailableCommands command) {
+		System.out.println("Help on command "+command);
+		System.out.println(command.getSyntax());
+		System.out.println(command.getDoc());
+	}
 }	
 	
