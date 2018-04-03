@@ -52,10 +52,4 @@ public interface Observable {
 	 * arrival of a ride.
 	 */
 	public void notifyAllArrivalObservers() throws NoRideException;
-	
-	/**
-	 * Method to notify an Observers of a station.
-	 */
-	public void notifyObserver(Observer obs) throws NoRideException;
-
 }

@@ -248,7 +248,8 @@ public class Ride implements Runnable {
 	 */
 	public void updateArrivalStation() {
 		GPScoordinates userLocation = this.user.getPosition();
-		this.arrivalStation = pathPreference.getUpdateOnArrivalStation(userLocation);		
+		this.arrivalStation = pathPreference.getUpdateOnArrivalStation(userLocation);	
+		this.user.setArrivalOfRide(this.arrivalStation);
 	}
 	
 	//Les Getters
@@ -464,14 +465,23 @@ public class Ride implements Runnable {
 	public void run() {
 		try {
 			System.out.println("The user "+this.user.getName()+" starts the ride.");
+			this.user.setOnARide(true);
+			this.departureStation.addDepartureObserver(user);
+			this.arrivalStation.addArrivalObserver(user);
 			this.deplacement(this.user,this.user.getPosition(),this.departureStation.getLocation());
+			
 			this.user.takeBike(this.departureStation);
 			System.out.println("The user "+this.user.getName()+" gets a bike.");
+			
 			this.deplacement(this.user, this.departureStation.getLocation(), this.arrivalStation.getLocation());
+			
 			this.user.dropBike(this.arrivalStation);
 			System.out.println("The user "+this.user.getName()+" drops the bike.");
+			
 			this.deplacement(this.user, this.arrivalStation.getLocation(), this.arrival);
 			System.out.println("The user has finished the ride.");
+			
+			this.user.addRide(this);
 			this.user.setRide(null);
 		} catch (InterruptedException e) {
 			e.printStackTrace();

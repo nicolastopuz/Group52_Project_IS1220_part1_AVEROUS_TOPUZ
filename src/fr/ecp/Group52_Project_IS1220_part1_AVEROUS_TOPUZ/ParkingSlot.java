@@ -136,15 +136,16 @@ public class ParkingSlot implements VisitableItems{
 			this.bike = u.getBike();
 			u.setBike(null);
 			this.state = ParkingSlotState.taken;
+			
 			this.station.setAvailableBikeNumber(this.station.getAvailableBikeNumber()+1);
 			this.station.setFreeSlotNumber(this.station.getFreeSlotNumber()-1);
+			
 			if(this.station.getFreeSlotNumber() == 0) {
 				try {
 					this.station.notifyAllArrivalObservers();
 				} catch (NoRideException e) {
 					e.printStackTrace();
 				}
-			u.setBehavior(new Walking());
 			}
 		}	
 	}
@@ -161,16 +162,13 @@ public class ParkingSlot implements VisitableItems{
 		if (!u.isOnARide()) {throw new NoRideException();}
 		else {
 			u.setBike(this.bike);
-			if (this.bike.getType()==BikesType.Electrical) {
-				u.setBehavior(new ElectricalBiking());
-			}
-			else if(this.bike.getType()==BikesType.Mechanical) {
-				u.setBehavior(new MecanicalBiking());
-			}
+			
 			this.bike = null;
 			this.state = ParkingSlotState.free;
+			
 			this.station.setAvailableBikeNumber(this.station.getAvailableBikeNumber()-1);
 			this.station.setFreeSlotNumber(this.station.getFreeSlotNumber()+1);
+			
 			if(this.station.getAvailableBikeNumber() == 0) {
 				try {
 					this.station.notifyAllDepartureObservers();

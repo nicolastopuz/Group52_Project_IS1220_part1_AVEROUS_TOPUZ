@@ -198,21 +198,16 @@ public class Station implements VisitableItems, Observable {
 	}
 
 	@Override
-	public void notifyObserver(Observer obs) throws NoRideException {
-		obs.update();
-	}
-
-	@Override
 	public void notifyAllDepartureObservers() throws NoRideException{
 		for (int i = 0; i < departureObserverList.size(); i++) {
-			notifyObserver(departureObserverList.get(i));
+			departureObserverList.get(i).updateDeparture();;
 		}
 	}
 
 	@Override
 	public void notifyAllArrivalObservers() throws NoRideException {
 		for (int i = 0; i < arrivalObserverList.size(); i++) {
-			notifyObserver(arrivalObserverList.get(i));
+			arrivalObserverList.get(i).updateArrival();
 		}
 	}
 	

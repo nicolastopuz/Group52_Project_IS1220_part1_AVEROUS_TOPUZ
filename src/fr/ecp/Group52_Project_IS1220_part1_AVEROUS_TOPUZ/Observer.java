@@ -18,6 +18,9 @@ public interface Observer {
 	 * in his itinerary
 	 * @throws NoRideException
 	 */
-	public void update() throws NoRideException;
+	public void updateDeparture() throws NoRideException;
 
+	public void updateArrival() throws NoRideException;
+
+	
 }

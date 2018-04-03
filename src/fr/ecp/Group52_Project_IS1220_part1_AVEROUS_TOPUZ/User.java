@@ -119,6 +119,7 @@ public class User implements VisitableItems, Observer {
 	 */
 	protected int timeCredit;
 	
+	
 	/**
 	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
 	 * @param name A string defining the name of the user 
@@ -163,6 +164,7 @@ public class User implements VisitableItems, Observer {
 			double numberOfRent = s.getNumberOfRent()+1;
 			s.setNumberOfRent(numberOfRent);
 			this.ride.startOnBike();
+			departureOfRide.removeDepartureObserver(this);
 		}
 		catch(EmptySlotException e) {
 			e.printStackTrace();
@@ -184,9 +186,15 @@ public class User implements VisitableItems, Observer {
 			ParkingSlot p = s.getFreeSlot();
 			p.acceptBike(this);
 			this.behavior = new Walking();
+			
 			double numberOfReturn = s.getNumberOfReturn();
-			s.setNumberOfReturn(numberOfReturn);
+			s.setNumberOfReturn(numberOfReturn+1);
+			s.removeArrivalObserver(this);
+			
 			this.ride.stopOnBike();
+			
+			this.ride.proceedCreditAttribution();
+			this.ride.proceedPayment();
 		}
 		catch(OccupiedSlotException e) {
 			e.printStackTrace();
@@ -200,9 +208,23 @@ public class User implements VisitableItems, Observer {
 	}
 	
 	@Override
-	public void update() throws NoRideException {
+	public void updateDeparture() throws NoRideException {
 		if(this.isOnARide()) {
+			this.arrivalOfRide.removeArrivalObserver(this);
+			this.departureOfRide.removeDepartureObserver(this);
+			this.goTo(arrival, arrivalStationPreference, pathPreference);
+		}
+		else {
+			throw new NoRideException();
+		}
+	}
+	
+	@Override
+	public void updateArrival() throws NoRideException {
+		if(this.isOnARide()) {
+			this.arrivalOfRide.removeArrivalObserver(this);
 			this.ride.updateArrivalStation();
+			this.arrivalOfRide.addArrivalObserver(this);
 		}
 		else {
 			throw new NoRideException();
@@ -221,11 +243,8 @@ public class User implements VisitableItems, Observer {
 		this.arrivalStationPreference = arrivalStationPreference;
 		this.pathPreference = pathPreference;
 		this.ride = new Ride(this, arrival, this.network.getStationList(), arrivalStationPreference, pathPreference);
-		this.setOnARide(true);
 		this.departureOfRide = this.ride.getDepartureStation();
 		this.arrivalOfRide = this.ride.getArrivalStation();
-		departureOfRide.addDepartureObserver(this);
-		arrivalOfRide.addArrivalObserver(this);
 	}
 	
 	/**
@@ -330,8 +349,87 @@ public class User implements VisitableItems, Observer {
 		return network;
 	}
 	
+	/**
+	 * A getter returning the arrival Station for the ride the User is on
+	 * @return	the arrival Station for the ride the User is on
+	 */
+	public Station getArrivalOfRide() {
+		return arrivalOfRide;
+	}
+	
+	/**
+	 * A getter returning the departure Station for the ride the User is on
+	 * @return	the departure Station for the ride the User is on
+	 */
+	public Station getDepartureOfRide() {
+		return departureOfRide;
+	}
+	
+	/**
+	 * A getter for the arrival station preference of the user
+	 * @return	the arrival station preference of the user
+	 */
+	public ArrivalStationPreferenceVisitable getArrivalStationPreference() {
+		return arrivalStationPreference;
+	}
+	
+	/**
+	 * A getter returning the arrival location (the place the user wants to go to)
+	 * @return	the arrival location (the place the user wants to go to)
+	 */
+	public GPScoordinates getArrival() {
+		return arrival;
+	}
+	
+	/**
+	 * A getter for the path preference of the user
+	 * @return	the path preference of the user
+	 */
+	public PathPreferences getPathPreference() {
+		return pathPreference;
+	}
 	
 	//Setters
+	
+	/**
+	 * A setter for the arrival Station of the User
+	 * @param	the arrival Station of the User
+	 */
+	public void setArrivalOfRide(Station arrivalOfRide) {
+		this.arrivalOfRide = arrivalOfRide;
+	}
+	
+	/**
+	 * A setter for the departure Station of the User
+	 * @param	the departure Station of the User
+	 */
+	public void setDepartureOfRide(Station departureOfRide) {
+		this.departureOfRide = departureOfRide;
+	}
+	
+	/**
+	 * A setter for the path preference of the User
+	 * @param	the path preference of the User
+	 */
+	public void setPathPreference(PathPreferences pathPreference) {
+		this.pathPreference = pathPreference;
+	}
+	
+	/**
+	 * A setter for the arrival station preference of the User
+	 * @param	the arrival station preference of the User
+	 */
+	public void setArrivalStationPreference(ArrivalStationPreferenceVisitable arrivalStationPreference) {
+		this.arrivalStationPreference = arrivalStationPreference;
+	}
+	
+	/**
+	 * A setter for the arrival location of the User
+	 * @param	the arrival location of the User
+	 */
+	public void setArrival(GPScoordinates arrival) {
+		this.arrival = arrival;
+	}
 	
 	/**
 	 * A setter to change the name of the user 
