@@ -1,5 +1,7 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -496,11 +498,22 @@ public class Ride implements Runnable {
 	 * @throws InterruptedException
 	 */
 	public void deplacement(User u,GPScoordinates departure,GPScoordinates arrival) throws InterruptedException {
+		LocalDateTime departureTime = LocalDateTime.now(); 
 		double distance = GPScoordinates.distanceAB(departure, arrival);
 		double vitesse = u.getBehavior().getSpeed();
 		double time = distance/vitesse;
-		Thread.sleep((long) time);
-		u.setPosition(arrival);
+		try {
+			Thread.sleep((long) time);
+			u.setPosition(arrival);
+		} catch (InterruptedException e) {
+			LocalDateTime interruptionTime = LocalDateTime.now();
+			Duration duration = Duration.between(interruptionTime,departureTime);
+			double travelTime = duration.toMillis();
+			double traveledDistance = vitesse*travelTime;
+			u.setPosition(GPScoordinates.intermediateDistance(departure, arrival, traveledDistance/distance));
+			throw new InterruptedException();	
+		}
+		
 	}
 	
 }

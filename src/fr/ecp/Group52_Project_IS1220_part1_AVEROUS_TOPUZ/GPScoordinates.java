@@ -267,6 +267,13 @@ public class GPScoordinates {
 		return this.longitude;
 	}
 	
+	/**
+	 * A method to know the coordinates of a user who could only partly do a deplacement
+	 * @param departure A GPScoordinates indicating the departure point of the deplacement
+	 * @param expectedArrival A GPScoordinates indicating the departure point of the deplacement
+	 * @param ratio A double indicating what part of the deplacement was achieved
+	 * @return
+	 */
 	public static GPScoordinates intermediateDistance(GPScoordinates departure, GPScoordinates expectedArrival, double ratio) {
 		double latitudeDifference=expectedArrival.getLatitude()-departure.getLatitude();
 		double longitudeDifference=expectedArrival.getLongitude()-departure.getLongitude();
@@ -277,7 +284,6 @@ public class GPScoordinates {
 			result = new GPScoordinates(departure.getLatitude()+latitudeAdd, departure.getLongitude()+longitudeAdd);
 			return result;
 		} catch (OutOfBoundsException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
