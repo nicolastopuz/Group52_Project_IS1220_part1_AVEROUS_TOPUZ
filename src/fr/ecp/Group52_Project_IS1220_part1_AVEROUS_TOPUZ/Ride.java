@@ -511,6 +511,7 @@ public class Ride implements Runnable {
 			double travelTime = duration.toMillis();
 			double traveledDistance = vitesse*travelTime;
 			u.setPosition(GPScoordinates.intermediateDistance(departure, arrival, traveledDistance/distance));
+			System.out.println("L'interruption de déplacement marche.\n");
 			throw new InterruptedException();	
 		}
 		

@@ -119,6 +119,11 @@ public class User implements VisitableItems, Observer {
 	 */
 	protected int timeCredit;
 	
+	/**
+	 * A Thread stocking the travel being done by the user
+	 */
+	protected Thread travel;
+	
 	
 	/**
 	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
@@ -210,6 +215,7 @@ public class User implements VisitableItems, Observer {
 	@Override
 	public void updateDeparture() throws NoRideException {
 		if(this.isOnARide()) {
+			this.travel.interrupt();
 			this.arrivalOfRide.removeArrivalObserver(this);
 			this.departureOfRide.removeDepartureObserver(this);
 			this.goTo(arrival, arrivalStationPreference, pathPreference);
@@ -222,6 +228,7 @@ public class User implements VisitableItems, Observer {
 	@Override
 	public void updateArrival() throws NoRideException {
 		if(this.isOnARide()) {
+			this.travel.interrupt();
 			this.arrivalOfRide.removeArrivalObserver(this);
 			this.ride.updateArrivalStation();
 			this.arrivalOfRide.addArrivalObserver(this);
@@ -265,12 +272,14 @@ public class User implements VisitableItems, Observer {
 			throw new NoRideException();
 		}
 		else {
-			Thread t1 = new Thread(this.ride);
+			this.travel = new Thread(this.ride);
 			try {
-				t1.start();
-				t1.join();
+				travel.start();
+				travel.join();
+				travel = null;
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				System.out.println("The ride has been interrupted.\n");
 			}
 		}
 	}
