@@ -42,4 +42,13 @@ public interface PathPreferenceVisitor {
 	 */
 	public void setRide(Ride ride);
 	
+	
+	/**
+	 * Getter for Departure and Arrival stations of the optimized ride, 
+	 * in a size 2 array. in position [0] is departure Station, position
+	 * [1] is arrival Station.
+	 * @return	the departure and arrival stations as a size 2 array.
+	 */
+	public Station[] getDepartureAndArrival();
+	
 }

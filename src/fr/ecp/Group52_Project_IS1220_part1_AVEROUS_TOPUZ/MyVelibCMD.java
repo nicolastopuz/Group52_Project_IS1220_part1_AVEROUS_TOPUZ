@@ -46,6 +46,7 @@ public class MyVelibCMD {
 			allCommands = readcmd(arg);
 			
 			allCommands[0] = allCommands[0].toLowerCase(); //change to Lower Case to make it easier to compare
+
 			try {
 				executeCommand(allCommands);
 			} catch( InvalidSyntaxException e ) {
@@ -55,11 +56,10 @@ public class MyVelibCMD {
 	}
 
 	public static void executeCommand(String[] allCommands) throws InvalidSyntaxException {
-		if(allCommands.length == 2) {
-			if(allCommands[1].equals("/h") && whatCommand(allCommands[0])!=null) 
-				help(whatCommand(allCommands[0]));
+		if(allCommands.length == 2 && allCommands[1].equals("/h") && whatCommand(allCommands[0])!=null) {
+			help(whatCommand(allCommands[0]));
 		}
-		else {
+		else {			
 			switch (allCommands[0]) {
 			case "setup":
 				if(allCommands.length == 2) {
@@ -292,7 +292,7 @@ public class MyVelibCMD {
 	public static AvailableCommands whatCommand(String cmd) {
 		AvailableCommands[] commands = AvailableCommands.values();
 		for (int i = 0; i < commands.length; i++) {
-			if(cmd.equals(commands[i].toString()))
+			if(cmd.equals(commands[i].toString().toLowerCase()))
 				return commands[i];
 		}
 		return null;
@@ -303,13 +303,13 @@ public class MyVelibCMD {
 	 * @param userID	the ID of the user you wish to find
 	 * @return	the User whose ID is userID (null if noone has this ID)
 	 */
-	public static User findUser(int userID) {
+	public static User findUser(int userID) throws NoSuchUserException {
 		for(User u : allUsers) {
 			if (u.getNumericalId()==userID) {
 				return u;
 			}
 		}
-		return null;
+		throw new NoSuchUserException();
 	}
 	
 	/**
@@ -317,13 +317,13 @@ public class MyVelibCMD {
 	 * @param networkName	the name of the network you wish to find
 	 * @return	the Network whose name is networkName (null if none has this name)
 	 */
-	public static Network findNetwork(String networkName) {
+	public static Network findNetwork(String networkName) throws NoSuchNetworkException {
 		for(Network n : allNetworks) {
 			if (n.getName().equals(networkName)) {
 				return n;
 			}
 		}
-		return null;
+		throw new NoSuchNetworkException();
 	}
 	
 	// Commands for the command prompt
@@ -355,6 +355,7 @@ public class MyVelibCMD {
 	public static void setup(String name, int numberOfStations, int slotsPerStation, double sideArea, double fillingPercentage) {
 		try {
 			allNetworks.add(new Network(name, numberOfStations, slotsPerStation, sideArea, fillingPercentage));
+			System.out.println("Network "+name+" has been setup.");
 		}
 		catch( InvalidProportionsException e ) {e.printStackTrace();}
 	}
@@ -366,7 +367,12 @@ public class MyVelibCMD {
 	 * @param network  the network to which the user should be added
 	 */
 	public static void addUser(String userName, String networkName) {
-		allUsers.add( findNetwork(networkName).createUser(userName) );	
+		try {
+			allUsers.add( findNetwork(networkName).createUser(userName) );	
+			System.out.println("User "+userName+" has been added to network "+networkName+".");
+		} catch (NoSuchNetworkException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -377,7 +383,12 @@ public class MyVelibCMD {
 	 * @param network  the network to which the user should be added
 	 */
 	public static void addUser(String userName, CardTypes cardType, String networkName) {
-		allUsers.add( findNetwork(networkName).createUser(userName, cardType) );	
+		try {
+			allUsers.add( findNetwork(networkName).createUser(userName, cardType) );	
+			System.out.println("User "+userName+" has been added to network "+networkName+".");
+		} catch (NoSuchNetworkException e) {
+			e.printStackTrace();
+		}
 	}	
 	
 	/**
@@ -386,7 +397,14 @@ public class MyVelibCMD {
 	 * @param stationID	the ID of the station
 	 */
 	public static void offline(String networkName, int stationID) {
-		findNetwork(networkName).findStation(stationID).setState(false);
+		try {
+			findNetwork(networkName).findStation(stationID).setState(false);
+			System.out.println("Station "+stationID+" from network "+networkName+" has been turned offline.");
+		} catch (NoSuchNetworkException e) {
+			e.printStackTrace();
+		} catch(NoSuchStationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -395,7 +413,14 @@ public class MyVelibCMD {
 	 * @param stationID	the ID of the station
 	 */
 	public static void online(String networkName, int stationID) {
-		findNetwork(networkName).findStation(stationID).setState(true);
+		try {
+			findNetwork(networkName).findStation(stationID).setState(true);
+			System.out.println("Station "+stationID+" from network "+networkName+" has been turned online.");
+		} catch (NoSuchNetworkException e) {
+			e.printStackTrace();
+		} catch(NoSuchStationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -406,8 +431,15 @@ public class MyVelibCMD {
 	 * @param stationID	the ID of the station of which you wish to rent a bike
 	 */
 	public static void rentBike(int userID, int stationID) {
-		User u = findUser(userID);
-		u.takeBike(u.getNetwork().findStation(stationID));
+		try {
+			User u = findUser(userID);
+			u.takeBike(u.getNetwork().findStation(stationID));
+			System.out.println("User "+userID+" has successfully rented a bike from station "+stationID+".");
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		} catch(NoSuchStationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -418,8 +450,15 @@ public class MyVelibCMD {
 	 * @param stationID	the ID of the station of which you wish to rent a bike
 	 */
 	public static void returnBike(int userID, int stationID) {
-		User u = findUser(userID);
-		u.dropBike(u.getNetwork().findStation(stationID));
+		try {
+			User u = findUser(userID);
+			u.dropBike(u.getNetwork().findStation(stationID));
+			System.out.println("User "+userID+" has successfully returned a bike at station "+stationID+".");
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		} catch(NoSuchStationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -428,8 +467,14 @@ public class MyVelibCMD {
 	 * @param stationID	the ID of the station you wish to get intel on
 	 */
 	public static void displayStation(String networkName, int stationID) {
-		String str = statisticCompiler.visit( findNetwork(networkName).findStation(stationID) );
-		System.out.println(str);
+		try {
+			String str = statisticCompiler.visit( findNetwork(networkName).findStation(stationID) );
+			System.out.println(str);
+		} catch (NoSuchNetworkException e) {
+			e.printStackTrace();
+		} catch(NoSuchStationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -439,8 +484,12 @@ public class MyVelibCMD {
 	 * @param userID	the ID of the user you wish to get intel on
 	 */
 	public static void displayUser(String networkName, int userID) {
-		String str = statisticCompiler.visit( findUser(userID) );
-		System.out.println(str);
+		try {
+			String str = statisticCompiler.visit( findUser(userID) );
+			System.out.println(str);
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -450,9 +499,13 @@ public class MyVelibCMD {
 	 * @param sortpolicy	the sorting policy for the sort
 	 */
 	public static void sortStation(String networkName, NetworkStatisticsSortingMethods sortpolicy) {
-		statisticCompiler.setSortingMethod(sortpolicy);
-		String str = statisticCompiler.visit( findNetwork(networkName) );
-		System.out.println(str);
+		try {
+			statisticCompiler.setSortingMethod(sortpolicy);
+			String str = statisticCompiler.visit( findNetwork(networkName) );
+			System.out.println(str);	
+		} catch (NoSuchNetworkException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -461,8 +514,12 @@ public class MyVelibCMD {
 	 * @param networkName the name of the Network
 	 */
 	public static void display(String networkName) {
-		String str = statisticCompiler.visit( findNetwork(networkName) );
-		System.out.println(str);	
+		try {
+			String str = statisticCompiler.visit( findNetwork(networkName) );
+			System.out.println(str);	
+		} catch (NoSuchNetworkException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

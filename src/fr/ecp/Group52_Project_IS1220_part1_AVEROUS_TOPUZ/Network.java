@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import org.omg.CORBA.DynAnyPackage.Invalid;
 
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidProportionsException;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.MoreBikesThanSlotsException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.*;
 
 /**
  * The myVelib global network. It contains all users, all stations,
@@ -213,12 +212,12 @@ public class Network implements VisitableItems {
 	 * @param stationID the ID of the station, as an int
 	 * @return	The station whose ID was stationID
 	 */
-	public Station findStation(int stationID) {
+	public Station findStation(int stationID) throws NoSuchStationException {
 		for(Station station : stationList) {
 			if (station.getStationID() == stationID)
 				return station;
 		}
-		return null;
+		throw new NoSuchStationException();
 	}
 	
 	//Getters

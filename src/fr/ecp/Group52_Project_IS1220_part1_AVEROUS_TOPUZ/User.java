@@ -133,6 +133,7 @@ public class User implements VisitableItems, Observer {
 		this.rides=new ArrayList<Ride>();
 		this.timeCredit = 0;
 		this.position = GPScoordinates.randomLocation();
+		this.setBehavior(new Walking());
 	}
 
 
@@ -149,6 +150,7 @@ public class User implements VisitableItems, Observer {
 		this.rides=new ArrayList<Ride>();
 		this.timeCredit = 0;
 		this.position = GPScoordinates.randomLocation();
+		this.setBehavior(new Walking());
 	}
 
 

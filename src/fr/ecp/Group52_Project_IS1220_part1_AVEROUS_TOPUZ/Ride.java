@@ -108,7 +108,7 @@ public class Ride implements Runnable {
 		this.arrivalStationPreference = arrivalStationPreference;
 		this.pathPreference = preference.getPathPreference();
 		this.pathPreference.setRide(this);
-		Station[] departureAndArrival = this.pathPreference.departureAndArrival();
+		Station[] departureAndArrival = this.pathPreference.getDepartureAndArrival();
 		this.departureStation = departureAndArrival[0];
 		this.arrivalStation = departureAndArrival[1];
 	}
@@ -255,6 +255,14 @@ public class Ride implements Runnable {
 	}
 	
 	//Les Getters
+	
+	/**
+	 * The getter for the path preference of the user. 
+	 * @return	The user's preferences for the arrival station.
+	 */
+	public PathPreferenceVisitor getPathPreference() {
+		return pathPreference;
+	}
 	/**
 	 * The getter for the GPScoordinates of the departure.
 	 * @return	a GPScoordinates object for the departure's location
@@ -377,6 +385,14 @@ public class Ride implements Runnable {
 	 */
 	public void setPreference(ArrivalStationPreferenceVisitable preference) {
 		this.arrivalStationPreference=preference;
+	}
+	
+	/**
+	 * Setter for the path preference of the user
+	 * @param pathPreference the pathPreference of the User.
+	 */
+	public void setPathPreference(PathPreferenceVisitor pathPreference) {
+		this.pathPreference = pathPreference;
 	}
 	
 	/**

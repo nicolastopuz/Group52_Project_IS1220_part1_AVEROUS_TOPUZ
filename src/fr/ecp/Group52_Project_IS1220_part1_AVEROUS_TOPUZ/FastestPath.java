@@ -48,15 +48,14 @@ public class FastestPath implements PathPreferenceVisitor {
 	@Override
 	public Station[] departureAndArrival() {
 		Station[] departureAndArrival = new Station[2];
-		
+				
 		ArrayList<Station> departureStations = ride.getDepartureStations();
 		ArrayList<Station> arrivalStations = ride.getArrivalStations();
 		
 		double[] distanceToDeparture = ride.distanceToDeparture(departureStations);
 		double[] distanceToArrival = ride.distanceToArrival(arrivalStations);
 		double[][] distancesUsedStations = ride.distancesUsedStation(departureStations, arrivalStations);
-		
-		
+				
 		double[][] timeBetweenStationsMechanical = new double[distanceToDeparture.length][distanceToArrival.length];
 		double[][] timeBetweenStationsElectrical = new double[distanceToDeparture.length][distanceToArrival.length];
 
