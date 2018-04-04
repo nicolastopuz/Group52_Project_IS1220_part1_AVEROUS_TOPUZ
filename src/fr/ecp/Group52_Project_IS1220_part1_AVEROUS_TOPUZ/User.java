@@ -137,7 +137,6 @@ public class User implements VisitableItems, Observer {
 		this.onARide=false;
 		this.rides=new ArrayList<Ride>();
 		this.timeCredit = 0;
-		this.position = GPScoordinates.randomLocation();
 		this.setBehavior(new Walking());
 	}
 
@@ -154,7 +153,6 @@ public class User implements VisitableItems, Observer {
 		this.card=CardFactory.create(this, type);
 		this.rides=new ArrayList<Ride>();
 		this.timeCredit = 0;
-		this.position = GPScoordinates.randomLocation();
 		this.setBehavior(new Walking());
 	}
 
@@ -166,12 +164,12 @@ public class User implements VisitableItems, Observer {
 	public synchronized void takeBike(Station s) {
 		try {
 			ParkingSlot p = s.getAvailableBicycle();
+			departureOfRide.removeDepartureObserver(this);
 			p.giveBike(this);
 			this.behavior = this.bike.getBehavior();
 			double numberOfRent = s.getNumberOfRent()+1;
 			s.setNumberOfRent(numberOfRent);
 			this.ride.startOnBike();
-			departureOfRide.removeDepartureObserver(this);
 		}
 		catch(EmptySlotException e) {
 			e.printStackTrace();
@@ -191,12 +189,12 @@ public class User implements VisitableItems, Observer {
 	public synchronized void dropBike(Station s) {
 		try {
 			ParkingSlot p = s.getFreeSlot();
+			s.removeArrivalObserver(this);
 			p.acceptBike(this);
 			this.behavior = new Walking();
 			
 			double numberOfReturn = s.getNumberOfReturn();
 			s.setNumberOfReturn(numberOfReturn+1);
-			s.removeArrivalObserver(this);
 			
 			this.ride.stopOnBike();
 			

@@ -62,6 +62,7 @@ public class ShortestPath implements PathPreferenceVisitor {
 				tripCostMatrix[i][j] = distanceToDeparture[i]
 										+ distancesUsedStations[i][j]
 										+ distanceToArrival[j];
+				
 				/*
 				 * This calculates the cost of every trip possible with these departure and
 				 * arrival stations. It is the sum of the distance from the starting point
@@ -71,14 +72,17 @@ public class ShortestPath implements PathPreferenceVisitor {
 			}
 		}
 		
-		int departureIndex = 0, arrivalIndex = 0;
+		
+		int departureIndex = 0, arrivalIndex = 1;
 		double minDistance = tripCostMatrix[0][0];
-		for (int i = 0; i < tripCostMatrix.length; i++) {
-			for (int j = 0; j < tripCostMatrix[0].length; j++) {
-				if (minDistance>tripCostMatrix[i][j] && tripCostMatrix[i][j]>0) {
+		for (int i = 0; i < distanceToDeparture.length; i++) {
+			for (int j = 0; j < distanceToArrival.length; j++) {
+				if (minDistance>tripCostMatrix[i][j] && i!=j) {
 					minDistance = tripCostMatrix[i][j];
-					arrivalIndex = j;
+				
 					departureIndex = i;
+					arrivalIndex = j;
+					
 					/*
 					 * Having the cost of every possible trip in the tripCostMatrix, we now
 					 * only need to find the cheapest trip, and through which stations this trip goes.

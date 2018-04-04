@@ -109,6 +109,12 @@ public class Ride implements Runnable {
 		this.pathPreference = preference.getPathPreference();
 		this.pathPreference.setRide(this);
 		Station[] departureAndArrival = this.pathPreference.getDepartureAndArrival();
+		
+		System.out.println("\n------------------------------------------");
+		System.out.println("Departure Station of the ride : " + departureAndArrival[0]);
+		System.out.println("Arrival Station of the ride : "+departureAndArrival[1]);
+		System.out.println("------------------------------------------\n");
+		
 		this.departureStation = departureAndArrival[0];
 		this.arrivalStation = departureAndArrival[1];
 	}
@@ -518,9 +524,16 @@ public class Ride implements Runnable {
 		double distance = GPScoordinates.distanceAB(departure, arrival);
 		double vitesse = u.getBehavior().getSpeed();
 		double time = distance/vitesse;
+		
+		System.out.println("\nDistance of travel : " + distance);
+		System.out.println("Time of travel : " +time);
+		System.out.println("Time of travel in millis : " +3600000*time);
+		System.out.println();
+
 		try {
-			Thread.sleep((long) time);
+			Thread.sleep((long) (3600000*time));
 			u.setPosition(arrival);
+			System.out.println(arrival.toString());
 		} catch (InterruptedException e) {
 			LocalDateTime interruptionTime = LocalDateTime.now();
 			Duration duration = Duration.between(interruptionTime,departureTime);
@@ -528,7 +541,6 @@ public class Ride implements Runnable {
 			double traveledDistance = vitesse*travelTime;
 			u.setPosition(GPScoordinates.intermediateDistance(departure, arrival, traveledDistance/distance));
 			System.out.println("L'interruption de déplacement marche.\n");
-			throw new InterruptedException();	
 		}
 		
 	}

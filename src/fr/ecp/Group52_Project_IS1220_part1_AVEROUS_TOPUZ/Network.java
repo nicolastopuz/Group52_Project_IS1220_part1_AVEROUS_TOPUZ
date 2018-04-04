@@ -49,6 +49,11 @@ public class Network implements VisitableItems {
 	protected static int networkCounter;
 	
 	/**
+	 * A double to store the side of the area in which the network is generated.
+	 */
+	protected double sideArea;
+	
+	/**
 	 * The constructor for making a Network instance.
 	 * 
 	 * @param name	The name of the network, as a String
@@ -93,7 +98,7 @@ public class Network implements VisitableItems {
 		else {			
 			Double d = (slotsPerStation*fillingPercentage);
 			int bikesPerStation = d.intValue();
-			
+			this.sideArea = sideArea;
 			this.name = name;
 			networkCounter++;
 			this.networkID = networkCounter;
@@ -150,6 +155,7 @@ public class Network implements VisitableItems {
 	public User createUser(String name) {
 		User u = new User(name);
 		u.setNetwork(this);
+		u.setPosition(GPScoordinates.randomLocation(this.sideArea));
 		this.addUser(u);
 		return u;
 	}
@@ -162,6 +168,7 @@ public class Network implements VisitableItems {
 	public User createUser(String name, CardTypes cardType) {
 		User u = new User(name, cardType);
 		u.setNetwork(this);
+		u.setPosition(GPScoordinates.randomLocation(this.sideArea));
 		this.addUser(u);
 		return u;
 	}
@@ -223,6 +230,14 @@ public class Network implements VisitableItems {
 	//Getters
 	
 	/**
+	 * Getter for the side of the area in which the network is generated, in km
+	 * @return	the side of the area in which the network is generated, in km
+	 */
+	public double getSideArea() {
+		return sideArea;
+	}
+	
+	/**
 	 * Getter method for the ArrayList object userList
 	 * @return	The list of all users in the Network as an ArrayList
 	 */
@@ -256,6 +271,15 @@ public class Network implements VisitableItems {
 	
 	
 	//Setters
+	
+	/**
+	 * Setter method for the side of the area in which the network is generated, in km
+	 * @param sideArea	the side of the area in which the network is generated, in km, as a double
+	 */
+	public void setSideArea(double sideArea) {
+		this.sideArea = sideArea;
+	}
+	
 	/**
 	 * Setter method for the ArrayList object userList
 	 * @param userList	the list of all users in the Network as an ArrayList

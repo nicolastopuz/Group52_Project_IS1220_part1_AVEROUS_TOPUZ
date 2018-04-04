@@ -56,8 +56,8 @@ public class FastestPath implements PathPreferenceVisitor {
 		double[] distanceToArrival = ride.distanceToArrival(arrivalStations);
 		double[][] distancesUsedStations = ride.distancesUsedStation(departureStations, arrivalStations);
 				
-		double[][] timeBetweenStationsMechanical = new double[distanceToDeparture.length][distanceToArrival.length];
-		double[][] timeBetweenStationsElectrical = new double[distanceToDeparture.length][distanceToArrival.length];
+		double[][] timeBetweenStationsMechanical = new double[departureStations.size()][arrivalStations.size()];
+		double[][] timeBetweenStationsElectrical = new double[departureStations.size()][arrivalStations.size()];
 
 		for (int i = 0; i < departureStations.size(); i++) {
 			for (int j = 0; j < arrivalStations.size(); j++) {
@@ -74,14 +74,15 @@ public class FastestPath implements PathPreferenceVisitor {
 			}
 		}
 		
-		int departureIndex = 0, arrivalIndex = 0;
+		int departureIndex = 0, arrivalIndex = 1;
 		double minTimeMeca = timeBetweenStationsMechanical[0][0];
 		double minTimeElec = timeBetweenStationsElectrical[0][0];
-		for (int i = 0; i < timeBetweenStationsMechanical.length; i++) {
-			for (int j = 0; j < timeBetweenStationsMechanical[0].length; j++) {
-				if (minTimeMeca>timeBetweenStationsMechanical[i][j] && timeBetweenStationsMechanical[i][j]>0) {
+		for (int i = 0; i < distanceToDeparture.length; i++) {
+			for (int j = 0; j < distanceToArrival.length; j++) {
+				if (minTimeMeca>timeBetweenStationsMechanical[i][j] && i!=j) {
 					minTimeMeca = timeBetweenStationsMechanical[i][j];
 					minTimeElec = timeBetweenStationsElectrical[i][j];
+					
 					departureIndex = i;
 					arrivalIndex = j;
 					/*

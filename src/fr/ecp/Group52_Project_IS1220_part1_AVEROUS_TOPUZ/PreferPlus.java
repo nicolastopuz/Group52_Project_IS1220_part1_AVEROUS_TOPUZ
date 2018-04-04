@@ -23,8 +23,9 @@ public class PreferPlus implements ArrivalStationPreferenceVisitable {
 	public ArrayList<Station> getArrivalStations(Ride ride) {
 		ArrayList<Station> allStations = ride.getAllStations();
 		ArrayList<Station> arrivalStations = new ArrayList<Station>();
+		boolean validStationPlusInRange = this.isValidPlusStationInRange(ride);
 		for (int i = 0; i < allStations.size(); i++) {
-			if (this.isValidPlusStationInRange(ride)) {
+			if (validStationPlusInRange) {
 				if(allStations.get(i).isFreeSlot() && allStations.get(i) instanceof StationPlus) {
 					arrivalStations.add(allStations.get(i));
 				}
@@ -39,7 +40,14 @@ public class PreferPlus implements ArrivalStationPreferenceVisitable {
 	}
 	
 	public boolean isValidPlusStationInRange(Ride ride) {
-		ArrayList<Station> arrivalStations = ride.getArrivalStations();
+		ArrayList<Station> arrivalStations = new ArrayList<Station>();
+		ArrayList<Station> allStations = ride.getAllStations();
+		for(int i = 0; i<allStations.size();i++) {
+			if(allStations.get(i).isFreeSlot()) {
+				arrivalStations.add(allStations.get(i));
+			}
+		}
+		
 		double[] arrivalDistances = ride.distanceToArrival(arrivalStations);
 		
 		double minDistance = arrivalDistances[0];
