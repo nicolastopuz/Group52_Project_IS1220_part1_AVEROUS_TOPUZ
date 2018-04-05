@@ -44,8 +44,8 @@ public class UseCaseTwoUsers {
 		lapitre.goTo(stationCoords.get(1));
 		paolo.goTo(stationCoords.get(1));
 		try {
-			lapitre.doTheRide();
-			paolo.doTheRide();
+			lapitre.getRide().start();
+			paolo.getRide().start();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		}

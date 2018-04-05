@@ -61,10 +61,12 @@ public class FastestPath implements PathPreferenceVisitor {
 
 		for (int i = 0; i < departureStations.size(); i++) {
 			for (int j = 0; j < arrivalStations.size(); j++) {
-				timeBetweenStationsMechanical[i][j] = (distanceToDeparture[i]+ distanceToArrival[j])*walk.getSpeed()
-						+ distancesUsedStations[i][j]*meca.getSpeed();
-				timeBetweenStationsElectrical[i][j] = (distanceToDeparture[i]+ distanceToArrival[j])*walk.getSpeed()
-						+ distancesUsedStations[i][j]*elec.getSpeed();
+				timeBetweenStationsMechanical[i][j] = distanceToDeparture[i]*walk.getSpeed()
+						+ distancesUsedStations[i][j]*meca.getSpeed()
+						+ distanceToArrival[j]*walk.getSpeed();
+				timeBetweenStationsElectrical[i][j] = distanceToDeparture[i]*walk.getSpeed()
+						+ distancesUsedStations[i][j]*elec.getSpeed()
+						+ distanceToArrival[j]*walk.getSpeed();
 				/*
 				 * This calculates the cost of every trip possible with these departure and
 				 * arrival stations. It is the sum of the duration from the starting point
