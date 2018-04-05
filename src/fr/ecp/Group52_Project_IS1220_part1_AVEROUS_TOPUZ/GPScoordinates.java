@@ -248,25 +248,6 @@ public class GPScoordinates {
 		}
 	}
 	
-	//Mise en place des getters
-	/**
-	 * Getter method for latitude.
-	 * 
-	 * @return latitude of these coordinates.
-	 */
-	public double getLatitude() {
-		return this.latitude;
-	}
-	
-	/**
-	 * Getter method for longitude.
-	 * 
-	 * @return longitude of these coordinates.
-	 */
-	public double getLongitude() {
-		return this.longitude;
-	}
-	
 	/**
 	 * A method to know the coordinates of a user who could only partly do a deplacement
 	 * @param departure A GPScoordinates indicating the departure point of the deplacement
@@ -288,7 +269,25 @@ public class GPScoordinates {
 		}
 		return result;
 	}
-		
+	
+	//Mise en place des getters
+	/**
+	 * Getter method for latitude.
+	 * 
+	 * @return latitude of these coordinates.
+	 */
+	public double getLatitude() {
+		return this.latitude;
+	}
+	
+	/**
+	 * Getter method for longitude.
+	 * 
+	 * @return longitude of these coordinates.
+	 */
+	public double getLongitude() {
+		return this.longitude;
+	}	
 	
 	@Override
 	public String toString() {
