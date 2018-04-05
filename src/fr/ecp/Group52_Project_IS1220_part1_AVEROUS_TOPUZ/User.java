@@ -117,7 +117,7 @@ public class User implements VisitableItems, Observer {
 	/**
 	 * The user's time credit
 	 */
-	protected int timeCredit;
+	protected double timeCredit;
 	
 	
 	/**
@@ -164,6 +164,7 @@ public class User implements VisitableItems, Observer {
 			this.behavior = this.bike.getBehavior();
 			double numberOfRent = s.getNumberOfRent()+1;
 			s.setNumberOfRent(numberOfRent);
+			this.ride.setBike(this.bike);
 			this.ride.startOnBike();
 		}
 		catch(EmptySlotException e) {
@@ -214,6 +215,7 @@ public class User implements VisitableItems, Observer {
 			this.arrivalOfRide.removeArrivalObserver(this);
 			this.departureOfRide.removeDepartureObserver(this);
 			this.goTo(arrival, arrivalStationPreference, pathPreference);
+			this.ride.start();
 		}
 		else {
 			throw new NoRideException();
@@ -247,6 +249,7 @@ public class User implements VisitableItems, Observer {
 		this.ride = new Ride(this, arrival, this.network.getStationList(), arrivalStationPreference, pathPreference);
 		this.departureOfRide = this.ride.getDepartureStation();
 		this.arrivalOfRide = this.ride.getArrivalStation();
+		this.setOnARide(true);
 	}
 	
 	/**
@@ -255,7 +258,7 @@ public class User implements VisitableItems, Observer {
 	 * @param arrival	The GPScoordinates of where the user wishes to go to
 	 */
 	public void goTo(GPScoordinates arrival) {
-		this.goTo(arrival, new NoPreference(), PathPreferences.Fastest);
+		this.goTo(arrival, new NoPreference(), PathPreferences.Shortest);
 	}
 	
 	
@@ -320,7 +323,7 @@ public class User implements VisitableItems, Observer {
 	 * A getter returning the TimeCredit of the user
 	 * @return	the time credit of the user as an int
 	 */
-	public int getTimeCredit() {
+	public double getTimeCredit() {
 		return timeCredit;
 	}
 	
@@ -495,7 +498,7 @@ public class User implements VisitableItems, Observer {
 	 * A setter to set the user's time credit
 	 * @param timeCredit an int indicating the user's new time credit
 	 */
-	public void setTimeCredit(int timeCredit) {
+	public void setTimeCredit(double timeCredit) {
 		this.timeCredit = timeCredit;
 	}
 	

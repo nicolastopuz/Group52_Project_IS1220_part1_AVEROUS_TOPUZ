@@ -76,7 +76,7 @@ public class FastestPath implements PathPreferenceVisitor {
 			}
 		}
 		
-		int departureIndex = 0, arrivalIndex = 1;
+		int departureIndex = 0, arrivalIndex = 0;
 		double minTimeMeca = timeBetweenStationsMechanical[0][0];
 		double minTimeElec = timeBetweenStationsElectrical[0][0];
 		for (int i = 0; i < distanceToDeparture.length; i++) {

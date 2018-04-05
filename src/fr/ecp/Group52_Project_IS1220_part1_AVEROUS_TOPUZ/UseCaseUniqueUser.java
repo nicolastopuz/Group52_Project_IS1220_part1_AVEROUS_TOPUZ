@@ -37,22 +37,15 @@ public class UseCaseUniqueUser {
 		
 		User pierre = n.getUserList().get(0);
 		
-		try {
-			pierre.getRide().start();
-		} catch (NoRideException e) {
-			e.printStackTrace();
-		}		
-		
-		System.out.println();
-		
-		ArrivalStationPreferenceVisitable arrivalPref = new PreferPlus();
-		PathPreferenceVisitor pathPref = new ShortestPath();
 		
 		System.out.println("Now to Station 4 !");
-		pierre.goTo(stationCoords.get(4), arrivalPref, PathPreferences.Shortest);
+		pierre.goTo(stationCoords.get(4));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
@@ -62,8 +55,11 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 5 !");
 		pierre.goTo(stationCoords.get(5));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -73,8 +69,11 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 7 !");
 		pierre.goTo(stationCoords.get(7));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -85,8 +84,11 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 4 !");
 		pierre.goTo(stationCoords.get(4));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -96,8 +98,11 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 2 !");
 		pierre.goTo(stationCoords.get(2));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -107,19 +112,25 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 4 !");
 		pierre.goTo(stationCoords.get(4));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-
+		/*
 		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
 				+ " has a time credit of : "+pierre.getTimeCredit()+".");
 
 		System.out.println("Now to Station 7 !");
 		pierre.goTo(stationCoords.get(7));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -129,8 +140,11 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 5 !");
 		pierre.goTo(stationCoords.get(5));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -140,8 +154,11 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 8 !");
 		pierre.goTo(stationCoords.get(8));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -151,8 +168,10 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 4 !");
 		pierre.goTo(stationCoords.get(4));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -162,8 +181,11 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 7 !");
 		pierre.goTo(stationCoords.get(7));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -173,8 +195,11 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 1 !");
 		pierre.goTo(stationCoords.get(1));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join();
 		} catch (NoRideException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -184,10 +209,14 @@ public class UseCaseUniqueUser {
 		System.out.println("Now to Station 9 !");
 		pierre.goTo(stationCoords.get(9));
 		try {
-			pierre.getRide().start();
+			pierre.getRide().start(); 
+			pierre.getRide().join(); 
 		} catch (NoRideException e) {
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+		*/
 
 		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
 				+ " has a time credit of : "+pierre.getTimeCredit()+".");

@@ -65,7 +65,7 @@ public class Ride extends Thread {
 	/**
 	 * The time the user spends on the bike during the ride
 	 */
-	protected int timeOnBike;
+	protected double timeOnBike;
 	
 	/**
 	 * The price of the ride as a double
@@ -207,17 +207,18 @@ public class Ride extends Thread {
 	 * This method updates the price of the ride inside the ride object.
 	 */
 	public void proceedPayment() {
-		int credit = this.user.getTimeCredit();
-		int timeToPay;
+		double credit = this.user.getTimeCredit();
+		double timeToPay;
 		if(this.timeOnBike >= credit) {
-			timeToPay = (int)this.timeOnBike - this.user.getTimeCredit();
+			timeToPay = this.timeOnBike - this.user.getTimeCredit();
 			this.user.setTimeCredit(0);
 		}
 		else {
 			timeToPay = 0;
-			this.user.setTimeCredit(credit - (int)this.timeOnBike);
+			this.user.setTimeCredit(credit - this.timeOnBike);
 		}
-		this.priceOfRide = this.user.getCard().pay(this.bike.getType(), timeToPay);
+		Card card= user.getCard();
+		this.priceOfRide = card.pay(this.bike.getType(), timeToPay);
 	}
 	
 	/**
@@ -247,7 +248,7 @@ public class Ride extends Thread {
 	 */
 	public void stopOnBike() {
 		this.timeBikeDropped = System.currentTimeMillis();
-		this.timeOnBike = (int) (this.timeBikeDropped - this.timeBikeTaken)/60000;
+		this.timeOnBike = (double)(this.timeBikeDropped - this.timeBikeTaken)/60000;
 	}
 	
 	/**
@@ -344,10 +345,18 @@ public class Ride extends Thread {
 	}
 	
 	/**
+	 * The getter for the Bike used on the ride
+	 * @return	the Bike used on the ride
+	 */
+	public Bike getBike() {
+		return bike;
+	}
+	
+	/**
 	 * The getter for the time spent on a bike during the ride
 	 * @return	the time spent on a bike during the ride in milliseconds as a double
 	 */
-	public int getTimeOnBike() {
+	public double getTimeOnBike() {
 		return timeOnBike;
 	}
 	
@@ -426,6 +435,14 @@ public class Ride extends Thread {
 	}
 	
 	/**
+	 * Setter used to know which bike was used in the ride
+	 * @param bike	the bike used in the ride
+	 */
+	public void setBike(Bike bike) {
+		this.bike = bike;
+	}
+	
+	/**
 	 * The setter for the credit earned for the user during this ride (if arrival is a plus station)
 	 * @param creditEarned	the credit earned for this ride
 	 */
@@ -445,7 +462,7 @@ public class Ride extends Thread {
 	 * The setter for the time the user has spent on a bike during this ride
 	 * @param timeOnBike	the time he has spent on a bike during this ride
 	 */
-	public void setTimeOnBike(int timeOnBike) {
+	public void setTimeOnBike(double timeOnBike) {
 		this.timeOnBike = timeOnBike;
 	}
 	
@@ -489,7 +506,7 @@ public class Ride extends Thread {
 	public void run() {
 		try {
 			System.out.println("The user "+this.user.getName()+" starts the ride.");
-			this.user.setOnARide(true);
+			this.user.setRide(this);
 			this.departureStation.addDepartureObserver(user);
 			this.arrivalStation.addArrivalObserver(user);
 			this.deplacement(this.user,this.user.getPosition(),this.departureStation.getLocation());
