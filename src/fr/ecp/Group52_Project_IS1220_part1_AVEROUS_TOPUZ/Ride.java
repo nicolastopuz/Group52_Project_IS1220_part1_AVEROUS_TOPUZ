@@ -512,18 +512,18 @@ public class Ride extends Thread {
 			this.deplacement(this.user,this.user.getPosition(),this.departureStation.getLocation());
 			
 			this.user.takeBike(this.departureStation);
-			System.out.println("The user "+this.user.getName()+" gets a bike.");
 			
 			this.deplacement(this.user, this.departureStation.getLocation(), this.arrivalStation.getLocation());
 			
 			this.user.dropBike(this.arrivalStation);
-			System.out.println("The user "+this.user.getName()+" drops the bike.");
 			
 			this.deplacement(this.user, this.arrivalStation.getLocation(), this.arrival);
 			System.out.println("The user has finished the ride.");
 			
 			this.user.addRide(this);
 			this.user.setRide(null);
+			System.out.println("The user "+this.user.getName()+" has a ride of null.");
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			System.out.println("The ride has been interrupted.\n");
