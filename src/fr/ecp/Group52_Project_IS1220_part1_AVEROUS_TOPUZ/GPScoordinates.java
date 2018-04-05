@@ -258,7 +258,7 @@ public class GPScoordinates {
 	public static GPScoordinates intermediateDistance(GPScoordinates departure, GPScoordinates expectedArrival, double ratio) {
 		double latitudeDifference=expectedArrival.getLatitude()-departure.getLatitude();
 		double longitudeDifference=expectedArrival.getLongitude()-departure.getLongitude();
-		double latitudeAdd=ratio*latitudeDifference;;
+		double latitudeAdd=ratio*latitudeDifference;
 		double longitudeAdd=ratio*longitudeDifference;
 		GPScoordinates result = null;
 		try {
@@ -318,5 +318,4 @@ public class GPScoordinates {
 		return (int) (41*(41+(a+b)*(a+b+1)/2+b)); 
 	}
 		
-	
 }

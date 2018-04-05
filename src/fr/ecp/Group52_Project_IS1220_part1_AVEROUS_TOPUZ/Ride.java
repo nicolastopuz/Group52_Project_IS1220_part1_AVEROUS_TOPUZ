@@ -555,7 +555,7 @@ public class Ride extends Thread {
 		} catch (InterruptedException e) {
 			LocalDateTime interruptionTime = LocalDateTime.now();
 			Duration duration = Duration.between(interruptionTime,departureTime);
-			double travelTime = duration.toMillis();
+			double travelTime = duration.toMillis()/(3600000);
 			double traveledDistance = vitesse*travelTime;
 			u.setPosition(GPScoordinates.intermediateDistance(departure, arrival, traveledDistance/distance));
 			System.out.println("L'interruption de déplacement marche.\n");

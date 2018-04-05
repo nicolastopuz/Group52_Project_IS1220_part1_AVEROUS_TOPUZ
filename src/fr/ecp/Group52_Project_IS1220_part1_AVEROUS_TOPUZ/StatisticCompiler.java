@@ -142,7 +142,11 @@ public class StatisticCompiler implements StatisticVisitor {
 			totalCreditTimeEarned+=r.getCreditEarned();
 		}
 		
-		return ("The User "+ u.getName()+", ID number "+u.getNumericalId()+", has done "+numberOfRides+" rides. He has spent "+timeSpentOnABike+" minutes on a bike, paid a total amount of charges of "+totalPrice+" euros‚ and earned a total amount of time credit of "+totalCreditTimeEarned+" minutes.\n");
+		totalPrice = ((int)totalPrice*100)/100;
+		int minOnBike= (int)timeSpentOnABike;
+		double secOnBike= (timeSpentOnABike-minOnBike)*60;
+		
+		return ("The User "+ u.getName()+", ID number "+u.getNumericalId()+", has done "+numberOfRides+" rides. He has spent "+minOnBike+" minutes "+secOnBike+" secondes on a bike, paid a total amount of charges of "+totalPrice+" eurosï¿½ and earned a total amount of time credit of "+totalCreditTimeEarned+" minutes.\n");
 	}
 
 	/**
