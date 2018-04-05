@@ -119,11 +119,6 @@ public class User implements VisitableItems, Observer {
 	 */
 	protected int timeCredit;
 	
-	/**
-	 * A Thread stocking the travel being done by the user
-	 */
-	protected Thread travel;
-	
 	
 	/**
 	 * A constructor creating a User instance with a name and a unique numericalId and setting him as a no card user
@@ -215,7 +210,7 @@ public class User implements VisitableItems, Observer {
 	@Override
 	public void updateDeparture() throws NoRideException {
 		if(this.isOnARide()) {
-			this.travel.interrupt();
+			this.ride.interrupt();
 			this.arrivalOfRide.removeArrivalObserver(this);
 			this.departureOfRide.removeDepartureObserver(this);
 			this.goTo(arrival, arrivalStationPreference, pathPreference);
@@ -228,7 +223,7 @@ public class User implements VisitableItems, Observer {
 	@Override
 	public void updateArrival() throws NoRideException {
 		if(this.isOnARide()) {
-			this.travel.interrupt();
+			this.ride.interrupt();
 			this.arrivalOfRide.removeArrivalObserver(this);
 			this.ride.updateArrivalStation();
 			this.arrivalOfRide.addArrivalObserver(this);
@@ -261,27 +256,6 @@ public class User implements VisitableItems, Observer {
 	 */
 	public void goTo(GPScoordinates arrival) {
 		this.goTo(arrival, new NoPreference(), PathPreferences.Fastest);
-	}
-	
-	/**
-	 * A method allowing the user to actually do the planified ride 
-	 * @throws NoRideException
-	 */
-	public void doTheRide() throws NoRideException {
-		if (this.ride==null) {
-			throw new NoRideException();
-		}
-		else {
-			this.travel = new Thread(this.ride);
-			try {
-				travel.start();
-				travel.join();
-				travel = null;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				System.out.println("The ride has been interrupted.\n");
-			}
-		}
 	}
 	
 	

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author Nicolas Topuz
  * @since 1.0
  */
-public class Ride implements Runnable {
+public class Ride extends Thread {
 	//Class Attributes start here
 	/**
 	 * The coordinates from which the user starts his ride.
@@ -509,6 +509,7 @@ public class Ride implements Runnable {
 			this.user.setRide(null);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			System.out.println("The ride has been interrupted.\n");
 		}
 	}
 	
