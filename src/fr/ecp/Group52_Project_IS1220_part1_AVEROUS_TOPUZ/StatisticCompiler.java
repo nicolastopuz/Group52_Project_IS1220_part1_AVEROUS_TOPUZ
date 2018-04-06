@@ -82,7 +82,11 @@ public class StatisticCompiler implements StatisticVisitor {
 				sortedStations.add(stations.get(indice_max));
 				stations.remove(indice_max);
 			}
-			return ("This Network has "+n.getStationList().size()+" stations, "+n.getBikeList().size()+" bikes and "+n.getUserList().size()+" users.\nThe list of it's stations sorted from the most used to the least used is the following :"+sortedStations.toString());
+			String toReturn = "This Network has "+n.getStationList().size()+" stations, "+n.getBikeList().size()+" bikes and "+n.getUserList().size()+" users.\nThe list of it's stations sorted from the least occupied to the most occupied is the following :\n";
+			for (int i = 0; i < sortedStations.size(); i++) {
+				toReturn += "\tN°"+i+" : Station number "+sortedStations.get(i).get(0)+", used "+sortedStations.get(i).get(1)+" times.\n";
+			}
+			return (toReturn);
 		}
 		else if (this.sortingMethod==NetworkStatisticsSortingMethods.LeastOccupied) {
 			ArrayList<ArrayList<Double>> stations = new ArrayList<ArrayList<Double>>();
@@ -105,7 +109,11 @@ public class StatisticCompiler implements StatisticVisitor {
 				sortedStations.add(stations.get(indice_min));
 				stations.remove(indice_min);
 			}
-			return ("This Network has "+n.getStationList().size()+" stations, "+n.getBikeList().size()+" bikes and "+n.getUserList().size()+" users.\nThe list of it's stations sorted from the least occupied to the most occupied is the following :"+sortedStations.toString());
+			String toReturn = "This Network has "+n.getStationList().size()+" stations, "+n.getBikeList().size()+" bikes and "+n.getUserList().size()+" users.\nThe list of it's stations sorted from the least occupied to the most occupied is the following :\n";
+			for (int i = 0; i < sortedStations.size(); i++) {
+				toReturn += "\tN°"+i+" : Station number "+sortedStations.get(i).get(0)+", used "+sortedStations.get(i).get(1)+" times.\n";
+			}
+			return (toReturn);
 		}
 		return null;
 	}
