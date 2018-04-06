@@ -142,8 +142,8 @@ public class StatisticCompiler implements StatisticVisitor {
 			totalCreditTimeEarned+=r.getCreditEarned();
 		}
 		
+
 		System.out.println(" Total price : " + totalPrice);
-		
 		
 		totalPrice = totalPrice*100;
 		totalPrice = Math.round(totalPrice);
