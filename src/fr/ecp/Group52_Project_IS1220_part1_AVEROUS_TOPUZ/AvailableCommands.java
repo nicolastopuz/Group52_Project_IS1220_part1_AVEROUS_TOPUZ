@@ -15,7 +15,8 @@ public enum AvailableCommands {
 	
 	rentBike("rentBike <userID> <stationID>", "	 * Command to let the user <userID> rent a bike from station <stationID> \r\n" ),
 	
-	returnBike("returnBike <userID> <stationID>", "	 * Command to let the user <userID> return a bike to station <stationID> \r\n" ),
+	returnBike("returnBike <userID> <stationID> \nreturnBike <userID> <stationID> <time>", "	 * Command to let the user <userID> return a bike to station <stationID> \r\n"+
+			"	 * after spending <time> minutes on a bike \r\n"),
 	
 	displayStation("displayStation <networkName> <stationID>", "	 * Command to display the statistics of station <stationID> of a myVelib network <networkName>.\r\n" ),
 	

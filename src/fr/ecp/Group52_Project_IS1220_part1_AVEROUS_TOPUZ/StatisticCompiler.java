@@ -118,7 +118,7 @@ public class StatisticCompiler implements StatisticVisitor {
 	 */
 	@Override
 	public String visit(Station s) {
-		return ("This station, ID number "+s.getStationID()+" has witnessed "+s.getNumberOfRent()+" rent operations as well as "+s.getNumberOfReturn()+" return operations.\nIt's aerage occupation rate is "+s.getAverageTimeOfOccupation()+" hours.\n");
+		return ("This station, ID number "+s.getStationID()+" has witnessed "+s.getNumberOfRent()+" rent operations as well as "+s.getNumberOfReturn()+" return operations.\nIt's average occupation rate is "+s.getAverageTimeOfOccupation()+" hours.\n");
 	}
 
 	/**
@@ -142,9 +142,17 @@ public class StatisticCompiler implements StatisticVisitor {
 			totalCreditTimeEarned+=r.getCreditEarned();
 		}
 		
-		totalPrice = ((int)totalPrice*100)/100;
+		System.out.println(" Total price : " + totalPrice);
+		
+		
+		totalPrice = totalPrice*100;
+		totalPrice = Math.round(totalPrice);
+		totalPrice = totalPrice/100; //Simple trick to have only 2 digits after comma.
+		
 		int minOnBike= (int)timeSpentOnABike;
-		double secOnBike= (timeSpentOnABike-minOnBike)*60;
+		double secOnBike= Math.round((timeSpentOnABike-minOnBike)*60);
+		
+		System.out.println("total price after modif : " + totalPrice);
 		
 		return ("The User "+ u.getName()+", ID number "+u.getNumericalId()+", has done "+numberOfRides+" rides. He has spent "+minOnBike+" minutes "+secOnBike+" secondes on a bike, paid a total amount of charges of "+totalPrice+" euros� and earned a total amount of time credit of "+totalCreditTimeEarned+" minutes.\n");
 	}

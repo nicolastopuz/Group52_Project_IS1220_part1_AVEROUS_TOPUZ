@@ -151,6 +151,13 @@ public class MyVelibCMD {
 						throw new InvalidSyntaxException();
 					}
 				}
+				else if (allCommands.length == 4) {
+					try {
+						returnBike(Integer.parseInt(allCommands[1]), Integer.parseInt(allCommands[2]), Double.parseDouble(allCommands[3]));
+					} catch (NumberFormatException e) {
+						throw new InvalidSyntaxException();
+					}
+				}
 				else {
 					throw new InvalidSyntaxException();
 				}
@@ -454,12 +461,29 @@ public class MyVelibCMD {
 			User u = findUser(userID);
 			u.dropBike(u.getNetwork().findStation(stationID));
 			System.out.println("User "+userID+" has successfully returned a bike at station "+stationID+".");
-		} catch (NoSuchUserException e) {
+		} catch (NoSuchUserException | NoSuchStationException e) {
 			e.printStackTrace();
-		} catch(NoSuchStationException e) {
+		} 
+	}
+	
+	/**
+	 * command to let the user userID return a bike to station stationID 
+	 * (if no slots are available should behave accordingly)
+	 * 
+	 * @param userID	the ID of the user who wants to rent a bike
+	 * @param stationID	the ID of the station of which you wish to rent a bike
+	 * @param time 		the time the user has spent on the bike before returning it
+	 */
+	public static void returnBike(int userID, int stationID, double time) {
+		try {
+			User u = findUser(userID);
+			u.dropBike(u.getNetwork().findStation(stationID), time);
+			System.out.println("User "+userID+" has successfully returned a bike at station "+stationID+".");
+		} catch (NoSuchUserException | NoSuchStationException e) {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	/**
 	 * command to display the statistics of station stationID of a myVelib network networkName.

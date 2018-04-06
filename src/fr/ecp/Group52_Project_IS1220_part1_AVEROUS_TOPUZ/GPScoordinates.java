@@ -265,6 +265,7 @@ public class GPScoordinates {
 		System.out.println("GPS COORDINATES IN INTERMEDIATE DISTANCE");
 		System.out.println("Latitude : " + departure.getLatitude() +" + "+latitudeAdd);
 		System.out.println("Longitude : " +departure.getLongitude()+ " + "+longitudeAdd);
+		System.out.println("Ratio : " + ratio);
 		System.out.println();
 		try {
 			result = new GPScoordinates(departure.getLatitude()+latitudeAdd, departure.getLongitude()+longitudeAdd);

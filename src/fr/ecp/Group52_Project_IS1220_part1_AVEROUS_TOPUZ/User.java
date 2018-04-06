@@ -200,13 +200,33 @@ public class User implements VisitableItems, Observer {
 			this.ride.proceedCreditAttribution();
 			this.ride.proceedPayment();
 		}
-		catch(OccupiedSlotException e) {
+		catch(OccupiedSlotException | NoRideException | NoFreeSlotException e ) {
 			e.printStackTrace();
 		}
-		catch(NoFreeSlotException e) {
-			e.printStackTrace();
+	}
+	
+	/**
+	 * Method for User to drop off a Bike at a given Station.
+	 * @param s 	The station where the Bike should be dropped off to.
+	 * @param time 	the time the user spent on the bike before returning it.
+	 */
+	public synchronized void dropBike(Station s, double time) {
+		try {
+			ParkingSlot p = s.getFreeSlot();
+			s.removeArrivalObserver(this);
+			p.acceptBike(this);
+			this.behavior = new Walking();
+			
+			double numberOfReturn = s.getNumberOfReturn();
+			s.setNumberOfReturn(numberOfReturn+1);
+			
+			this.ride.stopOnBike();
+			System.out.println("The user "+this.getName()+" drops the bike.");
+
+			this.ride.proceedCreditAttribution();
+			this.ride.proceedPayment(time);
 		}
-		catch(NoRideException e) {
+		catch(OccupiedSlotException | NoRideException | NoFreeSlotException e ) {
 			e.printStackTrace();
 		}
 	}
@@ -261,7 +281,7 @@ public class User implements VisitableItems, Observer {
 	 * @param arrival	The GPScoordinates of where the user wishes to go to
 	 */
 	public void goTo(GPScoordinates arrival) {
-		this.goTo(arrival, new NoPreference(), PathPreferences.Shortest);
+		this.goTo(arrival, new NoPreference(), PathPreferences.Fastest);
 	}
 	
 	

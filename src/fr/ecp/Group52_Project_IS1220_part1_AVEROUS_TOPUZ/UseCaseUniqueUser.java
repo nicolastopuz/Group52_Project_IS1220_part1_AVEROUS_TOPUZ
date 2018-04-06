@@ -119,7 +119,7 @@ public class UseCaseUniqueUser {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		/*
+		
 		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
 				+ " has a time credit of : "+pierre.getTimeCredit()+".");
 
@@ -216,7 +216,7 @@ public class UseCaseUniqueUser {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		*/
+		
 
 		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
 				+ " has a time credit of : "+pierre.getTimeCredit()+".");

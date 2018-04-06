@@ -222,6 +222,25 @@ public class Ride extends Thread {
 	}
 	
 	/**
+	 * This method updates the price of the ride inside the ride object.
+	 * @param timeOnBike The time spent on the bike as a double, in minutes
+	 */
+	public void proceedPayment(double timeOnBike) {
+		double credit = this.user.getTimeCredit();
+		double timeToPay;
+		if(timeOnBike >= credit) {
+			timeToPay = timeOnBike - this.user.getTimeCredit();
+			this.user.setTimeCredit(0);
+		}
+		else {
+			timeToPay = 0;
+			this.user.setTimeCredit(credit - timeOnBike);
+		}
+		Card card= user.getCard();
+		this.priceOfRide = card.pay(this.bike.getType(), timeToPay);
+	}
+	
+	/**
 	 * This method proceeds to the attribution of bonus credits, depending on the 
 	 * station visited by the user upon his arrival.
 	 */
@@ -526,6 +545,7 @@ public class Ride extends Thread {
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			Thread.currentThread().interrupt();
 			System.out.println("The ride has been interrupted.\n");
 		}
 	}
@@ -554,11 +574,15 @@ public class Ride extends Thread {
 			System.out.println(arrival.toString());
 		} catch (InterruptedException e) {
 			LocalDateTime interruptionTime = LocalDateTime.now();
-			Duration duration = Duration.between(interruptionTime,departureTime);
-			double travelTime = duration.toMillis()/(3600000);
-			double traveledDistance = vitesse*travelTime;
+			Duration duration = Duration.between(departureTime,interruptionTime);
+			double travelTime = duration.toMillis()/(1000);
+			System.out.println("Departure time : " + departureTime + " and interrupted time : " +interruptionTime);
+			System.out.println("Duration to millis : " + duration.toMillis());
+			System.out.println("Duration : "+duration);
+			System.out.println("travelTime : " + travelTime);
+			double traveledDistance = vitesse*travelTime/3600;
 			u.setPosition(GPScoordinates.intermediateDistance(departure, arrival, traveledDistance/distance));
-			System.out.println("L'interruption de déplacement marche.\n");
+			System.out.println("L'interruption de deplacement marche.\n");
 		}
 		
 	}

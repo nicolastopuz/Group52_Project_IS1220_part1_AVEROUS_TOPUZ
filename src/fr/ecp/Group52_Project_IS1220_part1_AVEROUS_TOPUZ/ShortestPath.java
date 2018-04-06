@@ -77,7 +77,7 @@ public class ShortestPath implements PathPreferenceVisitor {
 		double minDistance = tripCostMatrix[0][0];
 		for (int i = 0; i < distanceToDeparture.length; i++) {
 			for (int j = 0; j < distanceToArrival.length; j++) {
-				if (minDistance>tripCostMatrix[i][j] && i!=j) {
+				if (minDistance>=tripCostMatrix[i][j] && !departureStations.get(i).equals(arrivalStations.get(j))) {
 					minDistance = tripCostMatrix[i][j];
 				
 					departureIndex = i;

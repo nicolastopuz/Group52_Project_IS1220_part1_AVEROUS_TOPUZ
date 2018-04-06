@@ -59,14 +59,15 @@ public class FastestPath implements PathPreferenceVisitor {
 		double[][] timeBetweenStationsMechanical = new double[departureStations.size()][arrivalStations.size()];
 		double[][] timeBetweenStationsElectrical = new double[departureStations.size()][arrivalStations.size()];
 
+		
 		for (int i = 0; i < departureStations.size(); i++) {
 			for (int j = 0; j < arrivalStations.size(); j++) {
-				timeBetweenStationsMechanical[i][j] = distanceToDeparture[i]*walk.getSpeed()
-						+ distancesUsedStations[i][j]*meca.getSpeed()
-						+ distanceToArrival[j]*walk.getSpeed();
-				timeBetweenStationsElectrical[i][j] = distanceToDeparture[i]*walk.getSpeed()
-						+ distancesUsedStations[i][j]*elec.getSpeed()
-						+ distanceToArrival[j]*walk.getSpeed();
+				timeBetweenStationsMechanical[i][j] = distanceToDeparture[i]/walk.getSpeed()
+						+ distancesUsedStations[i][j]/meca.getSpeed()
+						+ distanceToArrival[j]/walk.getSpeed();
+				timeBetweenStationsElectrical[i][j] = distanceToDeparture[i]/walk.getSpeed()
+						+ distancesUsedStations[i][j]/elec.getSpeed()
+						+ distanceToArrival[j]/walk.getSpeed();
 				/*
 				 * This calculates the cost of every trip possible with these departure and
 				 * arrival stations. It is the sum of the duration from the starting point
@@ -76,12 +77,13 @@ public class FastestPath implements PathPreferenceVisitor {
 			}
 		}
 		
+		
 		int departureIndex = 0, arrivalIndex = 0;
 		double minTimeMeca = timeBetweenStationsMechanical[0][0];
 		double minTimeElec = timeBetweenStationsElectrical[0][0];
 		for (int i = 0; i < distanceToDeparture.length; i++) {
 			for (int j = 0; j < distanceToArrival.length; j++) {
-				if (minTimeMeca>timeBetweenStationsMechanical[i][j] && i!=j) {
+				if (minTimeMeca>=timeBetweenStationsMechanical[i][j] && !departureStations.get(i).equals(arrivalStations.get(j))) {
 					minTimeMeca = timeBetweenStationsMechanical[i][j];
 					minTimeElec = timeBetweenStationsElectrical[i][j];
 					
