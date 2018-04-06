@@ -142,7 +142,7 @@ public class StatisticCompiler implements StatisticVisitor {
 			totalCreditTimeEarned+=r.getCreditEarned();
 		}
 		
-		totalPrice = ((int)totalPrice*100)/100;
+		totalPrice = ((int)(totalPrice*100))/100;
 		int minOnBike= (int)timeSpentOnABike;
 		double secOnBike= (timeSpentOnABike-minOnBike)*60;
 		
