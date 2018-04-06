@@ -235,10 +235,6 @@ public class User implements VisitableItems, Observer {
 	public void updateDeparture() throws NoRideException {
 		if(this.isOnARide()) {
 			this.ride.interrupt();
-			this.arrivalOfRide.removeArrivalObserver(this);
-			this.departureOfRide.removeDepartureObserver(this);
-			this.goTo(arrival, arrivalStationPreference, pathPreference);
-			this.ride.start();
 		}
 		else {
 			throw new NoRideException();
@@ -249,9 +245,6 @@ public class User implements VisitableItems, Observer {
 	public void updateArrival() throws NoRideException {
 		if(this.isOnARide()) {
 			this.ride.interrupt();
-			this.arrivalOfRide.removeArrivalObserver(this);
-			this.ride.updateArrivalStation();
-			this.arrivalOfRide.addArrivalObserver(this);
 		}
 		else {
 			throw new NoRideException();

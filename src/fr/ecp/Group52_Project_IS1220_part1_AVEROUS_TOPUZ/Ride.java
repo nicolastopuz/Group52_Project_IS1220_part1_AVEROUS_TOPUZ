@@ -523,30 +523,24 @@ public class Ride extends Thread {
 	 */
 	@Override
 	public void run() {
-		try {
-			System.out.println("The user "+this.user.getName()+" starts the ride.");
-			this.user.setRide(this);
-			this.departureStation.addDepartureObserver(user);
-			this.arrivalStation.addArrivalObserver(user);
-			this.deplacement(this.user,this.user.getPosition(),this.departureStation.getLocation());
+		System.out.println("The user "+this.user.getName()+" starts the ride.");
+		this.user.setRide(this);
+		this.departureStation.addDepartureObserver(user);
+		this.arrivalStation.addArrivalObserver(user);
+		this.deplacement(this.user,this.user.getPosition(),this.departureStation.getLocation());
 			
-			this.user.takeBike(this.departureStation);
+		this.user.takeBike(this.departureStation);
+		
+		this.deplacement(this.user, this.departureStation.getLocation(), this.arrivalStation.getLocation());
+		
+		this.user.dropBike(this.arrivalStation);
 			
-			this.deplacement(this.user, this.departureStation.getLocation(), this.arrivalStation.getLocation());
+		this.deplacement(this.user, this.arrivalStation.getLocation(), this.arrival);
+		System.out.println("The user has finished the ride.");
 			
-			this.user.dropBike(this.arrivalStation);
-			
-			this.deplacement(this.user, this.arrivalStation.getLocation(), this.arrival);
-			System.out.println("The user has finished the ride.");
-			
-			this.user.addRide(this);
-			this.user.setRide(null);
-			System.out.println("The user "+this.user.getName()+" has a ride of null.");
-
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-			System.out.println("The ride has been interrupted.\n");
-		}
+		this.user.addRide(this);
+		this.user.setRide(null);
+		System.out.println("The user "+this.user.getName()+" has a ride of null.");
 	}
 	
 	/**
@@ -556,7 +550,7 @@ public class Ride extends Thread {
 	 * @param arrival A GPScoordinate object : the arrival point
 	 * @throws InterruptedException
 	 */
-	public void deplacement(User u,GPScoordinates departure,GPScoordinates arrival) throws InterruptedException {
+	public void deplacement(User u,GPScoordinates departure,GPScoordinates arrival) {
 		LocalDateTime departureTime = LocalDateTime.now(); 
 		double distance = GPScoordinates.distanceAB(departure, arrival);
 		double vitesse = u.getBehavior().getSpeed();
@@ -575,14 +569,27 @@ public class Ride extends Thread {
 			LocalDateTime interruptionTime = LocalDateTime.now();
 			Duration duration = Duration.between(departureTime,interruptionTime);
 			double travelTime = duration.toMillis()/(1000);
-			System.out.println("Departure time : " + departureTime + " and interrupted time : " +interruptionTime);
-			System.out.println("Duration to millis : " + duration.toMillis());
-			System.out.println("Duration : "+duration);
-			System.out.println("travelTime : " + travelTime);
 			double traveledDistance = vitesse*travelTime/3600;
 			u.setPosition(GPScoordinates.intermediateDistance(departure, arrival, traveledDistance/distance));
-			System.out.println("L'interruption de deplacement marche.\n");
-			throw new InterruptedException();
+			System.out.println("The ride of "+u.getName()+" has been interrupted for a change of itinerary.\n");
+			if (u.getBehavior() instanceof Walking){
+				System.out.println("The user "+u.getName()+" was walking to the departure station.");
+				u.getArrivalOfRide().removeArrivalObserver(u);
+				u.getDepartureOfRide().removeDepartureObserver(u);
+				u.goTo(arrival, u.getArrivalStationPreference(), u.getPathPreference());
+				System.out.println("The itinerary of "+u.getName()+" has been modified.");
+				System.out.println("The user "+u.getName()+" starts its ride again");
+				deplacement(u,u.getPosition(),this.getDepartureStation().getLocation());
+			}
+			else {
+				System.out.println("The user "+u.getName()+" was biking to the arrival station.");
+				u.getArrivalOfRide().removeArrivalObserver(u);
+				this.updateArrivalStation();
+				u.getArrivalOfRide().addArrivalObserver(u);
+				System.out.println("The itinerary of "+u.getName()+" has been modified.");
+				System.out.println("The user "+u.getName()+" starts its ride again.");
+				deplacement(u,u.getPosition(),u.getArrivalOfRide().getLocation());
+			}
 		}
 		
 	}
