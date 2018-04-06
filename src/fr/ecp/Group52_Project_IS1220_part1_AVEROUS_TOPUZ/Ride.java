@@ -544,7 +544,6 @@ public class Ride extends Thread {
 			System.out.println("The user "+this.user.getName()+" has a ride of null.");
 
 		} catch (InterruptedException e) {
-			e.printStackTrace();
 			Thread.currentThread().interrupt();
 			System.out.println("The ride has been interrupted.\n");
 		}
@@ -583,6 +582,7 @@ public class Ride extends Thread {
 			double traveledDistance = vitesse*travelTime/3600;
 			u.setPosition(GPScoordinates.intermediateDistance(departure, arrival, traveledDistance/distance));
 			System.out.println("L'interruption de deplacement marche.\n");
+			throw new InterruptedException();
 		}
 		
 	}
