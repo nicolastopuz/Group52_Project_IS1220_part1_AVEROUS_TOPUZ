@@ -1,7 +1,16 @@
-package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
+package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.UseCase;
 
 import java.util.ArrayList;
 
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.ArrivalStationPreferenceVisitable;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.GPScoordinates;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Network;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.NetworkStatisticsSortingMethods;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.PathPreferences;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.PreferPlus;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Station;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.StatisticCompiler;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.User;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidProportionsException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.MoreBikesThanSlotsException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;

@@ -14,7 +14,7 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
  *
  */
 
-public class Vmax extends Card implements CardVisitor {
+public class Vmax extends Card  {
 	
 	/**
 	 * A constructor creating a Vmax card object, assigning it a user, a unique card number and incrementing the card counter

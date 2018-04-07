@@ -19,7 +19,7 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
  * @since 1.0
  */
 
-public class MechanicalBike extends Bike implements VisitableBikes {
+public class MechanicalBike extends Bike {
 	
 	/**
 	 * A static double counting the total number of mechanical bikes in the system
