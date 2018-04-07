@@ -198,7 +198,7 @@ public class User implements VisitableItems, Observer {
 			e.printStackTrace();
 		}
 		catch(NoAvailableBikeException e) {
-			e.printStackTrace();
+			this.takeBike(s);
 		}
 		catch(NoRideException e) {
 			e.printStackTrace();
