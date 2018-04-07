@@ -135,7 +135,7 @@ public class ParkingSlot implements VisitableItems{
 		else {
 			this.bike = u.getBike();
 			u.setBike(null);
-			this.state = ParkingSlotState.taken;
+			this.setState(ParkingSlotState.taken);
 			
 			if(this.station.getFreeSlotNumber() == 0) {
 				try {
@@ -161,7 +161,7 @@ public class ParkingSlot implements VisitableItems{
 			u.setBike(this.bike);
 			
 			this.bike = null;
-			this.state = ParkingSlotState.free;
+			this.setState(ParkingSlotState.free);
 			
 			if(this.station.getAvailableBikeNumber() == 0) {
 				try {
@@ -234,8 +234,9 @@ public class ParkingSlot implements VisitableItems{
 			Duration duration = Duration.between(LocalDateTime.now(),this.lastChange);
 			this.timeOfOccupation += duration.toHours();
 			this.lastChange = LocalDateTime.now();
+			this.station.computingTheAverageTimeOccupation();
 		}
-		else {
+		else if (this.state.equals(ParkingSlotState.free)) {
 			this.lastChange = LocalDateTime.now();
 		}
 		this.state = state;

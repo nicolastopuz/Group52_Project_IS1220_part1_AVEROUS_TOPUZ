@@ -23,7 +23,6 @@ public class UseCaseTwoUsers {
 
 	public static void main(String[] args) {
 
-		StatisticCompiler stats = new StatisticCompiler(NetworkStatisticsSortingMethods.MostUsed);
 		Network n= new Network("network");
 		try {
 			n = new Network("network",2,2,0.1,0.5); //Two stations, one slot, one bike
@@ -31,13 +30,13 @@ public class UseCaseTwoUsers {
 			e.printStackTrace();
 		}
 		
-		n.createUser("Lapitre");
-		n.createUser("Paolo");
+		n.createUser("Elon Musk");
+		n.createUser("Bill Gates");
 
-		User lapitre = n.getUserList().get(0);
-		User paolo = n.getUserList().get(1);
-		System.out.println(lapitre);
-		System.out.println(paolo);
+		User user1 = n.getUserList().get(0);
+		User user2 = n.getUserList().get(1);
+		System.out.println(user1);
+		System.out.println(user2);
 		
 		ArrayList<Station> allStations = n.getStationList();
 		ArrayList<GPScoordinates> stationCoords = new ArrayList<GPScoordinates>();
@@ -46,12 +45,12 @@ public class UseCaseTwoUsers {
 			stationCoords.add(s.getLocation());
 		}
 		
-		System.out.println("Now to Station 1 for both users ! Who will get there first ?");
-		lapitre.goTo(stationCoords.get(1));
-		paolo.goTo(stationCoords.get(1));
+		System.out.println("Now to Station 1 for both users ! Who will get there first ?\n");
+		user1.goTo(stationCoords.get(1));
+		user2.goTo(stationCoords.get(1));
 		try {
-			lapitre.getRide().start();
-			paolo.getRide().start();
+			user1.getRide().start();
+			user2.getRide().start();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		}

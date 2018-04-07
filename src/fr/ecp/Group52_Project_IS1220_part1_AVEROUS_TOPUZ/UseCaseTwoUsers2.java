@@ -35,8 +35,8 @@ public class UseCaseTwoUsers2 {
 		station0.getParkingSlots().get(1).setState(ParkingSlotState.outOfOrder);
 		//The second slot of station 0 is out of order. Only the first slot can be used.
 		
-		n.createUser("Lapitre");
-		n.createUser("Paolo");
+		n.createUser("Elon Musk");
+		n.createUser("Bill Gates");
 		ArrayList<Station> allStations = n.getStationList();
 		ArrayList<GPScoordinates> stationCoords = new ArrayList<GPScoordinates>();
 		for(Station s : allStations) {
@@ -44,36 +44,36 @@ public class UseCaseTwoUsers2 {
 		}
 		
 		
-		User lapitre = n.getUserList().get(0);
-		User paolo = n.getUserList().get(1);
-		lapitre.setPosition(stationCoords.get(0)); //User lapitre starts his journey at station 0.
-		paolo.setPosition(stationCoords.get(2)); //User paolo starts his journey at station 2.
+		User user1 = n.getUserList().get(0);
+		User user2 = n.getUserList().get(1);
+		user1.setPosition(stationCoords.get(0)); //User user1 starts his journey at station 0.
+		user2.setPosition(stationCoords.get(2)); //User user2 starts his journey at station 2.
 		
-		System.out.println(lapitre);
-		System.out.println(paolo);
-		
-
+		System.out.println(user1);
+		System.out.println(user2);
 		
 
 		
-		System.out.println("Now to Station 1 user "+  lapitre.getName()  + "!");
-		lapitre.goTo(stationCoords.get(1));
+
+		
+		System.out.println("Now to Station 1 user "+  user1.getName()  + "!\n");
+		user1.goTo(stationCoords.get(1));
 		try {
-			lapitre.getRide().start();
-			lapitre.getRide().join();
+			user1.getRide().start();
+			user1.getRide().join();
 		} catch (NoRideException | InterruptedException e) {
 			e.printStackTrace();
 		}
 		
 		
-		System.out.println("\nNow that user "+  lapitre.getName()  + " has arrived, he will try to go back to station 0.");
-		System.out.println("However, user " + paolo.getName() + " coming from station 2 also wishes to go to station 0.");
-		System.out.println("there is only one free slot, so let's see how the updateArrival method works.");
-		lapitre.goTo(stationCoords.get(0));
-		paolo.goTo(stationCoords.get(0));
+		System.out.println("\nNow that user "+  user1.getName()  + " has arrived, he will try to go back to station 0.");
+		System.out.println("However, user " + user2.getName() + " coming from station 2 also wishes to go to station 0.");
+		System.out.println("there is only one free slot, so let's see how the updateArrival method works.\n");
+		user1.goTo(stationCoords.get(0));
+		user2.goTo(stationCoords.get(0));
 		try {
-			lapitre.getRide().start();
-			paolo.getRide().start();
+			user1.getRide().start();
+			user2.getRide().start();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		}

@@ -25,7 +25,7 @@ public class UseCaseUniqueUser {
 			e.printStackTrace();
 		}
 		
-		n.createUser("Lapitre");
+		n.createUser("Elon Musk");
 		System.out.println(n.getUserList().get(0));
 		
 		ArrayList<Station> allStations = n.getStationList();
@@ -35,182 +35,182 @@ public class UseCaseUniqueUser {
 			stationCoords.add(s.getLocation());
 		}
 		
-		User pierre = n.getUserList().get(0);
+		User user1 = n.getUserList().get(0);
 		
 		
 		System.out.println("Now to Station 4 !");
-		pierre.goTo(stationCoords.get(4));
+		user1.goTo(stationCoords.get(4));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 5 !");
-		pierre.goTo(stationCoords.get(5));
+		user1.goTo(stationCoords.get(5));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 7 !");
-		pierre.goTo(stationCoords.get(7));
+		user1.goTo(stationCoords.get(7));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 		
 
 		System.out.println("Now to Station 4 !");
-		pierre.goTo(stationCoords.get(4));
+		user1.goTo(stationCoords.get(4));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 2 !");
-		pierre.goTo(stationCoords.get(2));
+		user1.goTo(stationCoords.get(2));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 4 !");
-		pierre.goTo(stationCoords.get(4));
+		user1.goTo(stationCoords.get(4));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 7 !");
-		pierre.goTo(stationCoords.get(7));
+		user1.goTo(stationCoords.get(7));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 5 !");
-		pierre.goTo(stationCoords.get(5));
+		user1.goTo(stationCoords.get(5));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 8 !");
-		pierre.goTo(stationCoords.get(8));
+		user1.goTo(stationCoords.get(8));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 4 !");
-		pierre.goTo(stationCoords.get(4));
+		user1.goTo(stationCoords.get(4));
 		try {
-			pierre.getRide().start(); pierre.getRide().join();
+			user1.getRide().start(); user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 7 !");
-		pierre.goTo(stationCoords.get(7));
+		user1.goTo(stationCoords.get(7));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 1 !");
-		pierre.goTo(stationCoords.get(1));
+		user1.goTo(stationCoords.get(1));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join();
+			user1.getRide().start(); 
+			user1.getRide().join();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 
 		System.out.println("Now to Station 9 !");
-		pierre.goTo(stationCoords.get(9));
+		user1.goTo(stationCoords.get(9));
 		try {
-			pierre.getRide().start(); 
-			pierre.getRide().join(); 
+			user1.getRide().start(); 
+			user1.getRide().join(); 
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -218,11 +218,11 @@ public class UseCaseUniqueUser {
 		}
 		
 
-		System.out.println("After "+ pierre.getRides().size()+ " rides, " +pierre.getName()
-				+ " has a time credit of : "+pierre.getTimeCredit()+".");
+		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
+				+ " has a time credit of : "+user1.getTimeCredit()+".");
 		
 		System.out.println(stats.visit(n));
-		System.out.println(stats.visit(pierre));
+		System.out.println(stats.visit(user1));
 		System.out.println(stats.visit(allStations.get(4)));
 		System.out.println(stats.visit(allStations.get(2)));
 		

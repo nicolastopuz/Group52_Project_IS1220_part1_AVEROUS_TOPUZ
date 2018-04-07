@@ -29,9 +29,9 @@ public class UseCasePreferPlus {
 			e.printStackTrace();
 		}
 		
-		n.createUser("Lapitre");
-		User lapitre = n.getUserList().get(0);
-		System.out.println(lapitre);
+		n.createUser("Elon Musk");
+		User user = n.getUserList().get(0);
+		System.out.println(user);
 		
 		ArrayList<Station> allStations = n.getStationList();
 		
@@ -49,17 +49,17 @@ public class UseCasePreferPlus {
 			stationCoords.add(s.getLocation());
 		}
 		
-		lapitre.setPosition(stationCoords.get(0));
+		user.setPosition(stationCoords.get(0));
 		
-		System.out.println("Now user "+lapitre.getName()+"'s arrival point is between a normal station\n"
+		System.out.println("Now user "+user.getName()+"'s arrival point is between a normal station\n"
 				+ "and a plus station. With no preference, he should go toward station 1, but with \n"
-				+ "preferPlus preference he should be off to station 2 now !");
+				+ "preferPlus preference he should be off to station 2 now !\n");
 		
-		ArrivalStationPreferenceVisitable arrivalStationPreference = new NoPreference();
-		lapitre.goTo(GPScoordinates.intermediateDistance(stationCoords.get(1), stationCoords.get(2), 0.48), arrivalStationPreference , PathPreferences.Fastest);
+		ArrivalStationPreferenceVisitable arrivalStationPreference = new PreferPlus();
+		user.goTo(GPScoordinates.intermediateDistance(stationCoords.get(1), stationCoords.get(2), 0.48), arrivalStationPreference , PathPreferences.Fastest);
 		
 		try {
-			lapitre.getRide().start();
+			user.getRide().start();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		}

@@ -168,13 +168,7 @@ public class User implements VisitableItems, Observer {
 			this.ride.startOnBike();
 
 		}
-		catch(EmptySlotException e) {
-			e.printStackTrace();
-		}
-		catch(NoAvailableBikeException e) {
-			e.printStackTrace();
-		}
-		catch(NoRideException e) {
+		catch(EmptySlotException | NoRideException | NoAvailableBikeException e) {
 			e.printStackTrace();
 		}
 	}

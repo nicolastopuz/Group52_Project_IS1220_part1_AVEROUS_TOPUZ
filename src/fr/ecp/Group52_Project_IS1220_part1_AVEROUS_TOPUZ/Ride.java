@@ -269,12 +269,23 @@ public class Ride extends Thread {
 	 * A method to update the arrival station of the ride, in case the last parkingslots at this 
 	 * station are taken by another user during the ride
 	 */
-	public void updateArrivalStation() {
+	public void updateArrivalChange() {
 		GPScoordinates userLocation = this.user.getPosition();
 		this.arrivalStation = pathPreference.getUpdateOnArrivalStation(userLocation);	
 		this.user.setArrivalOfRide(this.arrivalStation);
 	}
 	
+	/**
+	 * A method to update the parameters of the ride, in case the last bikes at the  
+	 * departure station are taken by another user during the ride
+	 */
+	public void updateDepartureChange() {
+		Ride newRide = new Ride(this.user, arrival, this.allStations, this.user.getArrivalStationPreference(), this.user.getPathPreference());
+		this.departureStation = newRide.getDepartureStation();
+		this.arrivalStation = newRide.getArrivalStation();
+		this.user.setDepartureOfRide(this.departureStation);
+		this.user.setArrivalOfRide(this.arrivalStation);
+	}
 	//Les Getters
 	
 	/**
@@ -518,6 +529,8 @@ public class Ride extends Thread {
 	 */
 	@Override
 	public void run() {
+		System.out.println("The user "+this.user.getName()+" starts the ride,\n"
+				+ "passing through station "+this.departureStation.getStationID()+ " and station " + this.arrivalStation.getStationID()+".");
 		this.user.setRide(this);
 		this.departureStation.addDepartureObserver(user);
 		this.arrivalStation.addArrivalObserver(user);
@@ -530,6 +543,7 @@ public class Ride extends Thread {
 		this.user.dropBike(this.arrivalStation);
 			
 		this.deplacement(this.user, this.arrivalStation.getLocation(), this.arrival);
+		System.out.println("The user "+this.user.getName()+" has finished the ride.");
 			
 		this.user.addRide(this);
 		this.user.setRide(null);
@@ -557,20 +571,28 @@ public class Ride extends Thread {
 			double travelTime = duration.toMillis()/(1000);
 			double traveledDistance = vitesse*travelTime/3600;
 			u.setPosition(GPScoordinates.intermediateDistance(departure, arrival, traveledDistance/distance));
+			System.out.println("\n!!! The ride of "+u.getName()+" has been interrupted for a change of itinerary.");
 			if (u.getBehavior() instanceof Walking){
+				System.out.println("The user "+u.getName()+" was walking to the departure station.");
 				u.getArrivalOfRide().removeArrivalObserver(u);
 				u.getDepartureOfRide().removeDepartureObserver(u);
-				u.goTo(arrival, u.getArrivalStationPreference(), u.getPathPreference());
-				deplacement(u,u.getPosition(),this.getDepartureStation().getLocation());
+				this.updateDepartureChange();
+				u.getArrivalOfRide().addArrivalObserver(u);
+				u.getDepartureOfRide().addDepartureObserver(u);
+				System.out.println("The itinerary of "+u.getName()+" has been modified.");
+				System.out.println("The user "+u.getName()+" starts its ride again");
+				System.out.println("He is now going first to station "+u.getDepartureOfRide().getStationID()+", and then to station "+u.getArrivalOfRide().getStationID()+".\n");
+				deplacement(u,u.getPosition(),this.departureStation.getLocation());
 			}
 			else {
+				System.out.println("The user "+u.getName()+" was biking to the arrival station.");
 				u.getArrivalOfRide().removeArrivalObserver(u);
-				this.updateArrivalStation();
+				this.updateArrivalChange();
 				u.getArrivalOfRide().addArrivalObserver(u);
-				deplacement(u,u.getPosition(),u.getArrivalOfRide().getLocation());
+				System.out.println("The itinerary of "+u.getName()+" has been modified.");
+				System.out.println("The user "+u.getName()+" starts its ride again, he is off to station "+ u.getArrivalOfRide().getStationID() +".\n");
+				deplacement(u,u.getPosition(),this.arrivalStation.getLocation());
 			}
 		}
-		
 	}
-	
 }

@@ -150,8 +150,6 @@ public class StatisticCompiler implements StatisticVisitor {
 			totalCreditTimeEarned+=r.getCreditEarned();
 		}
 		
-
-		System.out.println(" Total price : " + totalPrice);
 		
 		totalPrice = totalPrice*100;
 		totalPrice = Math.round(totalPrice);
@@ -159,8 +157,6 @@ public class StatisticCompiler implements StatisticVisitor {
 		
 		int minOnBike= (int)timeSpentOnABike;
 		double secOnBike= Math.round((timeSpentOnABike-minOnBike)*60);
-		
-		System.out.println("total price after modif : " + totalPrice);
 		
 		return ("The User "+ u.getName()+", ID number "+u.getNumericalId()+", has done "+numberOfRides+" rides. He has spent "+minOnBike+" minutes "+secOnBike+" secondes on a bike, paid a total amount of charges of "+totalPrice+" euros� and earned a total amount of time credit of "+totalCreditTimeEarned+" minutes.\n");
 	}
