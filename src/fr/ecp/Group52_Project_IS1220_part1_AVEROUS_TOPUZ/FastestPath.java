@@ -109,7 +109,6 @@ public class FastestPath implements PathPreferenceVisitor {
 	
 	@Override
 	public Station getUpdateOnArrivalStation(GPScoordinates departure) {
-		GPScoordinates arrival = this.ride.getArrival();
 		ArrayList<Station> arrivalStations = this.ride.getArrivalStations();
 		
 		double[] distanceNextStationToArrival = ride.distanceToArrival(arrivalStations);
@@ -117,11 +116,13 @@ public class FastestPath implements PathPreferenceVisitor {
 		double[] totalMecaDurations = new double[arrivalStations.size()];
 		double[] totalElecDurations = new double[arrivalStations.size()];
 		
-		
+		System.out.println("Duration Matrix in calculation of new arrival of Ride");
 		for (int i = 0; i < arrivalStations.size(); i++) {
-			distanceToNextStation[i] = arrival.distanceTo(arrivalStations.get(i).getLocation()) ;
-			totalMecaDurations[i] = distanceToNextStation[i]*meca.getSpeed() + distanceNextStationToArrival[i]*walk.getSpeed();
-			totalElecDurations[i] = distanceToNextStation[i]*elec.getSpeed() + distanceNextStationToArrival[i]*walk.getSpeed();
+			distanceToNextStation[i] = departure.distanceTo(arrivalStations.get(i).getLocation()) ;
+			totalMecaDurations[i] = distanceToNextStation[i]/meca.getSpeed() + distanceNextStationToArrival[i]/walk.getSpeed();
+			totalElecDurations[i] = distanceToNextStation[i]/elec.getSpeed() + distanceNextStationToArrival[i]/walk.getSpeed();
+			System.out.print(totalMecaDurations[i]);
+
 		}
 		
 		int arrivalIndex = 0;
@@ -137,6 +138,9 @@ public class FastestPath implements PathPreferenceVisitor {
 		
 		this.mechanicalRideDuration = minMecaTime;
 		this.electricalRideDuration = minElecTime;
+		
+		System.out.println("Arrival index : " + arrivalIndex + ", duration :" + minMecaTime);
+		System.out.println();
 		
 		return arrivalStations.get(arrivalIndex);
 	}

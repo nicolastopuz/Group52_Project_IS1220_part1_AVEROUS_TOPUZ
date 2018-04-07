@@ -24,13 +24,15 @@ public class PreferPlus implements ArrivalStationPreferenceVisitable {
 		ArrayList<Station> allStations = ride.getAllStations();
 		ArrayList<Station> arrivalStations = new ArrayList<Station>();
 		boolean validStationPlusInRange = this.isValidPlusStationInRange(ride);
-		for (int i = 0; i < allStations.size(); i++) {
-			if (validStationPlusInRange) {
+		if (validStationPlusInRange) {
+			for (int i = 0; i < allStations.size(); i++) {
 				if(allStations.get(i).isFreeSlot() && allStations.get(i) instanceof StationPlus) {
 					arrivalStations.add(allStations.get(i));
 				}
 			}
-			else {
+		}
+		else {
+			for (int i = 0; i < allStations.size(); i++) {
 				if(allStations.get(i).isFreeSlot()) {
 					arrivalStations.add(allStations.get(i));
 				}
@@ -42,7 +44,7 @@ public class PreferPlus implements ArrivalStationPreferenceVisitable {
 	public boolean isValidPlusStationInRange(Ride ride) {
 		ArrayList<Station> arrivalStations = new ArrayList<Station>();
 		ArrayList<Station> allStations = ride.getAllStations();
-		for(int i = 0; i<allStations.size();i++) {
+		for (int i = 0; i < allStations.size(); i++) {
 			if(allStations.get(i).isFreeSlot()) {
 				arrivalStations.add(allStations.get(i));
 			}
@@ -56,7 +58,8 @@ public class PreferPlus implements ArrivalStationPreferenceVisitable {
 		}
 		
 		for (int i = 0; i < arrivalDistances.length; i++) {
-			if(arrivalStations.get(i) instanceof StationPlus && arrivalDistances[i]<1.1*minDistance) {
+			System.out.println("Arrival distance : "+ arrivalDistances[i] +", and switch distance : "+ (1.1*minDistance));
+			if(arrivalStations.get(i) instanceof StationPlus && arrivalDistances[i]<=1.1*minDistance) {
 				return true;
 			}
 		}

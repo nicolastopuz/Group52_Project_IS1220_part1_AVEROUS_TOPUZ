@@ -426,6 +426,12 @@ public class Station implements VisitableItems, Observable {
 	 * 
 	 */
 	public int getAvailableBikeNumber() {
+		availableBikeNumber = 0;
+		for (int i = 0; i < this.parkingSlots.size(); i++) {
+			if(parkingSlots.get(i).isBike()) {
+				availableBikeNumber++;
+			}
+		}
 		return availableBikeNumber;
 	}
 	
@@ -434,6 +440,12 @@ public class Station implements VisitableItems, Observable {
 	 * @return the number of free slots in this station as an int
 	 */
 	public int getFreeSlotNumber() {
+		freeSlotNumber = 0;
+		for (int i = 0; i < this.parkingSlots.size(); i++) {
+			if(parkingSlots.get(i).isFree()) {
+				freeSlotNumber++;
+			}
+		}
 		return freeSlotNumber;
 	}
 	

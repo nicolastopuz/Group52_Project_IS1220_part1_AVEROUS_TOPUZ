@@ -65,6 +65,7 @@ public class Network implements VisitableItems {
 		this.bikeList = new ArrayList<Bike>();
 		this.stationList = new ArrayList<Station>();
 		this.userList = new ArrayList<User>();
+		this.sideArea=4;
 	}
 	
 	/**
@@ -131,6 +132,18 @@ public class Network implements VisitableItems {
 		this.addStation(s);
 		return s;
 	}
+	
+	/**
+	 * A simple method to create a Station within the Network's range and add it to the stationList
+	 * @param numberOfSlots	The number of slots to be built in the station
+	 * @return	the new Station object
+	 */
+	public Station createStation(int numberOfSlots) {
+		Station s = new Station(this, numberOfSlots, GPScoordinates.randomLocation(sideArea));
+		this.addStation(s);
+		return s;
+	}
+	
 	/**
 	 * A simple method to create a Station and add it to the stationList
 	 * @param numberOfSlots	The number of slots to be built in the station
@@ -143,6 +156,75 @@ public class Network implements VisitableItems {
 	 */
 	public Station createStation(int numberOfSlots, GPScoordinates location, int numberOfBikes, float mechanicalBikeProportion) throws MoreBikesThanSlotsException, InvalidProportionsException {
 		Station s = new Station(this, numberOfSlots, location, numberOfBikes, mechanicalBikeProportion);
+		this.addStation(s);
+		return s;
+	}
+	
+	/**
+	 * A simple method to create a Station within the Network's range and add it to the stationList
+	 * @param numberOfSlots	The number of slots to be built in the station
+	 * @param mechanicalBikeProportion the proportion of mechanical Bikes among the 
+	 * bikes added to the station
+	 * @return	the new Station object
+	 * @throws MoreBikesThanSlotsException
+	 * @throws InvalidProportionsException
+	 */
+	public Station createStation(int numberOfSlots, int numberOfBikes, float mechanicalBikeProportion) throws MoreBikesThanSlotsException, InvalidProportionsException {
+		Station s = new Station(this, numberOfSlots, GPScoordinates.randomLocation(sideArea), numberOfBikes, mechanicalBikeProportion);
+		this.addStation(s);
+		return s;
+	}
+	
+	/**
+	 * A simple method to create a StationPlus and add it to the stationList
+	 * @param numberOfSlots	The number of slots to be built in the station
+	 * @param location	The location of the station
+	 * @return	the new StationPlus object
+	 */
+	public StationPlus createStationPlus(int numberOfSlots, GPScoordinates location) {
+		StationPlus s = new StationPlus(this, numberOfSlots, location);
+		this.addStation(s);
+		return s;
+	}
+	
+	/**
+	 * A simple method to create a StationPlus within the Network's range and add it to the stationList
+	 * @param numberOfSlots	The number of slots to be built in the station
+	 * @return	the new StationPlus object
+	 */
+	public StationPlus createStationPlus(int numberOfSlots) {
+		StationPlus s = new StationPlus(this, numberOfSlots, GPScoordinates.randomLocation(sideArea));
+		this.addStation(s);
+		return s;
+	}
+	
+	/**
+	 * A simple method to create a Station and add it to the stationList
+	 * @param numberOfSlots	The number of slots to be built in the station
+	 * @param location	The location of the station
+	 * @param mechanicalBikeProportion the proportion of mechanical Bikes among the 
+	 * bikes added to the station
+	 * @return	the new Station object
+	 * @throws MoreBikesThanSlotsException
+	 * @throws InvalidProportionsException
+	 */
+	public StationPlus createStationPlus(int numberOfSlots, GPScoordinates location, int numberOfBikes, float mechanicalBikeProportion) throws MoreBikesThanSlotsException, InvalidProportionsException {
+		StationPlus s = new StationPlus(this, numberOfSlots, location, numberOfBikes, mechanicalBikeProportion);
+		this.addStation(s);
+		return s;
+	}
+	
+	/**
+	 * A simple method to create a Station within the Network's range and add it to the stationList 
+	 * @param numberOfSlots	The number of slots to be built in the station
+	 * @param mechanicalBikeProportion the proportion of mechanical Bikes among the 
+	 * bikes added to the station
+	 * @return	the new Station object
+	 * @throws MoreBikesThanSlotsException
+	 * @throws InvalidProportionsException
+	 */
+	public StationPlus createStationPlus(int numberOfSlots, int numberOfBikes, float mechanicalBikeProportion) throws MoreBikesThanSlotsException, InvalidProportionsException {
+		StationPlus s = new StationPlus(this, numberOfSlots, GPScoordinates.randomLocation(sideArea), numberOfBikes, mechanicalBikeProportion);
 		this.addStation(s);
 		return s;
 	}

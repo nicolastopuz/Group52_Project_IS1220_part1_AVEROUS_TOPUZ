@@ -179,6 +179,34 @@ public class User implements VisitableItems, Observer {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Method for user to pick up a Bike at a given Station. 
+	 * @param s	The station from which the user should pick up the bike from.
+	 */
+	public synchronized void takeBike(Station s, BikesType type) {
+		try {
+			ParkingSlot p = s.getAvailableBicycle(type);
+			departureOfRide.removeDepartureObserver(this);
+			p.giveBike(this);
+			this.behavior = this.bike.getBehavior();
+			double numberOfRent = s.getNumberOfRent()+1;
+			s.setNumberOfRent(numberOfRent);
+			this.ride.setBike(this.bike);
+			this.ride.startOnBike();
+
+			System.out.println("The user "+this.getName()+" gets a bike.");
+		}
+		catch(EmptySlotException e) {
+			e.printStackTrace();
+		}
+		catch(NoAvailableBikeException e) {
+			e.printStackTrace();
+		}
+		catch(NoRideException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * Method for User to drop off a Bike at a given Station.

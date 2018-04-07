@@ -579,6 +579,7 @@ public class Ride extends Thread {
 				u.goTo(arrival, u.getArrivalStationPreference(), u.getPathPreference());
 				System.out.println("The itinerary of "+u.getName()+" has been modified.");
 				System.out.println("The user "+u.getName()+" starts its ride again");
+				System.out.println("He is now going first to station "+u.getDepartureOfRide().getStationID()+", and then to station "+u.getArrivalOfRide().getStationID()+".\n");
 				deplacement(u,u.getPosition(),this.getDepartureStation().getLocation());
 			}
 			else {
@@ -587,7 +588,7 @@ public class Ride extends Thread {
 				this.updateArrivalStation();
 				u.getArrivalOfRide().addArrivalObserver(u);
 				System.out.println("The itinerary of "+u.getName()+" has been modified.");
-				System.out.println("The user "+u.getName()+" starts its ride again.");
+				System.out.println("The user "+u.getName()+" starts its ride again, he is off to station "+ u.getArrivalOfRide().getStationID() +".");
 				deplacement(u,u.getPosition(),u.getArrivalOfRide().getLocation());
 			}
 		}

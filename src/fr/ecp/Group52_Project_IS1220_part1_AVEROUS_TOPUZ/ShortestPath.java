@@ -103,18 +103,19 @@ public class ShortestPath implements PathPreferenceVisitor {
 	
 	@Override
 	public Station getUpdateOnArrivalStation(GPScoordinates departure) {
-		GPScoordinates arrival = this.ride.getArrival();
 		ArrayList<Station> arrivalStations = this.ride.getArrivalStations();
 		
 		double[] distanceNextStationToArrival = ride.distanceToArrival(arrivalStations);
 		double[] distanceToNextStation = new double[arrivalStations.size()];
 		double[] totalDistances = new double[arrivalStations.size()];
 		
-		
+		System.out.println("Distance Matrix in calculation of new arrival of Ride");
 		for (int i = 0; i < arrivalStations.size(); i++) {
-			distanceToNextStation[i] = arrival.distanceTo(arrivalStations.get(i).getLocation()) ;
+			distanceToNextStation[i] = departure.distanceTo(arrivalStations.get(i).getLocation()) ;
 			totalDistances[i] = distanceToNextStation[i] + distanceNextStationToArrival[i];
+			System.out.print(totalDistances[i]);
 		}
+		
 		
 		int arrivalIndex = 0;
 		double minDistance = totalDistances[0];
@@ -124,6 +125,8 @@ public class ShortestPath implements PathPreferenceVisitor {
 				minDistance = totalDistances[i];
 			}
 		}
+		System.out.println("Arrival index : " + arrivalIndex + ", distance :" + minDistance);
+		System.out.println();
 		
 		return arrivalStations.get(arrivalIndex);
 	}
