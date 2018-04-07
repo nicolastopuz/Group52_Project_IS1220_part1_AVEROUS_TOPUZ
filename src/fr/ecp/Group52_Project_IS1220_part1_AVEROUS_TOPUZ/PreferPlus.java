@@ -58,7 +58,6 @@ public class PreferPlus implements ArrivalStationPreferenceVisitable {
 		}
 		
 		for (int i = 0; i < arrivalDistances.length; i++) {
-			System.out.println("Arrival distance : "+ arrivalDistances[i] +", and switch distance : "+ (1.1*minDistance));
 			if(arrivalStations.get(i) instanceof StationPlus && arrivalDistances[i]<=1.1*minDistance) {
 				return true;
 			}

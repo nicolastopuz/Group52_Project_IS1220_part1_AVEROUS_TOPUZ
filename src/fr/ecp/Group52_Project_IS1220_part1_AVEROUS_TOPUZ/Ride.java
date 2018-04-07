@@ -110,11 +110,6 @@ public class Ride extends Thread {
 		this.pathPreference.setRide(this);
 		Station[] departureAndArrival = this.pathPreference.getDepartureAndArrival();
 		
-		System.out.println("\n------------------------------------------");
-		System.out.println("Departure Station of the ride : " + departureAndArrival[0]);
-		System.out.println("Arrival Station of the ride : "+departureAndArrival[1]);
-		System.out.println("------------------------------------------\n");
-		
 		this.departureStation = departureAndArrival[0];
 		this.arrivalStation = departureAndArrival[1];
 	}
@@ -523,7 +518,6 @@ public class Ride extends Thread {
 	 */
 	@Override
 	public void run() {
-		System.out.println("The user "+this.user.getName()+" starts the ride.");
 		this.user.setRide(this);
 		this.departureStation.addDepartureObserver(user);
 		this.arrivalStation.addArrivalObserver(user);
@@ -536,11 +530,9 @@ public class Ride extends Thread {
 		this.user.dropBike(this.arrivalStation);
 			
 		this.deplacement(this.user, this.arrivalStation.getLocation(), this.arrival);
-		System.out.println("The user has finished the ride.");
 			
 		this.user.addRide(this);
 		this.user.setRide(null);
-		System.out.println("The user "+this.user.getName()+" has a ride of null.");
 	}
 	
 	/**
@@ -555,40 +547,26 @@ public class Ride extends Thread {
 		double distance = GPScoordinates.distanceAB(departure, arrival);
 		double vitesse = u.getBehavior().getSpeed();
 		double time = distance/vitesse;
-		
-		System.out.println("\nDistance of travel : " + distance);
-		System.out.println("Time of travel : " +time);
-		System.out.println("Time of travel in millis : " +3600000*time);
-		System.out.println();
 
 		try {
 			Thread.sleep((long) (3600000*time));
 			u.setPosition(arrival);
-			System.out.println(arrival.toString());
 		} catch (InterruptedException e) {
 			LocalDateTime interruptionTime = LocalDateTime.now();
 			Duration duration = Duration.between(departureTime,interruptionTime);
 			double travelTime = duration.toMillis()/(1000);
 			double traveledDistance = vitesse*travelTime/3600;
 			u.setPosition(GPScoordinates.intermediateDistance(departure, arrival, traveledDistance/distance));
-			System.out.println("The ride of "+u.getName()+" has been interrupted for a change of itinerary.\n");
 			if (u.getBehavior() instanceof Walking){
-				System.out.println("The user "+u.getName()+" was walking to the departure station.");
 				u.getArrivalOfRide().removeArrivalObserver(u);
 				u.getDepartureOfRide().removeDepartureObserver(u);
 				u.goTo(arrival, u.getArrivalStationPreference(), u.getPathPreference());
-				System.out.println("The itinerary of "+u.getName()+" has been modified.");
-				System.out.println("The user "+u.getName()+" starts its ride again");
-				System.out.println("He is now going first to station "+u.getDepartureOfRide().getStationID()+", and then to station "+u.getArrivalOfRide().getStationID()+".\n");
 				deplacement(u,u.getPosition(),this.getDepartureStation().getLocation());
 			}
 			else {
-				System.out.println("The user "+u.getName()+" was biking to the arrival station.");
 				u.getArrivalOfRide().removeArrivalObserver(u);
 				this.updateArrivalStation();
 				u.getArrivalOfRide().addArrivalObserver(u);
-				System.out.println("The itinerary of "+u.getName()+" has been modified.");
-				System.out.println("The user "+u.getName()+" starts its ride again, he is off to station "+ u.getArrivalOfRide().getStationID() +".");
 				deplacement(u,u.getPosition(),u.getArrivalOfRide().getLocation());
 			}
 		}

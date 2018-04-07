@@ -109,11 +109,9 @@ public class ShortestPath implements PathPreferenceVisitor {
 		double[] distanceToNextStation = new double[arrivalStations.size()];
 		double[] totalDistances = new double[arrivalStations.size()];
 		
-		System.out.println("Distance Matrix in calculation of new arrival of Ride");
 		for (int i = 0; i < arrivalStations.size(); i++) {
 			distanceToNextStation[i] = departure.distanceTo(arrivalStations.get(i).getLocation()) ;
 			totalDistances[i] = distanceToNextStation[i] + distanceNextStationToArrival[i];
-			System.out.print(totalDistances[i]);
 		}
 		
 		
@@ -125,8 +123,6 @@ public class ShortestPath implements PathPreferenceVisitor {
 				minDistance = totalDistances[i];
 			}
 		}
-		System.out.println("Arrival index : " + arrivalIndex + ", distance :" + minDistance);
-		System.out.println();
 		
 		return arrivalStations.get(arrivalIndex);
 	}

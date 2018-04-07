@@ -167,7 +167,6 @@ public class User implements VisitableItems, Observer {
 			this.ride.setBike(this.bike);
 			this.ride.startOnBike();
 
-			System.out.println("The user "+this.getName()+" gets a bike.");
 		}
 		catch(EmptySlotException e) {
 			e.printStackTrace();
@@ -194,8 +193,6 @@ public class User implements VisitableItems, Observer {
 			s.setNumberOfRent(numberOfRent);
 			this.ride.setBike(this.bike);
 			this.ride.startOnBike();
-
-			System.out.println("The user "+this.getName()+" gets a bike.");
 		}
 		catch(EmptySlotException e) {
 			e.printStackTrace();
@@ -223,8 +220,7 @@ public class User implements VisitableItems, Observer {
 			s.setNumberOfReturn(numberOfReturn+1);
 			
 			this.ride.stopOnBike();
-			System.out.println("The user "+this.getName()+" drops the bike.");
-
+			
 			this.ride.proceedCreditAttribution();
 			this.ride.proceedPayment();
 		}
@@ -249,7 +245,6 @@ public class User implements VisitableItems, Observer {
 			s.setNumberOfReturn(numberOfReturn+1);
 			
 			this.ride.stopOnBike();
-			System.out.println("The user "+this.getName()+" drops the bike.");
 
 			this.ride.proceedCreditAttribution();
 			this.ride.proceedPayment(time);
