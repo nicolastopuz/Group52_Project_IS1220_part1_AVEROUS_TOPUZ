@@ -2,8 +2,8 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Itinerary;
 
 import java.util.ArrayList;
 
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Station;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.StationPlus;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Station.Station;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Station.StationPlus;
 
 /**
  * A preference in arrival stations. The ride calculator has to prefer
