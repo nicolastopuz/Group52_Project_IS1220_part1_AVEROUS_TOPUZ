@@ -2,20 +2,9 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.UseCase;
 
 import java.util.ArrayList;
 
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.ArrivalStationPreferenceVisitable;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.GPScoordinates;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Network;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.NetworkStatisticsSortingMethods;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.PathPreferences;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.PreferPlus;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Station;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.StatisticCompiler;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.User;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidProportionsException;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.MoreBikesThanSlotsException;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.*;
 
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.*;
 /**
  * This class is used to test the good functioning of the PreferPlus
  * arrival station preference.
@@ -39,8 +28,11 @@ public class UseCasePreferPlus {
 		}
 		
 		n.createUser("Elon Musk");
-		User user = n.getUserList().get(0);
-		System.out.println(user);
+		n.createUser("Bill Gates");
+		User user1 = n.getUserList().get(0);
+		User user2 = n.getUserList().get(1);
+		System.out.println(user1);
+		System.out.println(user2);
 		
 		ArrayList<Station> allStations = n.getStationList();
 		
@@ -58,17 +50,26 @@ public class UseCasePreferPlus {
 			stationCoords.add(s.getLocation());
 		}
 		
-		user.setPosition(stationCoords.get(0));
+		user1.setPosition(stationCoords.get(0));
+		user2.setPosition(stationCoords.get(0));
 		
-		System.out.println("Now user "+user.getName()+"'s arrival point is between a normal station\n"
+		System.out.println("Now user "+user1.getName()+"'s arrival point is between a normal station\n"
 				+ "and a plus station. With no preference, he should go toward station 1, but with \n"
-				+ "preferPlus preference he should be off to station 2 now !\n");
+				+ "preferPlus preference he should be off to station 2 now !\n"
+				+ "User "+user2.getName() +" is starting off at the same location, he is going to the\n"
+				+ "same spot as the other user, but with no arrival station preference. He will \n"
+				+ "therefore go towards station 1.\n");
 		
-		ArrivalStationPreferenceVisitable arrivalStationPreference = new PreferPlus();
-		user.goTo(GPScoordinates.intermediateDistance(stationCoords.get(1), stationCoords.get(2), 0.48), arrivalStationPreference , PathPreferences.Fastest);
+		GPScoordinates arrivalPoint = GPScoordinates.intermediateDistance(stationCoords.get(1), stationCoords.get(2), 0.48);
 		
+		ArrivalStationPreferenceVisitable arrivalStationPreference1 = new PreferPlus();
+		ArrivalStationPreferenceVisitable arrivalStationPreference2 = new NoPreference();
+		user1.goTo(arrivalPoint, arrivalStationPreference1 , PathPreferences.Fastest);
+		user2.goTo(arrivalPoint, arrivalStationPreference2 , PathPreferences.Fastest);
+
 		try {
-			user.getRide().start();
+			user1.getRide().start();
+			user2.getRide().start();
 		} catch (NoRideException e) {
 			e.printStackTrace();
 		}

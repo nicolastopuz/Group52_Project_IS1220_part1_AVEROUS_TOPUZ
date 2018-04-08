@@ -177,7 +177,6 @@ public class ParkingSlot implements VisitableItems{
 		if(this.state == ParkingSlotState.taken) {
 			Duration duration = Duration.between(this.lastChange, LocalDateTime.now());
 			this.timeOfOccupation += duration.toMillis();
-			System.out.println(timeOfOccupation);
 			this.lastChange = LocalDateTime.now();
 		}
 	}

@@ -359,7 +359,6 @@ public class Station implements VisitableItems, Observable {
 			averageOccupationTime+=ps.getTimeOfOccupation();
 		}
 		this.averageTimeOfOccupation=averageOccupationTime/this.getParkingSlots().size();
-		System.out.println("avg : " +this.averageTimeOfOccupation);
 	}
 	
 	

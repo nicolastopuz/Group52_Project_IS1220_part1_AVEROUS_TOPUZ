@@ -26,7 +26,7 @@ public class UseCaseUniqueUser {
 		StatisticCompiler stats = new StatisticCompiler(NetworkStatisticsSortingMethods.MostUsed);
 		Network n= new Network("network");
 		try {
-			n = new Network("network",10,10,0.5,0.7);
+			n = new Network("network",10,10,0.1,0.7);
 		} catch (InvalidProportionsException e) {
 			e.printStackTrace();
 		}
