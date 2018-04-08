@@ -15,10 +15,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.GPScoordinates;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.BadCoordinatesSyntaxException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidCoordinatesException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.GPScoordinates;
 
 public class GPScoordinatesTest {
 	

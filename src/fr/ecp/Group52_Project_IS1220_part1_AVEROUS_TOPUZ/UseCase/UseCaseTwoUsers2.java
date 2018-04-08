@@ -2,15 +2,15 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.UseCase;
 
 import java.util.ArrayList;
 
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.GPScoordinates;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Network;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.NetworkStatisticsSortingMethods;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.ParkingSlotState;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Station;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.StatisticCompiler;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.User;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidProportionsException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.GPScoordinates;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Network;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Station.ParkingSlotState;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Station.Station;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.User.User;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Stats.NetworkStatisticsSortingMethods;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Stats.StatisticCompiler;
 
 /**
  * A class to test the functioning of the network for two user.
