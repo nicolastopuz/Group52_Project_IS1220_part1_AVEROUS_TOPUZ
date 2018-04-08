@@ -126,7 +126,7 @@ public class StatisticCompiler implements StatisticVisitor {
 	 */
 	@Override
 	public String visit(Station s) {
-		return ("This station, ID number "+s.getStationID()+" has witnessed "+s.getNumberOfRent()+" rent operations as well as "+s.getNumberOfReturn()+" return operations.\nIt's average occupation rate is "+s.getAverageTimeOfOccupation()+" hours.\n");
+		return ("This station, ID number "+s.getStationID()+" has witnessed "+s.getNumberOfRent()+" rent operations as well as "+s.getNumberOfReturn()+" return operations.\nIt's average occupation rate is "+Math.round(s.getAverageTimeOfOccupation()/36000)/100+" hours, "+ Math.round(s.getAverageTimeOfOccupation()/600)/100 +" minutes and "+ Math.round(s.getAverageTimeOfOccupation()/10)/100 +" seconds ("+s.getAverageTimeOfOccupation()+ "milliseconds).\n");
 	}
 
 	/**

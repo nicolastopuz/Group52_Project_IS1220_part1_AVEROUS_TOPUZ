@@ -100,7 +100,7 @@ public class Station implements VisitableItems, Observable {
 	/**
 	 * A long storing the average time of occupation after it's last computation by the averageTimeOfOccupation (it will be used to sort the least occupied stations)
 	 */
-	protected long averageTimeOfOccupation;
+	protected double averageTimeOfOccupation;
 	
 	/**
 	 * This method is a constructor of the Station class. 
@@ -353,11 +353,13 @@ public class Station implements VisitableItems, Observable {
 	 * A method to compute the average time of occupation and set its value in averageTimeOfOccupation
 	 */
 	public void computingTheAverageTimeOccupation() {
-		long averageOccupationTime = 0;
+		double averageOccupationTime = 0;
 		for (ParkingSlot ps : this.getParkingSlots()) {
+			ps.updateOccupationTime();
 			averageOccupationTime+=ps.getTimeOfOccupation();
 		}
 		this.averageTimeOfOccupation=averageOccupationTime/this.getParkingSlots().size();
+		System.out.println("avg : " +this.averageTimeOfOccupation);
 	}
 	
 	
@@ -487,7 +489,7 @@ public class Station implements VisitableItems, Observable {
 	 * A getter to retrieve the average time of occupation of the station 
 	 * @return the average time of occupation of the station as a long 
 	 */
-	public long getAverageTimeOfOccupation() {
+	public double getAverageTimeOfOccupation() {
 		return this.averageTimeOfOccupation;
 	}
 	

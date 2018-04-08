@@ -55,7 +55,7 @@ public class ParkingSlot implements VisitableItems{
 	/**
 	 * A long storing the total time of occupation of the Parking Slot 
 	 */
-	protected long timeOfOccupation; 
+	protected double timeOfOccupation; 
 	
 	/**
 	 * A constructor for creating a ParkingSlot instance with a unique ID within a station
@@ -173,7 +173,14 @@ public class ParkingSlot implements VisitableItems{
 		}
 	}
 	
-	
+	public void updateOccupationTime() {
+		if(this.state == ParkingSlotState.taken) {
+			Duration duration = Duration.between(this.lastChange, LocalDateTime.now());
+			this.timeOfOccupation += duration.toMillis();
+			System.out.println(timeOfOccupation);
+			this.lastChange = LocalDateTime.now();
+		}
+	}
 	//Mise en place des getters
 	/**
 	 * Getter method for the state of the parkingSlot
@@ -216,7 +223,7 @@ public class ParkingSlot implements VisitableItems{
 	 * Getter method for the time of occupation of the parkingSlot
 	 * @return the time of occupation of the parkingSlot as a long 
 	 */
-	public long getTimeOfOccupation() {
+	public double getTimeOfOccupation() {
 		return this.timeOfOccupation;
 	}
 	
@@ -231,9 +238,7 @@ public class ParkingSlot implements VisitableItems{
 	 */
 	public void setState(ParkingSlotState state) {
 		if (this.state.equals(ParkingSlotState.taken)) {
-			Duration duration = Duration.between(LocalDateTime.now(),this.lastChange);
-			this.timeOfOccupation += duration.toHours();
-			this.lastChange = LocalDateTime.now();
+			this.updateOccupationTime();
 			this.station.computingTheAverageTimeOccupation();
 		}
 		else if (this.state.equals(ParkingSlotState.free)) {
