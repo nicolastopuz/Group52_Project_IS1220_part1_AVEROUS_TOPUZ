@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Card;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.CardFactory;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.CardTypes;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.NoCard;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.User;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Vlibre;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Vmax;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Card;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.CardFactory;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.CardTypes;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.NoCard;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.User;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Vlibre;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Vmax;
 
 public class CardTest {
 

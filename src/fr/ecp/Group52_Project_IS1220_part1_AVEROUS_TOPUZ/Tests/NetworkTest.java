@@ -2,15 +2,15 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Tests;
 
 import static org.junit.Assert.*;
 
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Bike;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.BikeFactory;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.BikesType;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.CardTypes;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.GPScoordinates;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Network;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Station;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.User;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.*;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Bike;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.BikeFactory;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.BikesType;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.CardTypes;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.GPScoordinates;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Network;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Station;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.User;
 
 import org.junit.Test;
 
