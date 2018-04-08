@@ -12,7 +12,7 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Station.S
  * @author Nicolas Topuz
  * @since 1.0
  */
-public interface PathPreferenceVisitor {
+public interface PathPreference {
 	
 	/**
 	 * Most important method of this interface : it computes the departure

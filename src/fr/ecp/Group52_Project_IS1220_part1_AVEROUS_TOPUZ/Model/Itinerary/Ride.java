@@ -48,7 +48,7 @@ public class Ride extends Thread {
 	/**
 	 * The preference chosen by the user for what kind of arrival station he prefers.
 	 */
-	protected ArrivalStationPreferenceVisitable arrivalStationPreference;
+	protected ArrivalStationPreference arrivalStationPreference;
 	
 	/**
 	 * The list of all stations present in the network. 
@@ -68,7 +68,7 @@ public class Ride extends Thread {
 	/**
 	 * The user preference for which path should be taken (fastest/shortest)
 	 */
-	protected PathPreferenceVisitor pathPreference;
+	protected PathPreference pathPreference;
 	
 	/**
 	 * The time the user spends on the bike during the ride
@@ -106,9 +106,9 @@ public class Ride extends Thread {
 	 * @param arrival	The GPS coordinates of where the user wishes to go
 	 * @param allStations	An ArrayList of all stations in the current network
 	 * @param arrivalStationPreference	The preference for the arrival Station (plus station or not)
-	 * @param pathPreference	The preference in the path to be taken to the arrival (Fastest or Shortest)
+	 * @param preference	The preference in the path to be taken to the arrival (Fastest or Shortest)
 	 */
-	public Ride(User user, GPScoordinates arrival, ArrayList<Station> allStations, ArrivalStationPreferenceVisitable arrivalStationPreference, PathPreferences preference) {
+	public Ride(User user, GPScoordinates arrival, ArrayList<Station> allStations, ArrivalStationPreference arrivalStationPreference, PathPreferences preference) {
 		this.user = user; 
 		this.departure=user.getPosition();
 		this.arrival = arrival;
@@ -300,7 +300,7 @@ public class Ride extends Thread {
 	 * The getter for the path preference of the user. 
 	 * @return	The user's preferences for the arrival station.
 	 */
-	public PathPreferenceVisitor getPathPreference() {
+	public PathPreference getPathPreference() {
 		return pathPreference;
 	}
 	/**
@@ -333,7 +333,7 @@ public class Ride extends Thread {
 	 * or simply not to have any preferences. 
 	 * @return	The user's preferences for the arrival station.
 	 */
-	public ArrivalStationPreferenceVisitable getPreference() {
+	public ArrivalStationPreference getPreference() {
 		return this.arrivalStationPreference;
 	}
 	
@@ -431,7 +431,7 @@ public class Ride extends Thread {
 	 * Setter for the preference in the arrival station (avoid plus, prefer plus or no preference ?)
 	 * @param preference	the preference among the three types
 	 */
-	public void setPreference(ArrivalStationPreferenceVisitable preference) {
+	public void setPreference(ArrivalStationPreference preference) {
 		this.arrivalStationPreference=preference;
 	}
 	
@@ -439,7 +439,7 @@ public class Ride extends Thread {
 	 * Setter for the path preference of the user
 	 * @param pathPreference the pathPreference of the User.
 	 */
-	public void setPathPreference(PathPreferenceVisitor pathPreference) {
+	public void setPathPreference(PathPreference pathPreference) {
 		this.pathPreference = pathPreference;
 	}
 	
@@ -461,7 +461,7 @@ public class Ride extends Thread {
 	
 	/**
 	 * Setter used to set the departure station from which the user should pick up his bike
-	 * @param departure	the station from which the user should pick up his bike 
+	 * @param departureStation	the station from which the user should pick up his bike 
 	 */
 	public void setDepartureStation(Station departureStation) {
 		this.departureStation=departureStation;
@@ -562,7 +562,6 @@ public class Ride extends Thread {
 	 * @param u A user object : the user realizing the deplacement
 	 * @param departure A GPScoordinate object : the departure point
 	 * @param arrival A GPScoordinate object : the arrival point
-	 * @throws InterruptedException
 	 */
 	public void deplacement(User u,GPScoordinates departure,GPScoordinates arrival) {
 		LocalDateTime departureTime = LocalDateTime.now(); 

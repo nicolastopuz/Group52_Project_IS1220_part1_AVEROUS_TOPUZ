@@ -12,7 +12,6 @@ package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Bikes;
  * 
  * @see Bike
  * @see BikesType
- * @see VisitablesBikes
  * 
  * @author Pierre Averous
  * @author Nicolas Topuz

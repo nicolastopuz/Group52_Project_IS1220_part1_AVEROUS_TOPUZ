@@ -137,7 +137,7 @@ public class Station implements VisitableItems, Observable {
 	/**
 	 * This method is a constructor of the Station class. 
 	 * 
-	 * @param numberofslots	the number of parkingslots to create in the station, as an int.
+	 * @param numberOfSlots	the number of parkingslots to create in the station, as an int.
 	 * @param location		the location of the station, as GPScoordinates.
 	 * @param numberOfBikes	the number of bikes to put on the slots of the station, as an int
 	 * @param mechanicalBikeProportion	the proportion of mechanical bikes to create, as a float between 0 and 1
@@ -178,7 +178,7 @@ public class Station implements VisitableItems, Observable {
 	 * Increments the parking slot counter. This method is called upon
 	 * when a parking slot is added to the station.
 	 * 		  
-	 * @see ParkingSlots
+	 * @see ParkingSlot
 	 */
 	public void countUp() {
 		this.parkingCounter++;
@@ -224,7 +224,7 @@ public class Station implements VisitableItems, Observable {
 	 * within a station will be easier to manipulate if there is an 
 	 * <code>ArrayList</code> of them.
 	 * 
-	 * @see ParkingSlots
+	 * @see ParkingSlot
 	 * @param ps	the parking slot to add to the list
 	 */
 	public void addParkingSlot(ParkingSlot ps) {
@@ -291,7 +291,7 @@ public class Station implements VisitableItems, Observable {
 	}
 	
 	/**
-	 * This method tells if there is an available bicycle of type <code>type</type> in the station.
+	 * This method tells if there is an available bicycle of type <code>type</code> in the station.
 	 * It checks all parking slots, and returns <code>true</code> if one of them has 
 	 * an available bicycle, <code>false</code> if there is none. 
 	 * 
@@ -334,7 +334,7 @@ public class Station implements VisitableItems, Observable {
 	
 	/**
 	 * This method must be used after checking that there is indeed an available
-	 * bicycle of type <code>type</type> in the station. It then returns the parking slot on which the
+	 * bicycle of type <code>type</code> in the station. It then returns the parking slot on which the
 	 * available bicycle is stationed.
 	 * 
 	 * @param 	type	The type of bike the user wants to get
@@ -520,7 +520,7 @@ public class Station implements VisitableItems, Observable {
 	/**
 	 * This method allows to set the location of the station.
 	 * 
-	 * @see Coordinates
+	 * @see GPScoordinates
 	 * @param location the location of the station, as Coordinates.
 	 */
 	public void setLocation(GPScoordinates location) {
@@ -568,7 +568,7 @@ public class Station implements VisitableItems, Observable {
 
 	/**
 	 * A setter to change the number of returned bikes in this stations
-	 * @param numberOfRent A double representing the new number of returned bikes
+	 * @param numberOfReturn A double representing the new number of returned bikes
 	 */
 	public void setNumberOfReturn(double numberOfReturn) {
 		this.numberOfReturn = numberOfReturn;

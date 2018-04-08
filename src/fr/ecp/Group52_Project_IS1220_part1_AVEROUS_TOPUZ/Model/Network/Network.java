@@ -381,7 +381,7 @@ public class Network implements VisitableItems {
 	
 	/**
 	 * Setter method for the ArrayList object stationList
-	 * @param userList	the list of all stations in the Network as an ArrayList
+	 * @param stationList	the list of all stations in the Network as an ArrayList
 	 */
 	public void setStationList(ArrayList<Station> stationList) {
 		this.stationList = stationList;
@@ -389,7 +389,7 @@ public class Network implements VisitableItems {
 	
 	/**
 	 * Setter method for the ArrayList object bikeList
-	 * @param userList	the list of all bikes in the Network as an ArrayList
+	 * @param bikeList	the list of all bikes in the Network as an ArrayList
 	 */
 	public void setBikeList(ArrayList<Bike> bikeList) {
 		this.bikeList = bikeList;

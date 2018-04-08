@@ -17,7 +17,7 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.User.Movi
  * @author Nicolas Topuz
  * @since 1.0
  */
-public class FastestPath implements PathPreferenceVisitor {
+public class FastestPath implements PathPreference {
 	
 	/**
 	 * The different moving behaviors, used here to calculate the different paths.
@@ -42,7 +42,6 @@ public class FastestPath implements PathPreferenceVisitor {
 	
 	/**
 	 * Constructor for an instance of the FastestPath strategy.
-	 * @param ride	The ride in question, that should be calculated
 	 */
 	public FastestPath() {
 		this.walk = new Walking();

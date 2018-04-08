@@ -32,23 +32,29 @@ public enum AvailableCommands {
 	endTest("endTest","	 * Command to end a test from file and give control back to CLUI."),
 	
 	goTo("goTo <userID> <arrivalLatitude> <arrivalLongitude>\ngoTo <userID> <arrivalStationID>\n"  
-			+ "goTo <userName> <arrivalLatitude> <arrivalLongitude>\ngoTo <userName> <arrivalStationID>",""),
+			+ "goTo <userName> <arrivalLatitude> <arrivalLongitude>\ngoTo <userName> <arrivalStationID>","	 * Command to compute the ride for user <userID>/<userName> going either to \r\n" + 
+					"	 * GPS coordinates <arrivalLatitude> and <arrivalLongitude>, or to station <arrivalStationID>."),
 	
 	joinedRideSimulation("joinedRideSimulation <userID> <arrivalLatitude> <arrivalLongitude>\njoinedRideSimulation <userID> <arrivalStationID>"
-			+ "\njoinedRideSimulation <userName> <arrivalLatitude> <arrivalLongitude>\njoinedRideSimulation <userName> <arrivalStationID>",""),
+			+ "\njoinedRideSimulation <userName> <arrivalLatitude> <arrivalLongitude>\njoinedRideSimulation <userName> <arrivalStationID>","	 * Command to launch a simulated ride for user <userID>/<userName> going eigher to \r\n" + 
+					"	 * GPS coordinates <arrivalLatitude> and <arrivalLongitude>, or to station <arrivalStationID>. The ride thread will start and the system \r\n"
+					+ "	 * will wait for the ride to join before doing anything else."),
 	
 	rideSimulation("rideSimulation <userID> <arrivalLatitude> <arrivalLongitude>\nrideSimulation <userID> <arrivalStationID>"
-			+ "\nrideSimulation <userName> <arrivalLatitude> <arrivalLongitude>\nrideSimulation <userName> <arrivalStationID>",""),
+			+ "\nrideSimulation <userName> <arrivalLatitude> <arrivalLongitude>\nrideSimulation <userName> <arrivalStationID>", "	 * Command to launch a simulated ride for user <userID>/<userName> going eigher to \r\n" + 
+			"	 * GPS coordinates <arrivalLatitude> and <arrivalLongitude>, or to station <arrivalStationID>. The ride thread will start."),
 	
-	choosePath("choosePath <userID> <pathPreference>\nchoosePath <userName> <pathPreference>",""),
+	choosePath("choosePath <userID> <pathPreference>\nchoosePath <userName> <pathPreference>","	 * Command to choose the path preference <pathPreference> for user <userID>/<userName>"),
 	
-	chooseArrival("chooseArrival <userID> <arrivalPreference>\nchooseArrival <userName> <arrivalPreference>",""),
+	chooseArrival("chooseArrival <userID> <arrivalPreference>\nchooseArrival <userName> <arrivalPreference>","	 * Command to choose the arrival station preference <arrivalPreference> for user <userID>/<userName>"),
 	
-	addStation("addStation <networkName> <stationType> <numberOfSlots>\naddStation <networkName> <stationType> <numberOfSlots> <numberOfBikes> <mechanicalBikeProportion>",""),
+	addStation("addStation <networkName> <stationType> <numberOfSlots>\naddStation <networkName> <stationType> <numberOfSlots> <numberOfBikes> <mechanicalBikeProportion>","	 * Command to add a station to the network <networkName>. Station will contain \r\n"
+			+ "	 * <numberOfSlots> slots, will be of type <stationType>, and will contain <numberOfBikes> bikes with a \r\n"
+			+ "	 * proportion of <mechanicalBikeProportion> of mechanical bikes. (default being an empty station)"),
 	
-	setUserLocation("setUserLocation <userID> <latitude> <longitude>\nsetUserLocation <userName> <latitude> <longitude>",""),
+	setUserLocation("setUserLocation <userID> <latitude> <longitude>\nsetUserLocation <userName> <latitude> <longitude>","	 * Command to set user <userID>/<userName>'s location to GPS coordinates <latitude> and <longitude>"),
 	
-	setStationLocation("setStationLocation <networkName> <stationID> <latitude> <longitude>","");
+	setStationLocation("setStationLocation <networkName> <stationID> <latitude> <longitude>","	 * Command to set the location of station <stationID> in network <networkName> to GPS coordinates <latitude> and <longitude>");
 	
 	
 	protected String syntax;

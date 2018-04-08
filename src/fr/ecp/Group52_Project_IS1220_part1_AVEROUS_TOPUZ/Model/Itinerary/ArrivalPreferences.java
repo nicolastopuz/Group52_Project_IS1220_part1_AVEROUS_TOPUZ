@@ -5,10 +5,10 @@ public enum ArrivalPreferences {
 	PreferPlus(new PreferPlus(), "preferplus"),
 	NoPreference(new NoPreference(), "nopreference");
 	
-	private ArrivalStationPreferenceVisitable preference;
+	private ArrivalStationPreference preference;
 	private String commandSelector;
 	
-	ArrivalPreferences(ArrivalStationPreferenceVisitable preference, String cmdSelector) {
+	ArrivalPreferences(ArrivalStationPreference preference, String cmdSelector) {
 		this.preference = preference;
 		this.commandSelector = cmdSelector;
 	}
@@ -17,7 +17,7 @@ public enum ArrivalPreferences {
 		return this.commandSelector;
 	}
 	
-	public ArrivalStationPreferenceVisitable getArrivalPreference() {
+	public ArrivalStationPreference getArrivalPreference() {
 		return this.preference;
 	}
 }

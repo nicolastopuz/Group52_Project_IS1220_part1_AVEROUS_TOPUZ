@@ -116,7 +116,7 @@ public class ParkingSlot implements VisitableItems{
 	}
 	
 	/**
-	 * This method tells if there is a bike of type <code>type</type> on the parking slot or not.
+	 * This method tells if there is a bike of type <code>type</code> on the parking slot or not.
 	 * It returns <code>false</code> if there is no bike, or <code>true</code> if there is one.
 	 * 
 	 * @param	type	The type of bike to check if there is
@@ -237,7 +237,7 @@ public class ParkingSlot implements VisitableItems{
 	/**
 	 * Setter method for the state of the parkingSlot
 	 * 
-	 * @param 	the new state of the parking slot from ParkingSlotState enum
+	 * @param state	the new state of the parking slot from ParkingSlotState enum
 	 * @see ParkingSlotState
 	 */
 	public void setState(ParkingSlotState state) {
@@ -254,7 +254,7 @@ public class ParkingSlot implements VisitableItems{
 	/**
 	 * Setter method for the bike that is on the parking slot.
 	 * 
-	 * @param The bike that is to be set on the slot.
+	 * @param bike The bike that is to be set on the slot.
 	 */
 	public void setBike(Bike bike) {
 		this.bike = bike;

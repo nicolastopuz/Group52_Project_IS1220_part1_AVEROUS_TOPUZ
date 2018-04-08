@@ -9,7 +9,7 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoFreeSlotEx
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OccupiedSlotException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Itinerary.ArrivalPreferences;
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Itinerary.ArrivalStationPreferenceVisitable;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Itinerary.ArrivalStationPreference;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Itinerary.NoPreference;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Itinerary.Observer;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Itinerary.PathPreferences;
@@ -115,7 +115,7 @@ public class User implements VisitableItems, Observer {
 	/**
 	 * The preference of the user for the way he wishes to go to station
 	 */
-	protected ArrivalStationPreferenceVisitable arrivalStationPreference;
+	protected ArrivalStationPreference arrivalStationPreference;
 	
 	/**
 	 * The user preference for which path should be taken (fastest/shortest)
@@ -297,7 +297,7 @@ public class User implements VisitableItems, Observer {
 	 * @param arrivalStationPreference	The Preference the user has in the nature of the arrival station
 	 * @param pathPreference	The preference the user has concerning the path to take to reach his goal
 	 */
-	public void goTo(GPScoordinates arrival, ArrivalStationPreferenceVisitable arrivalStationPreference, PathPreferences pathPreference) {
+	public void goTo(GPScoordinates arrival, ArrivalStationPreference arrivalStationPreference, PathPreferences pathPreference) {
 		this.arrival = arrival;
 		this.arrivalStationPreference = arrivalStationPreference;
 		this.pathPreference = pathPreference;
@@ -410,7 +410,7 @@ public class User implements VisitableItems, Observer {
 	 * A getter for the arrival station preference of the user
 	 * @return	the arrival station preference of the user
 	 */
-	public ArrivalStationPreferenceVisitable getArrivalStationPreference() {
+	public ArrivalStationPreference getArrivalStationPreference() {
 		return arrivalStationPreference;
 	}
 	
@@ -434,7 +434,7 @@ public class User implements VisitableItems, Observer {
 	
 	/**
 	 * A setter for the arrival Station of the User
-	 * @param	the arrival Station of the User
+	 * @param	arrivalOfRide the arrival Station of the User
 	 */
 	public void setArrivalOfRide(Station arrivalOfRide) {
 		this.arrivalOfRide = arrivalOfRide;
@@ -442,7 +442,7 @@ public class User implements VisitableItems, Observer {
 	
 	/**
 	 * A setter for the departure Station of the User
-	 * @param	the departure Station of the User
+	 * @param	departureOfRide the departure Station of the User
 	 */
 	public void setDepartureOfRide(Station departureOfRide) {
 		this.departureOfRide = departureOfRide;
@@ -450,7 +450,7 @@ public class User implements VisitableItems, Observer {
 	
 	/**
 	 * A setter for the path preference of the User
-	 * @param	the path preference of the User
+	 * @param pathPreference the path preference of the User
 	 */
 	public void setPathPreference(PathPreferences pathPreference) {
 		this.pathPreference = pathPreference;
@@ -458,7 +458,7 @@ public class User implements VisitableItems, Observer {
 	
 	/**
 	 * A setter for the arrival station preference of the User
-	 * @param	the arrival station preference of the User
+	 * @param	arrivalPreference the arrival station preference of the User
 	 */
 	public void setArrivalStationPreference(ArrivalPreferences arrivalPreference) {
 		this.arrivalStationPreference = arrivalPreference.getArrivalPreference();
@@ -466,15 +466,15 @@ public class User implements VisitableItems, Observer {
 	
 	/**
 	 * A setter for the arrival station preference of the User
-	 * @param	the arrival station preference of the User
+	 * @param	arrivalPreference the arrival station preference of the User
 	 */
-	public void setArrivalStationPreference(ArrivalStationPreferenceVisitable arrivalPreference) {
+	public void setArrivalStationPreference(ArrivalStationPreference arrivalPreference) {
 		this.arrivalStationPreference = arrivalPreference;
 	}
 	
 	/**
 	 * A setter for the arrival location of the User
-	 * @param	the arrival location of the User
+	 * @param arrival	the arrival location of the User
 	 */
 	public void setArrival(GPScoordinates arrival) {
 		this.arrival = arrival;
@@ -567,7 +567,6 @@ public class User implements VisitableItems, Observer {
 	
 	/**
 	 * A setter to set the array list rides storing all the rides done by the user
-	 * @param rides an ArrayList storing all the rides done by the user
 	 */
 	public ArrayList<Ride> getRides() {
 		return rides;

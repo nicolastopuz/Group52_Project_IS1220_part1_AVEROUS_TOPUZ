@@ -616,7 +616,6 @@ public class MyVelibCMD {
 	 * in each of the 10 stations 	 
 	 * 
 	 * @param name the name to be given to the network
-	 * @param allNetworks		List of all networks, to add the new network to
 	 */
 	public static void setup(String name) {
 		setup(name, 10, 10, 4, 0.7);
@@ -630,8 +629,8 @@ public class MyVelibCMD {
 	 * @param name	Name of the Network
 	 * @param numberOfStations	Number of Stations to build in
 	 * @param slotsPerStation	number of slots per station
+	 * @param sideArea			The side of the area the network should be generated into
 	 * @param fillingPercentage	Percentage of slots to fill with bikes
-	 * @param allNetworks		List of all networks, to add the new network to
 	 */
 	public static void setup(String name, int numberOfStations, int slotsPerStation, double sideArea, double fillingPercentage) {
 		try {
@@ -644,7 +643,7 @@ public class MyVelibCMD {
 	/**
 	 * command to add a station to the network
 	 * 
-	 * @param network Name the network to which the user should be added
+	 * @param networkName Name the network to which the user should be added
 	 * @param stationType type of station to create
 	 * @param numberOfSlots the number of parking slots to build into the station
 	 */
@@ -669,7 +668,7 @@ public class MyVelibCMD {
 	/**
 	 * command to add a station to the network
 	 * 
-	 * @param network Name the network to which the user should be added
+	 * @param networkName Name the network to which the user should be added
 	 * @param stationType type of station to create
 	 * @param numberOfSlots the number of parking slots to build into the station
 	 * @param numberOfBikes the number of bikes to place into the station
@@ -697,7 +696,7 @@ public class MyVelibCMD {
 	 * command to add a user to the network
 	 * 
 	 * @param userName name of the user as a String
-	 * @param network  the network to which the user should be added
+	 * @param networkName  the network to which the user should be added
 	 */
 	public static void addUser(String userName, String networkName) {
 		try {
@@ -713,7 +712,7 @@ public class MyVelibCMD {
 	 * 
 	 * @param userName name of the user as a String
 	 * @param cardType type of card to assign to the user
-	 * @param network  the network to which the user should be added
+	 * @param networkName  the network to which the user should be added
 	 */
 	public static void addUser(String userName, CardTypes cardType, String networkName) {
 		try {
@@ -780,7 +779,7 @@ public class MyVelibCMD {
 	
 	/**
 	 * Command to turn a specific station in the network off
-	 * @param network	the network in which the station has been built
+	 * @param networkName	the network in which the station has been built
 	 * @param stationID	the ID of the station
 	 */
 	public static void offline(String networkName, int stationID) {
@@ -796,7 +795,7 @@ public class MyVelibCMD {
 	
 	/**
 	 * Command to turn a specific station in the network on
-	 * @param network	the network in which the station has been built
+	 * @param networkName	the network in which the station has been built
 	 * @param stationID	the ID of the station
 	 */
 	public static void online(String networkName, int stationID) {

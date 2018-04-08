@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidProportionsException;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Itinerary.PathPreferences;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.GPScoordinates;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Network;
 import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Station.Station;
@@ -43,7 +44,7 @@ public class UseCaseUniqueUser {
 		
 		User user1 = n.getUserList().get(0);
 		
-		
+		user1.setPathPreference(PathPreferences.Fastest);
 		System.out.println("Now to Station 4 !");
 		user1.goTo(stationCoords.get(4));
 		try {
@@ -139,7 +140,8 @@ public class UseCaseUniqueUser {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
+		
+		user1.setPathPreference(PathPreferences.Shortest);
 		System.out.println("After "+ user1.getRides().size()+ " rides, " +user1.getName()
 				+ " has a time credit of : "+user1.getTimeCredit()+".");
 

@@ -7,7 +7,7 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Network;
  * the creation of bikes in an easy and OPEN-CLOSE way.
  * 
  * @see Bike
- * @see BikeTypes
+ * @see BikesType
  * @see Network
  * 
  * @author Pierre Averous

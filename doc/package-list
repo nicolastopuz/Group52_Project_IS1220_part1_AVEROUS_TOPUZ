@@ -1,0 +1,12 @@
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.CLUI
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Itinerary
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Bikes
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Station
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.User
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.User.Card
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.User.MovingBehavior
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Stats
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Tests
+fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.UseCase

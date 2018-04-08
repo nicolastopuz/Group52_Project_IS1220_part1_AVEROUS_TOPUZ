@@ -13,7 +13,7 @@ import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Model.Network.Station.S
  * @author Nicolas Topuz
  * @since 1.0
  */
-public class NoPreference implements ArrivalStationPreferenceVisitable {
+public class NoPreference implements ArrivalStationPreference {
 	
 	/**
 	 * Constructor to get a NoPreference instance.

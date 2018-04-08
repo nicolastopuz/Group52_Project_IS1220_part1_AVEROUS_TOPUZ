@@ -4,10 +4,10 @@ public enum PathPreferences {
 	Fastest(new FastestPath(), "fastest"),
 	Shortest(new ShortestPath(), "shortest");
 	
-	private PathPreferenceVisitor preference;
+	private PathPreference preference;
 	private String commandSelector;
 	
-	PathPreferences(PathPreferenceVisitor preference, String cmdSelector) {
+	PathPreferences(PathPreference preference, String cmdSelector) {
 		this.preference = preference;
 		this.commandSelector = cmdSelector;
 	}
@@ -16,7 +16,7 @@ public enum PathPreferences {
 		return this.commandSelector;
 	}
 	
-	public PathPreferenceVisitor getPathPreference() {
+	public PathPreference getPathPreference() {
 		return this.preference;
 	}
 }

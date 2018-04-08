@@ -73,7 +73,6 @@ public class GPScoordinates {
 	 * A simple method that returns a random location on the globe.
 	 *  	
 	 * @return a GPScoordinates object, with random coordinates.
-	 * @throws OutOfBoundsException
 	 */
 	public static GPScoordinates randomLocation() {
 		Random randomGenerator = new Random();
@@ -110,7 +109,6 @@ public class GPScoordinates {
 	 *  	
 	 * @return a GPScoordinates object, with random coordinates.
 	 * @param	range	the range in which you want the coordinates to pop, in km.
-	 * @throws OutOfBoundsException
 	 */
 	public static GPScoordinates randomLocation(double range) {
 
