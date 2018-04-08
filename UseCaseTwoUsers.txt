@@ -1,0 +1,15 @@
+setup network 2 2 0.1 0.5
+display network 
+addUser "Elon Musk" network 
+addUser "Bill Gates" network 
+echo " --- "
+echo Now both users will begin their ride at a random
+echo location. Both will go to station 1. The first
+echo to arrive will trigger an update in the second's
+echo itinerary, because he will take the last available
+echo bike. The second user will then adapt to the change.
+echo " --- "
+rideSimulation 1 1
+rideSimulation 2 1
+endtest
+

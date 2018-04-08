@@ -1,0 +1,43 @@
+setup mynetwork 10 10 0.1 0.7
+addUser "Elon Musk" mynetwork
+addUser "Bill Gates" mynetwork
+addUser "Steve Jobs" mynetwork
+addUser "Steve Wozniak" mynetwork
+addUser "Bruce Wayne" mynetwork
+addUser "Tony Stark" mynetwork
+addUser "Abraham Lincoln" mynetwork
+addUser "John Kennedy" mynetwork
+addUser "Howard Shore" mynetwork
+addUser "Robert Pattinson" mynetwork
+addUser "Leonardo da Vinci" mynetwork
+addUser "Beethoven" mynetwork
+addUser "Mozart" mynetwork
+addUser "Gandi" mynetwork
+addUser "Henry Ford" mynetwork
+addUser "Michael Phelps" mynetwork
+addUser "Michael Jordan" mynetwork
+addUser "Fidel Castro" mynetwork
+echo " --- "
+display mynetwork
+echo " --- "
+rideSimulation 1 5
+rideSimulation 2 5
+rideSimulation 3 5
+rideSimulation 4 5
+rideSimulation 5 5
+rideSimulation 6 5
+rideSimulation 7 5
+rideSimulation "John Kennedy" 5
+rideSimulation "Howard Shore" 5
+rideSimulation "Robert Pattinson" 5
+rideSimulation "Leonardo da Vinci" 5
+rideSimulation "Beethoven" 7
+rideSimulation "Mozart" 6
+rideSimulation "Gandi" 2
+rideSimulation "Henry Ford" 7
+rideSimulation "Michael Phelps" 4
+rideSimulation "Michael Jordan" 6
+rideSimulation "Fidel Castro" 3
+display mynetwork
+endtest
+

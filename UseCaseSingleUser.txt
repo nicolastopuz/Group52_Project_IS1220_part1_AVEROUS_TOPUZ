@@ -1,0 +1,16 @@
+setup mynetwork 10 10 0.1 0.7
+addUser "Elon Musk" mynetwork
+joinedRideSimulation 1 4
+joinedRideSimulation 1 5
+joinedRideSimulation 1 4
+joinedRideSimulation 1 2
+joinedRideSimulation 1 7
+joinedRideSimulation 1 8
+joinedRideSimulation 1 4
+joinedRideSimulation 1 7
+joinedRideSimulation 1 1
+joinedRideSimulation 1 9
+displayUser mynetwork "Elon Musk"
+display mynetwork
+endtest
+

@@ -13,21 +13,42 @@ public enum AvailableCommands {
 	
 	online("online <networkName> <stationID>", "	 * Command to turn station of id <stationID> in the network <networkName> on\r\n" ),
 	
-	rentBike("rentBike <userID> <stationID>", "	 * Command to let the user <userID> rent a bike from station <stationID> \r\n" ),
+	rentBike("rentBike <userID> <stationID>\nrentBike <userName> <stationID>", "	 * Command to let the user <userID>/<userName> rent a bike from station <stationID> \r\n" ),
 	
 	returnBike("returnBike <userID> <stationID> \nreturnBike <userID> <stationID> <time>", "	 * Command to let the user <userID> return a bike to station <stationID> \r\n"+
 			"	 * after spending <time> minutes on a bike \r\n"),
 	
 	displayStation("displayStation <networkName> <stationID>", "	 * Command to display the statistics of station <stationID> of a myVelib network <networkName>.\r\n" ),
 	
-	displayUser("displayUser <networkName> <userID>", "	 * Command to display the statistics of user whose ID is <userID>\r\n" + 
-			"	 * in the myVelib network <networkName>."),
+	displayUser("displayUser <networkName> <userID> \ndisplayUser <networkName> <userName>", "	 * Command to display the statistics of user whose ID is <userID>,\r\n" + 
+			"	 * or name is <userName>, in the myVelib network <networkName>."),
 	
 	sortStation("sortStation <networkName> <sortpolicy>", "	 * Command to display the stations of network <networkName> in increasing order w.r.t. to the \r\n" + 
 			"	 * sorting policy of the client <sortpolicy>.\r\n"),
 	
 	display("display <velibnetworkName>", "	 * Command to display the entire status (stations, parking bays, users) \r\n" + 
-			"	 * of a myVelib network <networkName>.");
+			"	 * of a myVelib network <networkName>."),
+	
+	endTest("endTest","	 * Command to end a test from file and give control back to CLUI."),
+	
+	goTo("goTo <userID> <arrivalLatitude> <arrivalLongitude>\ngoTo <userID> <arrivalStationID>\n"  
+			+ "goTo <userName> <arrivalLatitude> <arrivalLongitude>\ngoTo <userName> <arrivalStationID>",""),
+	
+	joinedRideSimulation("joinedRideSimulation <userID> <arrivalLatitude> <arrivalLongitude>\njoinedRideSimulation <userID> <arrivalStationID>"
+			+ "\njoinedRideSimulation <userName> <arrivalLatitude> <arrivalLongitude>\njoinedRideSimulation <userName> <arrivalStationID>",""),
+	
+	rideSimulation("rideSimulation <userID> <arrivalLatitude> <arrivalLongitude>\nrideSimulation <userID> <arrivalStationID>"
+			+ "\nrideSimulation <userName> <arrivalLatitude> <arrivalLongitude>\nrideSimulation <userName> <arrivalStationID>",""),
+	
+	choosePath("choosePath <userID> <pathPreference>\nchoosePath <userName> <pathPreference>",""),
+	
+	chooseArrival("chooseArrival <userID> <arrivalPreference>\nchooseArrival <userName> <arrivalPreference>",""),
+	
+	addStation("addStation <networkName> <stationType> <numberOfSlots>\naddStation <networkName> <stationType> <numberOfSlots> <numberOfBikes> <mechanicalBikeProportion>",""),
+	
+	setUserLocation("setUserLocation <userID> <latitude> <longitude>\nsetUserLocation <userName> <latitude> <longitude>",""),
+	
+	setStationLocation("setStationLocation <networkName> <stationID> <latitude> <longitude>","");
 	
 	
 	protected String syntax;

@@ -61,6 +61,7 @@ public class UseCasePreferPlus {
 				+ "therefore go towards station 1.\n");
 		
 		GPScoordinates arrivalPoint = GPScoordinates.intermediateDistance(stationCoords.get(1), stationCoords.get(2), 0.48);
+		System.out.println(arrivalPoint);
 		
 		ArrivalStationPreferenceVisitable arrivalStationPreference1 = new PreferPlus();
 		ArrivalStationPreferenceVisitable arrivalStationPreference2 = new NoPreference();

@@ -1,12 +1,18 @@
 package fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ;
 
-import static org.junit.Assert.assertArrayEquals;
-
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
-import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.*;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidProportionsException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.InvalidSyntaxException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.MoreBikesThanSlotsException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoRideException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoSuchNetworkException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoSuchStationException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.NoSuchUserException;
+import fr.ecp.Group52_Project_IS1220_part1_AVEROUS_TOPUZ.Exceptions.OutOfBoundsException;
 
 
 /**
@@ -40,6 +46,8 @@ public class MyVelibCMD {
 		System.out.println("Thank you for using the myVelib system.");
 		System.out.println("Type /h for general help on the system.");
 		System.out.println("Type <command> /h for specific help for \na command.");
+		System.out.println("Use exit command to stop the simulation.");
+
 		
 		while(running) {
 			arg = input.nextLine();
@@ -48,19 +56,24 @@ public class MyVelibCMD {
 			allCommands[0] = allCommands[0].toLowerCase(); //change to Lower Case to make it easier to compare
 
 			try {
-				executeCommand(allCommands);
+				executeCommand(allCommands, arg);
 			} catch( InvalidSyntaxException e ) {
 				e.printStackTrace();
 			}
 		}		
 	}
 
-	public static void executeCommand(String[] allCommands) throws InvalidSyntaxException {
+	public static void executeCommand(String[] allCommands, String arg) throws InvalidSyntaxException {
 		if(allCommands.length == 2 && allCommands[1].equals("/h") && whatCommand(allCommands[0])!=null) {
 			help(whatCommand(allCommands[0]));
 		}
 		else {			
 			switch (allCommands[0]) {
+			case "echo":
+				String str = String.join(" ", allCommands).substring(5);
+				System.out.println(str);
+				break;
+				
 			case "setup":
 				if(allCommands.length == 2) {
 					setup(allCommands[1]);
@@ -71,6 +84,31 @@ public class MyVelibCMD {
 					} catch (NumberFormatException e) {
 						throw new InvalidSyntaxException();
 					}
+				}
+				else {
+					throw new InvalidSyntaxException();
+				}
+				break;
+				
+			case "runtest":
+				if(allCommands.length == 2) {
+					String path = allCommands[1];
+					File file = new File(path);
+					try {
+						input = new Scanner(file);
+					} catch (FileNotFoundException e) {
+						System.out.println("No such file in directory. Please try again.");
+					}
+				}
+				else {
+					throw new InvalidSyntaxException();
+				}
+				break;
+				
+			case "endtest":
+				if(allCommands.length == 1) {
+					input = new Scanner(System.in);
+					System.out.println("Test case is over.");
 				}
 				else {
 					throw new InvalidSyntaxException();
@@ -133,10 +171,16 @@ public class MyVelibCMD {
 			case "rentbike":
 				if (allCommands.length == 3) {
 					try {
-						rentBike(Integer.parseInt(allCommands[1]), Integer.parseInt(allCommands[2]));
+						int stationID = Integer.parseInt(allCommands[2]);
+						try {
+							rentBike(Integer.parseInt(allCommands[1]), stationID);
+						} catch (NumberFormatException e) {
+							rentBike(allCommands[1], stationID);
+						}
 					} catch (NumberFormatException e) {
 						throw new InvalidSyntaxException();
 					}
+					
 				}
 				else {
 					throw new InvalidSyntaxException();
@@ -181,7 +225,7 @@ public class MyVelibCMD {
 					try {
 						displayUser(allCommands[1], Integer.parseInt(allCommands[2]));
 					} catch (NumberFormatException e) {
-						throw new InvalidSyntaxException();
+						displayUser(allCommands[1], allCommands[2]);
 					}
 				}
 				else {
@@ -218,7 +262,217 @@ public class MyVelibCMD {
 					throw new InvalidSyntaxException();
 				}
 				break;
+				
+			case "goto":
+				if (allCommands.length == 3) {
+					try {
+						User u = findUser(Integer.parseInt(allCommands[1]));
+						goTo(u, Integer.parseInt(allCommands[2]));
+					} catch (NumberFormatException e) {
+						try {
+							User u = findUser(allCommands[1]);
+							goTo(u, Integer.parseInt(allCommands[2]));
+						} catch (NoSuchUserException e1) {
+							e1.printStackTrace();
+						} catch (NumberFormatException e1) {
+							throw new InvalidSyntaxException();
+						} 
+					} catch (NoSuchUserException e) {
+						e.printStackTrace();
+					}
+				}
+				else if (allCommands.length == 4) {
+					try {
+						User u = findUser(Integer.parseInt(allCommands[1]));
+						GPScoordinates arrival = new GPScoordinates( Double.parseDouble(allCommands[2]), Double.parseDouble(allCommands[3]) );
+						goTo(u, arrival);
+					} catch (NumberFormatException e) {
+						try {
+							User u = findUser(allCommands[1]);
+							GPScoordinates arrival = new GPScoordinates( Double.parseDouble(allCommands[2]), Double.parseDouble(allCommands[3]) );
+							goTo(u, arrival);
+						} catch (NoSuchUserException e1) {
+							e1.printStackTrace();
+						} catch (NumberFormatException | OutOfBoundsException e1) {
+							throw new InvalidSyntaxException();
+						} 
+					} catch (NoSuchUserException | OutOfBoundsException e) {
+						e.printStackTrace();
+					}
+				}
+				else {
+					throw new InvalidSyntaxException();
+				}
+				break;
 			
+			case "joinedridesimulation":
+				if (allCommands.length == 3) {
+					try {
+						User u = findUser(Integer.parseInt(allCommands[1]));
+						goTo(u, Integer.parseInt(allCommands[2]));
+						u.getRide().start();
+						u.getRide().join();
+					} catch (NumberFormatException e) {
+						try {
+							User u = findUser(allCommands[1]);
+							goTo(u, Integer.parseInt(allCommands[2]));
+							u.getRide().start();
+							u.getRide().join();
+						} catch (NoSuchUserException | InterruptedException | NoRideException e1) {
+							e1.printStackTrace();
+						} catch (NumberFormatException e1) {
+							throw new InvalidSyntaxException();
+						} 
+					} catch (NoSuchUserException | InterruptedException | NoRideException e) {
+						e.printStackTrace();
+					}
+				}
+				else if (allCommands.length == 4) {
+					try {
+						User u = findUser(Integer.parseInt(allCommands[1]));
+						GPScoordinates arrival = new GPScoordinates( Double.parseDouble(allCommands[2]), Double.parseDouble(allCommands[3]) );
+						goTo(u, arrival);
+						u.getRide().start();
+						u.getRide().join();
+					} catch (NumberFormatException e) {
+						try {
+							User u = findUser(allCommands[1]);
+							GPScoordinates arrival = new GPScoordinates( Double.parseDouble(allCommands[2]), Double.parseDouble(allCommands[3]) );
+							goTo(u, arrival);
+							u.getRide().start();
+							u.getRide().join();
+						} catch (NoSuchUserException | InterruptedException | NoRideException e1) {
+							e1.printStackTrace();
+						} catch (NumberFormatException | OutOfBoundsException e1) {
+							throw new InvalidSyntaxException();
+						} 
+					} catch (NoSuchUserException | NoRideException | InterruptedException | OutOfBoundsException e) {
+						e.printStackTrace();
+					}
+				}
+				else {
+					throw new InvalidSyntaxException();
+				}
+				break;
+				
+			case "ridesimulation":
+				if (allCommands.length == 3) {
+					try {
+						User u = findUser(Integer.parseInt(allCommands[1]));
+						goTo(u, Integer.parseInt(allCommands[2]));
+						u.getRide().start();
+					} catch (NumberFormatException e) {
+						try {
+							User u = findUser(allCommands[1]);
+							goTo(u, Integer.parseInt(allCommands[2]));
+							u.getRide().start();
+						} catch (NoSuchUserException | NoRideException e1) {
+							e1.printStackTrace();
+						} catch (NumberFormatException e1) {
+							throw new InvalidSyntaxException();
+						} 
+					} catch (NoSuchUserException | NoRideException e) {
+						e.printStackTrace();
+					}
+				}
+				else if (allCommands.length == 4) {
+					try {
+						User u = findUser(Integer.parseInt(allCommands[1]));
+						GPScoordinates arrival = new GPScoordinates( Double.parseDouble(allCommands[2]), Double.parseDouble(allCommands[3]) );
+						goTo(u, arrival);
+						u.getRide().start();
+					} catch (NumberFormatException e) {
+						try {
+							User u = findUser(allCommands[1]);
+							GPScoordinates arrival = new GPScoordinates( Double.parseDouble(allCommands[2]), Double.parseDouble(allCommands[3]) );
+							goTo(u, arrival);
+							u.getRide().start();
+						} catch (NoSuchUserException | NoRideException e1) {
+							e1.printStackTrace();
+						} catch (NumberFormatException | OutOfBoundsException e1) {
+							throw new InvalidSyntaxException();
+						} 
+					} catch (NoSuchUserException | NoRideException | OutOfBoundsException e) {
+						e.printStackTrace();
+					}
+				}
+				else {
+					throw new InvalidSyntaxException();
+				}
+				break;
+			
+			case "choosepath":
+				if (allCommands.length == 3) {
+					try {
+						choosePath(Integer.parseInt(allCommands[1]), allCommands[2]);
+					} catch (NumberFormatException e) {
+						choosePath(allCommands[1], allCommands[2]);
+					}
+				}
+				else {
+					throw new InvalidSyntaxException();
+				}
+				break;
+				
+			case "choosearrival":
+				if (allCommands.length == 3) {
+					try {
+						chooseArrival(Integer.parseInt(allCommands[1]), allCommands[2]);
+					} catch (NumberFormatException e) {
+						chooseArrival(allCommands[1], allCommands[2]);
+					}
+				}
+				else {
+					throw new InvalidSyntaxException();
+				}
+				break;
+				
+			case "addstation":
+				if (allCommands.length == 4) {
+					try {
+						addStation(allCommands[1], allCommands[2], Integer.parseInt(allCommands[3]));
+					} catch (NumberFormatException e) {
+						throw new InvalidSyntaxException();
+					}
+				}
+				else if (allCommands.length == 6) {
+					try {
+						addStation(allCommands[1], allCommands[2], Integer.parseInt(allCommands[3]), Integer.parseInt(allCommands[4]), Float.parseFloat(allCommands[5]));
+					} catch (NumberFormatException e) {
+						throw new InvalidSyntaxException();
+					}
+				}
+				else {
+					throw new InvalidSyntaxException();
+				}
+				break;
+				
+			case "setstationlocation":
+				if (allCommands.length == 5) {
+					try {
+						setStationLocation(allCommands[1], Integer.parseInt(allCommands[2]), Double.parseDouble(allCommands[3]), Double.parseDouble(allCommands[4]));
+					} catch( NumberFormatException e) {
+						throw new InvalidSyntaxException();
+					}
+				}
+				else {
+					throw new InvalidSyntaxException();
+				}
+				break;
+				
+			case "setuserlocation":
+				if (allCommands.length == 4) {
+					try {
+						setUserLocation(Integer.parseInt(allCommands[1]), Double.parseDouble(allCommands[2]), Double.parseDouble(allCommands[3]));
+					} catch( NumberFormatException e) {
+						setUserLocation(allCommands[1], Double.parseDouble(allCommands[2]), Double.parseDouble(allCommands[3]));
+					}
+				}
+				else {
+					throw new InvalidSyntaxException();
+				}
+				break;
+				
 			case "exit":
 				exit();
 				break;
@@ -268,20 +522,17 @@ public class MyVelibCMD {
 			int lastIndex = 0;
 			arg += " ";
 			for(int i = 0; i < arg.length(); i++) {
-				System.out.println("on regarde : "+i+" et lastIndex est "+lastIndex);
 		
 				if(arg.charAt(i)==' ' && arg.charAt(lastIndex) == ' ' && !isQuote) {
 						lastIndex = i+1;
 				}
 				else if(arg.charAt(i) == ' ' && !isQuote) {
 					tampon.add(arg.substring(lastIndex, i));
-					System.out.println("ajout de -> "+arg.substring(lastIndex, i));
 					lastIndex = i+1;
 				}
 				else if(arg.charAt(i) == '"') {
 					if(isQuote) {
 						tampon.add(arg.substring(lastIndex, i));
-						System.out.println("ajout de -> "+arg.substring(lastIndex, i));
 					}
 					isQuote = !isQuote;
 					lastIndex = i+1;
@@ -308,11 +559,25 @@ public class MyVelibCMD {
 	/**
 	 * Simple method to find a User knowing only his UserID
 	 * @param userID	the ID of the user you wish to find
-	 * @return	the User whose ID is userID (null if noone has this ID)
+	 * @return	the User whose ID is userID (NoSuchUserException if no such user exists)
 	 */
 	public static User findUser(int userID) throws NoSuchUserException {
 		for(User u : allUsers) {
 			if (u.getNumericalId()==userID) {
+				return u;
+			}
+		}
+		throw new NoSuchUserException();
+	}
+	
+	/**
+	 * Simple method to find a User knowing only his UserID
+	 * @param userName	the name of the user you wish to find
+	 * @return	the User whose ID is userID (NoSuchUserException if no such user exists)
+	 */
+	public static User findUser(String userName) throws NoSuchUserException {
+		for(User u : allUsers) {
+			if (u.getName().equals(userName)) {
 				return u;
 			}
 		}
@@ -368,6 +633,58 @@ public class MyVelibCMD {
 	}
 	
 	/**
+	 * command to add a station to the network
+	 * 
+	 * @param network Name the network to which the user should be added
+	 * @param stationType type of station to create
+	 * @param numberOfSlots the number of parking slots to build into the station
+	 */
+	public static void addStation(String networkName, String stationType, int numberOfSlots) throws InvalidSyntaxException {
+		try {
+			if(stationType.equals("standard")) {
+				Network n = findNetwork(networkName);
+				n.createStation(numberOfSlots);
+			}
+			else if(stationType.equals("plus")) {
+				Network n = findNetwork(networkName);
+				n.createStationPlus(numberOfSlots);
+			}
+			else {
+				throw new InvalidSyntaxException();
+			}
+		} catch (NoSuchNetworkException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * command to add a station to the network
+	 * 
+	 * @param network Name the network to which the user should be added
+	 * @param stationType type of station to create
+	 * @param numberOfSlots the number of parking slots to build into the station
+	 * @param numberOfBikes the number of bikes to place into the station
+	 * @param mechanicalBikeProportion the proportion of mechanical bikes to build into the station
+	 */
+	public static void addStation(String networkName, String stationType, int numberOfSlots,int numberOfBikes, float mechanicalBikeProportion) throws InvalidSyntaxException {
+		try {
+			if(stationType.equals("standard")) {
+				Network n = findNetwork(networkName);
+				n.createStation(numberOfSlots, numberOfBikes, mechanicalBikeProportion);
+			}
+			else if(stationType.equals("plus")) {
+				Network n = findNetwork(networkName);
+				n.createStationPlus(numberOfSlots, numberOfBikes, mechanicalBikeProportion);
+			}
+			else {
+				throw new InvalidSyntaxException();
+			}
+		} catch (NoSuchNetworkException | MoreBikesThanSlotsException | InvalidProportionsException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * command to add a user to the network
 	 * 
 	 * @param userName name of the user as a String
@@ -397,6 +714,60 @@ public class MyVelibCMD {
 			e.printStackTrace();
 		}
 	}	
+	
+	/**
+	 * command to set the location of a station
+	 * 
+	 * @param networkName	the name of the network the station is in
+	 * @param stationID		the ID of the station	
+	 * @param latitude		the latitude of where the station should be set
+	 * @param longitude		the longitude of where the station should be set
+	 */
+	public static void setStationLocation(String networkName, int stationID, double latitude, double longitude) throws InvalidSyntaxException {
+		try {
+			Network n = findNetwork(networkName);
+			Station s = n.findStation(stationID);
+			s.setLocation(new GPScoordinates(latitude, longitude));
+		} catch (OutOfBoundsException | NoSuchNetworkException | NoSuchStationException e) {
+			throw new InvalidSyntaxException();
+		}
+	}
+	
+	/**
+	 * command to set the location of a user
+	 * 
+	 * @param userID		the ID of the user	
+	 * @param latitude		the latitude of where the user should be set
+	 * @param longitude		the longitude of where the user should be set
+	 */
+	public static void setUserLocation(int userID, double latitude, double longitude) throws InvalidSyntaxException {
+		try {
+			User u = findUser(userID);
+			u.setPosition(new GPScoordinates(latitude, longitude));
+		} catch (OutOfBoundsException e) {
+			throw new InvalidSyntaxException();
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * command to set the location of a user
+	 * 
+	 * @param userName		the name of the user	
+	 * @param latitude		the latitude of where the user should be set
+	 * @param longitude		the longitude of where the user should be set
+	 */
+	public static void setUserLocation(String userName, double latitude, double longitude) throws InvalidSyntaxException {
+		try {
+			User u = findUser(userName);
+			u.setPosition(new GPScoordinates(latitude, longitude));
+		} catch (OutOfBoundsException e) {
+			throw new InvalidSyntaxException();
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * Command to turn a specific station in the network off
@@ -441,7 +812,26 @@ public class MyVelibCMD {
 		try {
 			User u = findUser(userID);
 			u.takeBike(u.getNetwork().findStation(stationID));
-			System.out.println("User "+userID+" has successfully rented a bike from station "+stationID+".");
+			System.out.println("User "+u.getName()+" has successfully rented a bike from station "+stationID+".");
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		} catch(NoSuchStationException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * command to let the user userName renting a bike from station stationID 
+	 * (if no bikes are available should behave accordingly)
+	 * 
+	 * @param userName	the name of the user who wants to rent a bike
+	 * @param stationID	the ID of the station of which you wish to rent a bike
+	 */
+	public static void rentBike(String userName, int stationID) {
+		try {
+			User u = findUser(userName);
+			u.takeBike(u.getNetwork().findStation(stationID));
+			System.out.println("User "+userName+" has successfully rented a bike from station "+stationID+".");
 		} catch (NoSuchUserException e) {
 			e.printStackTrace();
 		} catch(NoSuchStationException e) {
@@ -484,6 +874,33 @@ public class MyVelibCMD {
 		}
 	}
 	
+	/**
+	 * command to give instructions to user on how to get to arrival
+	 * GPScoordinates using the myvelib system
+	 * 
+	 * @param user 		the user who is on the move
+	 * @param arrival	the GPScoordinates of the position the user wants to get to
+	 */
+	public static void goTo(User user, GPScoordinates arrival) {
+		user.goTo(arrival);	
+	}
+	
+	/**
+	 * command to give instructions to user on how to get to station
+	 * stationID using the myvelib system
+	 * 
+	 * @param user 		the user who is on the move
+	 * @param stationID	the ID of the station the user wants to get to
+	 */
+	public static void goTo(User user, int stationID) {
+		Station arrival;
+		try {
+			arrival = user.getNetwork().findStation(stationID);
+			goTo(user,arrival.getLocation());
+		} catch (NoSuchStationException e) {
+			e.printStackTrace();
+		}		
+	}
 	
 	/**
 	 * command to display the statistics of station stationID of a myVelib network networkName.
@@ -510,6 +927,21 @@ public class MyVelibCMD {
 	public static void displayUser(String networkName, int userID) {
 		try {
 			String str = statisticCompiler.visit( findUser(userID) );
+			System.out.println(str);
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * command to display the statistics of user whose name is userName
+	 * in the myVelib network networkName.
+	 * @param networkName the name of the network
+	 * @param userName	the name of the user you wish to get intel on
+	 */
+	public static void displayUser(String networkName, String userName) {
+		try {
+			String str = statisticCompiler.visit( findUser(userName) );
 			System.out.println(str);
 		} catch (NoSuchUserException e) {
 			e.printStackTrace();
@@ -544,6 +976,112 @@ public class MyVelibCMD {
 		} catch (NoSuchNetworkException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Command for user to choose the his PathPreference
+	 * 
+	 * @param userID			The ID of the user whose path preference is to be set
+	 * @param pathPreference	The path preference of the user
+	 */
+	public static void choosePath(int userID, String pathPreference) {
+		try {
+			boolean tampon = true;
+			User u = findUser(userID) ;
+			PathPreferences[] allPreferences = PathPreferences.values();
+			for (int i = 0; i < allPreferences.length; i++) {
+				if(allPreferences[i].getCommand().equals(pathPreference)) {
+					u.setPathPreference(allPreferences[i]);
+					tampon = false;
+					break;
+				}
+			}
+			if(tampon) {
+				System.out.println("This preference does not exist, try again.");
+			}System.out.println("This preference does not exist, try again.");
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Command for user to choose the his PathPreference
+	 * 
+	 * @param userName			The name of the user whose path preference is to be set
+	 * @param pathPreference	The path preference of the user
+	 */
+	public static void choosePath(String userName, String pathPreference) {
+		try {
+			boolean tampon=true;
+			User u = findUser(userName) ;
+			PathPreferences[] allPreferences = PathPreferences.values();
+			for (int i = 0; i < allPreferences.length; i++) {
+				if(allPreferences[i].getCommand().equals(pathPreference)) {
+					u.setPathPreference(allPreferences[i]);
+					tampon = false;
+					break;
+				}
+			}
+			if(tampon) {
+				System.out.println("This preference does not exist, try again.");
+			}
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Command for user to choose the his ArrivalPreference
+	 * 
+	 * @param userID			The ID of the user whose arrival preference is to be set
+	 * @param arrivalPreference	The arrival preference of the user
+	 */
+	public static void chooseArrival(int userID, String arrivalPreference) {
+		try {
+			boolean tampon = true;
+			User u = findUser(userID) ;
+			ArrivalPreferences[] allPreferences = ArrivalPreferences.values();
+			for (int i = 0; i < allPreferences.length; i++) {
+				if(allPreferences[i].getCommand().equals(arrivalPreference)) {
+					u.setArrivalStationPreference(allPreferences[i]);
+					tampon = false;
+					break;
+				}
+			}
+			if(tampon) {
+				System.out.println("This preference does not exist, try again.");
+			}		
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Command for user to choose the his ArrivalPreference
+	 * 
+	 * @param userName			The name of the user whose arrival preference is to be set
+	 * @param arrivalPreference	The arrival preference of the user
+	 */
+	public static void chooseArrival(String userName, String arrivalPreference) {
+		try {
+			boolean tampon = true;
+			User u = findUser(userName) ;
+			ArrivalPreferences[] allPreferences = ArrivalPreferences.values();
+			for (int i = 0; i < allPreferences.length; i++) {
+				if(allPreferences[i].getCommand().equals(arrivalPreference)) {
+					u.setArrivalStationPreference(allPreferences[i]);
+					tampon = false;
+					break;
+				}
+			}
+			if(tampon) {
+				System.out.println("This preference does not exist, try again.");
+			}
+		} catch (NoSuchUserException e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	/**

@@ -133,6 +133,8 @@ public class User implements VisitableItems, Observer {
 		this.rides=new ArrayList<Ride>();
 		this.timeCredit = 0;
 		this.setBehavior(new Walking());
+		this.arrivalStationPreference = new NoPreference();
+		this.pathPreference = PathPreferences.Fastest;
 	}
 
 
@@ -149,6 +151,8 @@ public class User implements VisitableItems, Observer {
 		this.rides=new ArrayList<Ride>();
 		this.timeCredit = 0;
 		this.setBehavior(new Walking());
+		this.arrivalStationPreference = new NoPreference();
+		this.pathPreference = PathPreferences.Fastest;
 	}
 
 
@@ -291,7 +295,7 @@ public class User implements VisitableItems, Observer {
 	 * @param arrival	The GPScoordinates of where the user wishes to go to
 	 */
 	public void goTo(GPScoordinates arrival) {
-		this.goTo(arrival, new NoPreference(), PathPreferences.Fastest);
+		this.goTo(arrival, this.arrivalStationPreference, this.pathPreference);
 	}
 	
 	
@@ -438,8 +442,16 @@ public class User implements VisitableItems, Observer {
 	 * A setter for the arrival station preference of the User
 	 * @param	the arrival station preference of the User
 	 */
-	public void setArrivalStationPreference(ArrivalStationPreferenceVisitable arrivalStationPreference) {
-		this.arrivalStationPreference = arrivalStationPreference;
+	public void setArrivalStationPreference(ArrivalPreferences arrivalPreference) {
+		this.arrivalStationPreference = arrivalPreference.getArrivalPreference();
+	}
+	
+	/**
+	 * A setter for the arrival station preference of the User
+	 * @param	the arrival station preference of the User
+	 */
+	public void setArrivalStationPreference(ArrivalStationPreferenceVisitable arrivalPreference) {
+		this.arrivalStationPreference = arrivalPreference;
 	}
 	
 	/**

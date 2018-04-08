@@ -580,7 +580,7 @@ public class Ride extends Thread {
 				u.getArrivalOfRide().addArrivalObserver(u);
 				u.getDepartureOfRide().addDepartureObserver(u);
 				System.out.println("The itinerary of "+u.getName()+" has been modified.");
-				System.out.println("The user "+u.getName()+" starts its ride again");
+				System.out.println("The user "+u.getName()+" starts his ride again");
 				System.out.println("He is now going first to station "+u.getDepartureOfRide().getStationID()+", and then to station "+u.getArrivalOfRide().getStationID()+".\n");
 				deplacement(u,u.getPosition(),this.departureStation.getLocation());
 			}
@@ -590,7 +590,7 @@ public class Ride extends Thread {
 				this.updateArrivalChange();
 				u.getArrivalOfRide().addArrivalObserver(u);
 				System.out.println("The itinerary of "+u.getName()+" has been modified.");
-				System.out.println("The user "+u.getName()+" starts its ride again, he is off to station "+ u.getArrivalOfRide().getStationID() +".\n");
+				System.out.println("The user "+u.getName()+" starts his ride again, he is off to station "+ u.getArrivalOfRide().getStationID() +".\n");
 				deplacement(u,u.getPosition(),this.arrivalStation.getLocation());
 			}
 		}

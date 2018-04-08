@@ -1,0 +1,28 @@
+setup network 2 2 0.1 0.5
+display network 
+addUser "Elon Musk" network 
+addUser "Bill Gates" network 
+addStation network standard 2 2 1
+setStationLocation network 0 0 0
+setStationLocation network 1 -0.0002 0.0003
+setStationLocation network 2 0.00025 0.0004
+setUserLocation 1 0.00025 0.0004
+setUserLocation 2 -0.0002 0.0003
+echo " --- "
+echo First off, the first user will go to station 0
+echo starting at station 2. He will take a bike from
+echo there, so there is only one free slot remaining.
+echo " --- "
+joinedRideSimulation 1 0
+echo " --- "
+echo Now that he has arrived, user 1 and 2 will both 
+echo to go to station 2. The first to arrive will take 
+echo the last remaining available slot, and the other's
+echo ride will be interrupted and recalculated, in order
+echo to lead him to a station in which there is an
+echo available slot for him to drop his bike off.
+echo " --- "
+rideSimulation 1 2
+rideSimulation 2 2
+endtest
+

@@ -1,0 +1,30 @@
+setup preferplusnetwork 0 0 0.1 0.5
+display preferplusnetwork
+addUser "Elon Musk" preferplusnetwork
+addUser "Bill Gates" preferplusnetwork
+choosePath "Elon Musk" fastest
+chooseArrival 1 preferplus
+choosePath "Bill Gates" fastest
+chooseArrival 2 nopreference
+addStation preferplusnetwork standard 2 2 1
+addStation preferplusnetwork standard 2 1 1
+addStation preferplusnetwork plus 2 1 1
+setStationLocation preferplusnetwork 0 0 0
+setStationLocation preferplusnetwork 1 -0.0002 0.0003
+setStationLocation preferplusnetwork 2 0.0002 0.0003
+setUserLocation 1 0 0
+setUserLocation 2 0 0.00001
+echo " --- "
+echo Now both users will begin their ride at station 0
+echo Both will go to a point situated between stations 1 
+echo 2, a bit closer to station 1.
+echo Station 2 being a plus station, the preferplus arrival
+echo preference should lead there, even though the path
+echo is a bit longer.
+echo In this case, Elon Musk should be going toward station 2
+echo and Bill Gates toward station 1.
+echo " --- "
+rideSimulation 1 -0.000008 0.0003
+rideSimulation 2 -0.000008 0.0003
+endtest
+
